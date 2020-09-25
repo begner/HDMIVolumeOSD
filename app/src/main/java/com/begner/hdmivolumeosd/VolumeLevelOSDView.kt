@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.view.WindowManager
 import android.widget.*
 import com.begner.hdmivolumeosd.R
+import java.lang.Math.floor
+import java.lang.Math.round
 
 // TODO: convert dimensions from px to dp
 
@@ -27,14 +29,39 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
         setPadding(20,20,20,20)
 
         val title = findViewById<TextView>(R.id.vosd_title)
-        title.text = props.curVolume.toString() + "/" + props.maxVolume.toString()
+        title.text = mapVolume(props.curVolume).toString() // + "/" + mapVolume(props.maxVolume).toString()
 
         val bar = findViewById<SeekBar>(R.id.vosd_bar)
-        bar.max = props.maxVolume
-        bar.progress = props.curVolume
+        bar.max = mapVolume(props.maxVolume)
+        bar.progress = mapVolume(props.curVolume)
+
+        val temp = findViewById<TextView>(R.id.vosd_temp)
+        val tempRounded = round(props.curTemp * 10).toFloat() / 10f
+        temp.text = tempRounded.toString() + "°C"
+
+        val speakerIcon = findViewById<ImageView>(R.id.vosd_icon_speaker)
+        if (mapVolume(props.curVolume) < 1) {
+            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_0)
+        } else if (mapVolume(props.curVolume) < 8) {
+            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_1)
+        } else if (mapVolume(props.curVolume) < 15) {
+            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_2)
+        } else {
+            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_3)
+        }
+
     }
 
     open fun destroy() {}
+
+    fun mapVolume(volume: Int): Int {
+        var mappedVolume: Int = volume
+
+        var versatz = floor(volume.toDouble() / 6.toDouble()).toInt()
+        mappedVolume = volume - versatz
+
+        return mappedVolume
+    }
 
     private class Default(context: Context, props: VolumeLevelOSDProps) : VolumeLevelOSDView(context, props) {
         init {

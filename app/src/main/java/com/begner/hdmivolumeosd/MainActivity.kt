@@ -15,15 +15,21 @@
 package com.begner.hdmivolumeosd
 
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
+import android.view.View
+import android.widget.TextView
+import com.begner.hdmivolumeosd.R
 
 
 class MainActivity : Activity() {
+
+    lateinit var settingsMQTTServer: TextView
+    lateinit var settingsMQTTTopic: TextView
+    lateinit var settingsMQTTUser: TextView
+    lateinit var settingsMQTTPassword: TextView
+    lateinit var settings: Settings
+    lateinit var mainServiceIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,8 +85,47 @@ class MainActivity : Activity() {
 
  */
             setContentView(R.layout.activity_main)
-            val serviceIntent = Intent(this, MainService::class.java)
-            startForegroundService(serviceIntent)
+            mainServiceIntent = Intent(this, MainService::class.java)
+
+            startForegroundService(mainServiceIntent)
       //  }
+
+
+        settingsMQTTServer = findViewById(R.id.settings_mqtt_server);
+        settingsMQTTTopic = findViewById(R.id.settings_mqtt_topic);
+        settingsMQTTUser = findViewById(R.id.settings_mqtt_username);
+        settingsMQTTPassword = findViewById(R.id.settings_mqtt_password);
+
+        settings = Settings(applicationContext)
+        GetSettings(null)
     }
+
+    fun restartService() {
+        stopService(mainServiceIntent)
+        startForegroundService(mainServiceIntent)
+    }
+
+    fun SaveSettings(view: View?) {
+        settings.SaveSettings(settingsMQTTServer.getText().toString(),
+                                settingsMQTTTopic.getText().toString(),
+                                settingsMQTTUser.getText().toString(),
+                                settingsMQTTPassword.getText().toString())
+        restartService()
+    }
+
+    fun ClearSettings(view: View?) {
+        settingsMQTTServer.setText("")
+        settingsMQTTTopic.setText("")
+        settingsMQTTUser.setText("")
+        settingsMQTTPassword.setText("")
+    }
+
+    fun GetSettings(view: View?) {
+        settingsMQTTServer.setText(settings.getMQTTServer())
+        settingsMQTTTopic.setText(settings.getMQTTTopic())
+        settingsMQTTUser.setText(settings.getMQTTUser())
+        settingsMQTTPassword.setText(settings.getMQTTPassword())
+    }
+
+
 }

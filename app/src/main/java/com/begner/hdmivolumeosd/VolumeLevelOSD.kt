@@ -1,5 +1,6 @@
 package nl.rogro82.pipup
 
+import java.math.RoundingMode
 import android.app.Service
 import android.content.Context
 import android.database.ContentObserver
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import com.begner.hdmivolumeosd.MainService
+import java.lang.Math.round
 import java.util.*
 
 class VolumeLevelOSD(s: MainService, c: Context) {
@@ -38,12 +40,14 @@ class VolumeLevelOSD(s: MainService, c: Context) {
         applicationContext.contentResolver.unregisterContentObserver(settingsContentObserver)
     }
 
-    fun createOverlay(routeMax : Int, currentVolume : Int) {
+    fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
 
         removePopup()
+
         val props = VolumeLevelOSDProps(
             currentVolume,
-            routeMax
+            maxVolume,
+            currentTemp
         )
 
         mOverlay = when (val overlay = mOverlay) {
@@ -130,7 +134,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
            // if (routeName.equals("HDMI")) {
                 // val message: String = "DirectVolume: " + currentVolume.toString() + "/" + routeMax.toString()
                 // val props = PopupProps(4,PopupProps.Position.BottomRight,"#88000000", message, 16f)
-                service.createOverlay(routeMax, currentVolume)
+                service.createOverlay(routeMax, currentVolume, service.service.getAverageTemp())
                 //service.createPopup(props)
             // }
 

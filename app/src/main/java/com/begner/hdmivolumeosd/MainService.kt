@@ -8,14 +8,21 @@ import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
 import android.provider.Settings.canDrawOverlays
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import nl.rogro82.pipup.VolumeLevelOSD
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
+import org.eclipse.paho.client.mqttv3.MqttMessage
 
 
 class MainService : Service() {
     private lateinit var volumeLevelOSD: VolumeLevelOSD
+
+    private lateinit var mqttClient: MqttClient
+    private var temperatures: MutableMap<String, Float> = mutableMapOf<String, Float>()
 
     override fun onCreate() {
         super.onCreate()
@@ -38,6 +45,7 @@ class MainService : Service() {
 
 
         startForeground(Companion.ONGOING_NOTIFICATION_ID, mBuilder.build())
+        startMqtt()
         volumeLevelOSD = VolumeLevelOSD(this, applicationContext)
     }
 
@@ -62,6 +70,41 @@ class MainService : Service() {
         )
         channel.description = description
         notificationManager.createNotificationChannel(channel)
+    }
+
+
+    fun getAverageTemp(): Float {
+        var avarageTemp : Float = 0f
+        if (temperatures.isNotEmpty()) {
+            for ((k, v) in temperatures) {
+                avarageTemp += v
+            }
+            avarageTemp /= temperatures.size
+        }
+        return avarageTemp
+    }
+
+    fun startMqtt() {
+        mqttClient = MqttClient(applicationContext)
+        mqttClient.setCallback(object : MqttCallbackExtended {
+            override fun connectComplete(b: Boolean, s: String) {
+                Log.w("connectComplete", s)
+            }
+
+            override fun connectionLost(throwable: Throwable) {
+
+            }
+
+            @Throws(Exception::class)
+            override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+                temperatures.put(topic, mqttMessage.toString().toFloat())
+
+                Log.w("Debug", mqttMessage.toString())
+            }
+
+            override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {}
+        })
+
     }
 
     companion object {

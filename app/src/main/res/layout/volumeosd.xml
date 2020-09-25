@@ -4,15 +4,22 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-            android:id="@+id/vosd_frame"
+        android:id="@+id/vosd_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp">
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/layout_bg"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-        <ImageView
-                android:id="@+id/imageView"
+            <ImageView
+                android:id="@+id/vosd_icon_speaker"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
@@ -21,15 +28,14 @@
                 android:contentDescription="SpeakerIcon"
                 android:cropToPadding="true"
                 android:scaleType="fitStart"
+                android:src="@drawable/ic_icon_speaker_1"
                 android:tint="#FFFFFF"
-                android:visibility="visible"
-                android:src="@drawable/ic_speaker_icon"
-                 />
+                android:visibility="visible" />
 
-        <SeekBar
+            <SeekBar
                 android:id="@+id/vosd_bar"
                 style="@android:style/Widget.Material.SeekBar"
-                android:layout_width="550dp"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:indeterminate="false"
                 android:max="60"
@@ -42,20 +48,62 @@
                 android:splitTrack="false"
                 android:thumbTint="#FFFFFF" />
 
-        <TextView
+            <TextView
                 android:id="@+id/vosd_title"
-                android:layout_width="70dp"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:shadowColor="#ff000000"
                 android:shadowDx="1.0"
                 android:shadowDy="1.0"
                 android:shadowRadius="5.0"
-                android:text="10/40"
+                android:text="40"
+                android:textAlignment="viewEnd"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlCompat" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:alpha="1"
+            android:background="@drawable/layout_bg"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:id="@+id/vsod_icon_temp"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:contentDescription="Temperature"
+                android:cropToPadding="true"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_icon_temperature"
+                android:tint="#FFFFFF"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/vosd_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:shadowColor="#ff000000"
+                android:shadowDx="1.0"
+                android:shadowDy="1.0"
+                android:shadowRadius="5.0"
+                android:text="10.0 °C"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+        </LinearLayout>
 
     </LinearLayout>
 

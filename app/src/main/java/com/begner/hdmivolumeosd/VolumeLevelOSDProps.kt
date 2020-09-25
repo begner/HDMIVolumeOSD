@@ -2,7 +2,8 @@ package nl.rogro82.pipup
 
 data class VolumeLevelOSDProps(
     val curVolume: Int = 0,
-    val maxVolume: Int = 10,
+    val maxVolume: Int = 60,
+    val curTemp: Float = 0f,
     val duration: Int = DEFAULT_DURATION,
     val position: Position = DEFAULT_POSITION,
     val backgroundColor: String = DEFAULT_BACKGROUND_COLOR
