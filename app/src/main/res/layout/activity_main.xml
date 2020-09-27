@@ -1,115 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:tools="http://schemas.android.com/tools"
+<androidx.leanback.widget.TitleView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
+    <!-- Settings Pane -->
     <LinearLayout
-        android:layout_width="500dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right"
         >
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="MQTT Server" />
-
-            <EditText
-                android:id="@+id/settings_mqtt_server"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textUri"
-                android:text="" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="MQTT Topic" />
-            <EditText
-                android:id="@+id/settings_mqtt_topic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="MQTT Username" />
-            <EditText
-                android:id="@+id/settings_mqtt_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="MQTT Password" />
-            <EditText
-                android:id="@+id/settings_mqtt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/settings_btn_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="SaveSettings"
-                android:text="Save" />
-            <Button
-                android:id="@+id/settings_btn_retr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="GetSettings"
-                android:text="Retrieve" />
-
-            <Button
-                android:id="@+id/settings_btn_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="ClearSettings"
-                android:text="Clear" />
-        </LinearLayout>
+    <Button
+        android:id="@+id/main_btn_open_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openSettings"
+        android:text="Temperatur Monitor" />
     </LinearLayout>
+
 </LinearLayout>
-</merge>
+
+</androidx.leanback.widget.TitleView>

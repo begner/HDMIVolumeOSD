@@ -4,9 +4,8 @@ data class VolumeLevelOSDProps(
     val curVolume: Int = 0,
     val maxVolume: Int = 60,
     val curTemp: Float = 0f,
-    val duration: Int = DEFAULT_DURATION,
-    val position: Position = DEFAULT_POSITION,
-    val backgroundColor: String = DEFAULT_BACKGROUND_COLOR
+    val duration: Int = 3,
+    val position: Position = Position.TopRight
 ) {
     enum class Position(index: Int) {
         TopRight(0),
@@ -14,10 +13,5 @@ data class VolumeLevelOSDProps(
         BottomRight(2),
         BottomLeft(3),
         Center(4)
-    }
-    companion object {
-        const val DEFAULT_DURATION: Int = 3
-        const val DEFAULT_BACKGROUND_COLOR = "#88000000"
-        val DEFAULT_POSITION: Position = Position.TopRight
     }
 }

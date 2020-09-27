@@ -3,15 +3,9 @@ package com.begner.hdmivolumeosd
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.IBinder
-import android.provider.Settings
-import android.provider.Settings.canDrawOverlays
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import nl.rogro82.pipup.VolumeLevelOSD
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended

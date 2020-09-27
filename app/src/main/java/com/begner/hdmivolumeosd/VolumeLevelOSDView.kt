@@ -2,12 +2,18 @@ package nl.rogro82.pipup
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.TextView
+import com.begner.hdmivolumeosd.MQTTSettings
 import com.begner.hdmivolumeosd.R
 import java.lang.Math.floor
 import java.lang.Math.round
+
 
 // TODO: convert dimensions from px to dp
 
@@ -26,6 +32,9 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
             minimumWidth = 240
         }
 
+
+        val settings = MQTTSettings(context)
+
         setPadding(20,20,20,20)
 
         val title = findViewById<TextView>(R.id.vosd_title)
@@ -35,9 +44,16 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
         bar.max = mapVolume(props.maxVolume)
         bar.progress = mapVolume(props.curVolume)
 
-        val temp = findViewById<TextView>(R.id.vosd_temp)
-        val tempRounded = round(props.curTemp * 10).toFloat() / 10f
-        temp.text = tempRounded.toString() + "°C"
+
+
+        val tempContainer = findViewById<LinearLayout>(R.id.vsod_temp_container)
+        if (settings.getMQTTActive()) {
+            val tempRounded = round(props.curTemp * 10).toFloat() / 10f
+            val temp = findViewById<TextView>(R.id.vosd_temp)
+            temp.text = tempRounded.toString() + "°C"
+        } else {
+            (tempContainer.getParent() as ViewGroup).removeView(tempContainer)
+        }
 
         val speakerIcon = findViewById<ImageView>(R.id.vosd_icon_speaker)
         if (mapVolume(props.curVolume) < 1) {
@@ -55,12 +71,8 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
     open fun destroy() {}
 
     fun mapVolume(volume: Int): Int {
-        var mappedVolume: Int = volume
-
         var versatz = floor(volume.toDouble() / 6.toDouble()).toInt()
-        mappedVolume = volume - versatz
-
-        return mappedVolume
+        return volume - versatz
     }
 
     private class Default(context: Context, props: VolumeLevelOSDProps) : VolumeLevelOSDView(context, props) {

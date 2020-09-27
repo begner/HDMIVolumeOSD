@@ -17,115 +17,44 @@ package com.begner.hdmivolumeosd
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings.canDrawOverlays
 import android.view.View
-import android.widget.TextView
-import com.begner.hdmivolumeosd.R
 
 
 class MainActivity : Activity() {
 
-    lateinit var settingsMQTTServer: TextView
-    lateinit var settingsMQTTTopic: TextView
-    lateinit var settingsMQTTUser: TextView
-    lateinit var settingsMQTTPassword: TextView
-    lateinit var settings: Settings
     lateinit var mainServiceIntent: Intent
+
+    val REQUEST_CODE_SETTINGS = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-/*
-        if (!Settings.canDrawOverlays(applicationContext)) {
+        setContentView(R.layout.activity_main)
 
-            // Register the permissions callback, which handles the user's response to the
-// system permissions dialog. Save the return value, an instance of
-// ActivityResultLauncher. You can use either a val, as shown in this snippet,
-// or a lateinit var in your onAttach() or onCreate() method.
-            val requestPermissionLauncher =
-                registerForActivityResult(RequestPermission()
-                ) { isGranted: Boolean ->
-                    if (isGranted) {
-                        // Permission is granted. Continue the action or workflow in your
-                        // app.
-                    } else {
-                        // Explain to the user that the feature is unavailable because the
-                        // features requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
-                    }
-                }
-            val builder = AlertDialog.Builder(this@MainActivity)
-            builder.setTitle("Rights needed")
-            builder.setMessage("Foo bar")
-
-            val requestCode: Int = 123;
-
-            builder.setPositiveButton("YES") { dialog, which ->
-                try {
-                    val intent = Intent(
-                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + applicationContext.packageName)
-                    )
-                    startActivityForResult(intent, requestCode);
-                } catch (e: ActivityNotFoundException) {
-                    val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                    startActivityForResult(intent, requestCode);
-                }
-            }
-
-            builder.setNegativeButton("No"){dialog,which ->
-
-            }
-
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+        if (!canDrawOverlays(applicationContext)) {
+            // TODO: display message to adjust app settings
         }
-        else {
 
- */
-            setContentView(R.layout.activity_main)
-            mainServiceIntent = Intent(this, MainService::class.java)
-
-            startForegroundService(mainServiceIntent)
-      //  }
-
-
-        settingsMQTTServer = findViewById(R.id.settings_mqtt_server);
-        settingsMQTTTopic = findViewById(R.id.settings_mqtt_topic);
-        settingsMQTTUser = findViewById(R.id.settings_mqtt_username);
-        settingsMQTTPassword = findViewById(R.id.settings_mqtt_password);
-
-        settings = Settings(applicationContext)
-        GetSettings(null)
-    }
-
-    fun restartService() {
-        stopService(mainServiceIntent)
+        mainServiceIntent = Intent(this, MainService::class.java)
         startForegroundService(mainServiceIntent)
     }
 
-    fun SaveSettings(view: View?) {
-        settings.SaveSettings(settingsMQTTServer.getText().toString(),
-                                settingsMQTTTopic.getText().toString(),
-                                settingsMQTTUser.getText().toString(),
-                                settingsMQTTPassword.getText().toString())
-        restartService()
+    fun openSettings(view: View) {
+        val intent = Intent(this, MQTTSettingsActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE_SETTINGS);
     }
 
-    fun ClearSettings(view: View?) {
-        settingsMQTTServer.setText("")
-        settingsMQTTTopic.setText("")
-        settingsMQTTUser.setText("")
-        settingsMQTTPassword.setText("")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SETTINGS) {
+            if (resultCode == RESULT_OK) {
+                stopService(mainServiceIntent)
+                startForegroundService(mainServiceIntent)
+            }
+            if (resultCode == RESULT_CANCELED) {
+                // Nothing to do here
+            }
+        }
     }
-
-    fun GetSettings(view: View?) {
-        settingsMQTTServer.setText(settings.getMQTTServer())
-        settingsMQTTTopic.setText(settings.getMQTTTopic())
-        settingsMQTTUser.setText(settings.getMQTTUser())
-        settingsMQTTPassword.setText(settings.getMQTTPassword())
-    }
-
-
 }

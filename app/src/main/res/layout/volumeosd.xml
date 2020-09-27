@@ -68,12 +68,15 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/vsod_temp_container"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:alpha="1"
             android:background="@drawable/layout_bg"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="15dp"
+            android:layout_marginStart="50dp"
+            >
 
             <ImageView
                 android:id="@+id/vsod_icon_temp"

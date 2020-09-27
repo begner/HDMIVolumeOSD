@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="popup_layout_padding">20dp</dimen>
+    <dimen name="popup_field_label_width">160dp</dimen>
+    <dimen name="popup_field_input_width">300dp</dimen>
+    <dimen name="popup_field_margin_top">10dp</dimen>
+    <dimen name="popup_width">500dp</dimen>
+
+    <item type="dimen" name="dialog_min_width_major">500dp</item>
+    <item type="dimen" name="dialog_min_width_minor">500dp</item>
+
+</resources>
