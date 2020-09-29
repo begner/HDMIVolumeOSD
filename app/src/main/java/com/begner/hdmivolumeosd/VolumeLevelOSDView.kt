@@ -3,14 +3,15 @@ package nl.rogro82.pipup
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import com.begner.hdmivolumeosd.MQTTSettings
+import com.begner.hdmivolumeosd.PropertyOSDPositions
 import com.begner.hdmivolumeosd.R
+import com.begner.hdmivolumeosd.SettingsMQTT
+import com.begner.hdmivolumeosd.SettingsVolume
 import java.lang.Math.floor
 import java.lang.Math.round
 
@@ -22,18 +23,23 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
 
 
     open fun create() {
-        inflate(context, R.layout.volumeosd,this)
+
+        val settingsMQTT = SettingsMQTT(context)
+        var settingsVolume = SettingsVolume(context)
+
+        if (PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
+            inflate(context, R.layout.volume_osd_horizontal,this)
+        } else {
+            inflate(context, R.layout.volume_osd_vertical,this)
+        }
 
         layoutParams = LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         ).apply {
             orientation = VERTICAL
-            minimumWidth = 240
         }
 
-
-        val settings = MQTTSettings(context)
 
         setPadding(20,20,20,20)
 
@@ -44,15 +50,12 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
         bar.max = mapVolume(props.maxVolume)
         bar.progress = mapVolume(props.curVolume)
 
-
-
-        val tempContainer = findViewById<LinearLayout>(R.id.vsod_temp_container)
-        if (settings.getMQTTActive()) {
+        val temp = findViewById<TextView>(R.id.vosd_temp)
+        if (settingsMQTT.getMQTTActive()) {
             val tempRounded = round(props.curTemp * 10).toFloat() / 10f
-            val temp = findViewById<TextView>(R.id.vosd_temp)
             temp.text = tempRounded.toString() + "°C"
         } else {
-            (tempContainer.getParent() as ViewGroup).removeView(tempContainer)
+            temp.visibility = View.GONE
         }
 
         val speakerIcon = findViewById<ImageView>(R.id.vosd_icon_speaker)

@@ -3,19 +3,21 @@
 
     <string name="mqtt_setting_headline">Temperatur Monitor (MQTT)</string>
     <string name="mqtt_setting_label_active">Active</string>
-
     <string name="mqtt_setting_label_host">Host</string>
     <string name="mqtt_setting_description_host">Protocol, host and port of the MQTT Server.
 Example: tcp://192.168.1.13:1883</string>
-
     <string name="mqtt_setting_label_topic">Topic</string>
     <string name="mqtt_setting_description_topic">MQTT Topic, which results in one or many values (float)
 Example: /temperature/+</string>
-
     <string name="mqtt_setting_label_username">Username</string>
-
     <string name="mqtt_setting_label_password">Password</string>
-
     <string name="mqtt_setting_button_save">Save</string>
     <string name="mqtt_setting_button_cancel">Cancel</string>
+
+    <string name="volume_setting_headline">OSD Settings</string>
+    <string name="volume_setting_label_position">Position</string>
+    <string name="volume_setting_label_duration">Duration</string>
+    <string name="mqtt_setting_label_limit_to_hdmi">Only show on HDMI</string>
+
+
 </resources>

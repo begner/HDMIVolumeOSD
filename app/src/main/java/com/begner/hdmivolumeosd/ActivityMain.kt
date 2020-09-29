@@ -21,11 +21,12 @@ import android.provider.Settings.canDrawOverlays
 import android.view.View
 
 
-class MainActivity : Activity() {
+class ActivityMain : Activity() {
 
     lateinit var mainServiceIntent: Intent
 
-    val REQUEST_CODE_SETTINGS = 1
+    val REQUEST_CODE_SETTINGS_MQTT = 1
+    val REQUEST_CODE_SETTINGS_VOLUME = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +41,20 @@ class MainActivity : Activity() {
         startForegroundService(mainServiceIntent)
     }
 
-    fun openSettings(view: View) {
-        val intent = Intent(this, MQTTSettingsActivity::class.java)
-        startActivityForResult(intent, REQUEST_CODE_SETTINGS);
+    fun openSettingsMQTT(view: View) {
+        val intent = Intent(this, PopupActivitySettingsMQTT::class.java)
+        startActivityForResult(intent, REQUEST_CODE_SETTINGS_MQTT);
+    }
+
+    fun openSettingsVolume(view: View) {
+        val intent = Intent(this, PopupActivitySettingsVolume::class.java)
+        startActivityForResult(intent, REQUEST_CODE_SETTINGS_VOLUME);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SETTINGS) {
+        if (requestCode == REQUEST_CODE_SETTINGS_MQTT ||
+            requestCode == REQUEST_CODE_SETTINGS_VOLUME) {
             if (resultCode == RESULT_OK) {
                 stopService(mainServiceIntent)
                 startForegroundService(mainServiceIntent)

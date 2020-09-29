@@ -1,21 +1,19 @@
 package nl.rogro82.pipup
 
-import java.math.RoundingMode
-import android.app.Service
 import android.content.Context
 import android.database.ContentObserver
 import android.graphics.PixelFormat
 import android.media.AudioManager
 import android.media.MediaRouter
-import android.os.Build
 import android.os.Handler
 import android.provider.Settings
-import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.core.graphics.rotationMatrix
 import com.begner.hdmivolumeosd.MainService
-import java.lang.Math.round
+import com.begner.hdmivolumeosd.PropertyOSDPositions
+import com.begner.hdmivolumeosd.SettingsVolume
 import java.util.*
 
 class VolumeLevelOSD(s: MainService, c: Context) {
@@ -41,6 +39,8 @@ class VolumeLevelOSD(s: MainService, c: Context) {
     }
 
     fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
+
+        val settingsVolume = SettingsVolume(applicationContext)
 
         removePopup()
 
@@ -73,25 +73,18 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             mPopup = VolumeLevelOSDView.build(applicationContext, props)
 
             it.addView(mPopup, FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
             ). apply {
-
-                // position the popup
-
-                gravity = when(props.position) {
-                    VolumeLevelOSDProps.Position.TopRight -> Gravity.TOP or Gravity.END
-                    VolumeLevelOSDProps.Position.TopLeft -> Gravity.TOP or Gravity.START
-                    VolumeLevelOSDProps.Position.BottomRight -> Gravity.BOTTOM or Gravity.END
-                    VolumeLevelOSDProps.Position.BottomLeft -> Gravity.BOTTOM or Gravity.START
-                    VolumeLevelOSDProps.Position.Center -> Gravity.CENTER
-                }
+                gravity = PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).gravity
             })
+
+
         }
 
         mHandler.postDelayed({
             removePopup(true)
-        }, (props.duration * 1000).toLong())
+        }, (settingsVolume.getDuration() * 1000).toLong())
     }
 
 
@@ -116,6 +109,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
         ContentObserver(handler) {
         var context: Context
         var service: VolumeLevelOSD
+        var settingsVolume: SettingsVolume
 
         override fun deliverSelfNotifications(): Boolean {
             return super.deliverSelfNotifications()
@@ -131,18 +125,19 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             val routeName = routeInfo.getName().toString()
             var routeMax = routeInfo.getVolumeMax()
 
-           // if (routeName.equals("HDMI")) {
+            if (routeName.equals("HDMI") || !settingsVolume.getLimitOnHDMI()) {
                 // val message: String = "DirectVolume: " + currentVolume.toString() + "/" + routeMax.toString()
                 // val props = PopupProps(4,PopupProps.Position.BottomRight,"#88000000", message, 16f)
                 service.createOverlay(routeMax, currentVolume, service.service.getAverageTemp())
                 //service.createPopup(props)
-            // }
+            }
 
         }
 
         init {
             context = c
             service = s
+            settingsVolume = SettingsVolume(context)
         }
     }
 

@@ -24,7 +24,7 @@ public class MqttClient {
 
     public MqttClient(Context context){
 
-        MQTTSettings settings = new MQTTSettings(context);
+        SettingsMQTT settings = new SettingsMQTT(context);
         serverUri = settings.getMQTTServer();
         subscriptionTopic = settings.getMQTTTopic();
         username = settings.getMQTTUser();

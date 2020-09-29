@@ -25,7 +25,7 @@ class MainService : Service() {
 
         val pendingIntent = PendingIntent.getActivity(
             this, 0,
-            Intent(this, MainActivity::class.java), 0
+            Intent(this, ActivityMain::class.java), 0
         )
 
         val mBuilder = NotificationCompat.Builder(this, "service_channel")

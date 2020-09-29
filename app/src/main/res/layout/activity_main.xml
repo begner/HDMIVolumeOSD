@@ -5,24 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <!-- Settings Pane -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom|right"
-        >
-    <Button
-        android:id="@+id/main_btn_open_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="openSettings"
-        android:text="Temperatur Monitor" />
+        android:gravity="bottom|right">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="bottom|right">
+                <Button
+                    android:id="@+id/main_btn_open_settings_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="openSettingsVolume"
+                    android:text="OSD Settings" />
+                <Button
+                    android:id="@+id/main_btn_open_settings_mqtt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="openSettingsMQTT"
+                    android:text="Temperatur Monitor" />
+            </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
 
 </androidx.leanback.widget.TitleView>

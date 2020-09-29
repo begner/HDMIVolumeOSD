@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.leanback.widget.TitleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".PopupActivitySettingsMQTT"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="@dimen/popup_width"
+        android:layout_height="wrap_content"
+        android:text="@string/volume_setting_headline" />
+
+    <LinearLayout
+        android:padding="@dimen/popup_layout_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/popup_field_margin_top">
+            <TextView
+                android:layout_width="@dimen/popup_field_label_width"
+                android:layout_height="wrap_content"
+                android:text="@string/volume_setting_label_position" />
+
+            <Spinner
+                android:id="@+id/settings_volume_position"
+                android:layout_width="@dimen/popup_field_input_width"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/popup_field_margin_top">
+            <TextView
+                android:layout_width="@dimen/popup_field_label_width"
+                android:layout_height="wrap_content"
+                android:text="@string/mqtt_setting_label_limit_to_hdmi" />
+            <Switch
+                android:id="@+id/settings_limit_on_hdmi"
+                android:layout_width="@dimen/popup_field_input_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:showText="true"
+                tools:checked="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/popup_field_margin_top">
+            <TextView
+                android:layout_width="@dimen/popup_field_label_width"
+                android:layout_height="wrap_content"
+                android:text="@string/volume_setting_label_duration" />
+            <EditText
+                android:id="@+id/settings_volume_duration"
+                android:layout_width="@dimen/popup_field_input_width"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="3"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="@dimen/popup_field_margin_top">
+
+            <Button
+                android:id="@+id/settings_btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="ActionCancel"
+                android:text="@string/mqtt_setting_button_cancel" />
+
+            <Button
+                android:id="@+id/settings_btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="ActionSave"
+                android:text="@string/mqtt_setting_button_save" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.leanback.widget.TitleView>
