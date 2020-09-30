@@ -70,8 +70,8 @@ class MainService : Service() {
     fun getAverageTemp(): Float {
         var avarageTemp : Float = 0f
         if (temperatures.isNotEmpty()) {
-            for ((k, v) in temperatures) {
-                avarageTemp += v
+            for (item in temperatures) {
+                avarageTemp += item.value
             }
             avarageTemp /= temperatures.size
         }

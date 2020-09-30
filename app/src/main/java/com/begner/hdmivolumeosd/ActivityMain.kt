@@ -41,12 +41,14 @@ class ActivityMain : Activity() {
         startForegroundService(mainServiceIntent)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun openSettingsMQTT(view: View) {
         val intent = Intent(this, PopupActivitySettingsMQTT::class.java)
         startActivityForResult(intent, REQUEST_CODE_SETTINGS_MQTT);
     }
 
-    fun openSettingsVolume(view: View) {
+    @Suppress("UNUSED_PARAMETER")
+    fun openSettingsOSD(view: View) {
         val intent = Intent(this, PopupActivitySettingsOSD::class.java)
         startActivityForResult(intent, REQUEST_CODE_SETTINGS_VOLUME);
     }

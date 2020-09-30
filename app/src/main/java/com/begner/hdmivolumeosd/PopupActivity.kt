@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 
-open class PopupActivity : Activity() {
+abstract class PopupActivity : Activity() {
 
     public fun setResultAndFinish(success: Boolean) {
         setResult(success)
@@ -22,9 +22,18 @@ open class PopupActivity : Activity() {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     public fun ActionCancel(view: View?) {
         setResultAndFinish(false)
     }
+
+    @Suppress("UNUSED_PARAMETER")
+    public fun ActionSave(view: View?) {
+        save()
+        setResultAndFinish(true)
+    }
+
+    abstract fun save()
 
     override fun onBackPressed() {
         setResultAndFinish(false)

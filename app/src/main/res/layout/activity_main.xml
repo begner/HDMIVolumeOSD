@@ -19,14 +19,14 @@
                     android:id="@+id/main_btn_open_settings_volume"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="openSettingsVolume"
-                    android:text="OSD Settings" />
+                    android:onClick="openSettingsOSD"
+                    android:text="@string/main_button_settings_osd" />
                 <Button
                     android:id="@+id/main_btn_open_settings_mqtt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="openSettingsMQTT"
-                    android:text="Temperatur Monitor" />
+                    android:text="@string/main_button_settings_mqtt" />
             </LinearLayout>
     </LinearLayout>
 

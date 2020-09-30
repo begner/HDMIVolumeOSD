@@ -40,7 +40,8 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
     fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
 
-        val settingsVolume = SettingsOSD(applicationContext)
+        val settingsOSD = SettingsOSD(applicationContext)
+        val padding = settingsOSD.getPadding()
 
         removePopup()
 
@@ -48,7 +49,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             is FrameLayout -> overlay
             else -> FrameLayout(service).apply {
 
-                this.setPadding(20, 20, 20, 20)
+                this.setPadding(padding, padding, padding, padding)
 
                 val params = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.MATCH_PARENT,
@@ -73,21 +74,21 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             var newWidth = ViewGroup.LayoutParams.WRAP_CONTENT
             var newHeight = ViewGroup.LayoutParams.WRAP_CONTENT
 
-            if (PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
+            if (PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).isHorizontal) {
                 newWidth = Math.round(
-                    metrics.widthPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
-                )
+                    metrics.widthPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
+                ) - padding * 2
             } else {
                 newHeight = Math.round(
-                    metrics.heightPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
-                )
+                    metrics.heightPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
+                ) - padding * 2
             }
 
             it.addView(mPopup, FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             ). apply {
-                gravity = PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).gravity
+                gravity = PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).gravity
                 width = newWidth
                 height = newHeight
             })
@@ -97,7 +98,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
         mHandler.postDelayed({
             removePopup(true)
-        }, (settingsVolume.getDuration() * 1000).toLong())
+        }, (settingsOSD.getDuration() * 1000).toLong())
     }
 
 

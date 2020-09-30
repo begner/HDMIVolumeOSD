@@ -18,7 +18,11 @@ class SettingsOSD(applicationContext: Context) : Settings() {
 
     fun getDuration(): Int {
         loadPreferences()
-        return getValueAsInt("Duration", 3)
+        var dur = getValueAsInt("Duration", 3)
+        if (dur < 0) {
+            dur = 0
+        }
+        return dur
     }
 
     fun getSize(): Int {
@@ -33,6 +37,15 @@ class SettingsOSD(applicationContext: Context) : Settings() {
         return size
     }
 
+    fun getPadding() : Int {
+        loadPreferences()
+        var padding = getValueAsInt("Padding", 20)
+        if (padding < 0) {
+            padding = 0
+        }
+        return padding
+    }
+
     fun getLimitOnHDMI() : Boolean {
         loadPreferences()
         return getValueAsBoolean("LimitOnHDMI", true)
@@ -42,6 +55,7 @@ class SettingsOSD(applicationContext: Context) : Settings() {
         position: String,
         duration: Int,
         size: Int,
+        padding: Int,
         limitOnHDMI: Boolean
     ) {
         loadPreferences()
@@ -49,6 +63,7 @@ class SettingsOSD(applicationContext: Context) : Settings() {
         editor.putString("Position", position)
         editor.putInt("Duration", duration)
         editor.putInt("Size", size)
+        editor.putInt("Padding", padding)
         editor.putBoolean("LimitOnHDMI", limitOnHDMI)
         editor.commit()
     }

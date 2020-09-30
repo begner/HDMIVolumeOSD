@@ -7,11 +7,12 @@ import android.widget.*
 
 class PopupActivitySettingsOSD : PopupActivity() {
 
-    lateinit var settingsVolumePosition: Spinner
-    lateinit var settingsVolumeDuration: EditText
-    lateinit var settingsVolumeSize: EditText
-    lateinit var settingsVolumeLimitOnHDMI: Switch
-
+    lateinit var Position: Spinner
+    lateinit var Duration: EditText
+    lateinit var Size: EditText
+    lateinit var LimitOnHDMI: Switch
+    lateinit var Padding: EditText
+    
     lateinit var settingsOSD: SettingsOSD
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,33 +20,36 @@ class PopupActivitySettingsOSD : PopupActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_volume)
 
-        settingsVolumePosition = findViewById<Spinner>(R.id.settings_volume_position);
-        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, PropertyOSDPositions().getLabelArray())
-        settingsVolumePosition.setAdapter(arrayAdapter);
-
-        settingsVolumeDuration = findViewById<EditText>(R.id.settings_volume_duration)
-        settingsVolumeSize = findViewById<EditText>(R.id.settings_volume_size)
-        settingsVolumeLimitOnHDMI = findViewById<Switch>(R.id.settings_limit_on_hdmi)
         settingsOSD = SettingsOSD(applicationContext)
 
+        Position = findViewById<Spinner>(R.id.settings_osd_position);
+        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, PropertyOSDPositions().getLabelArray())
+        Position.setAdapter(arrayAdapter);
+
+        Duration = findViewById<EditText>(R.id.settings_osd_duration)
+        Size = findViewById<EditText>(R.id.settings_osd_size)
+        Padding = findViewById<EditText>(R.id.settings_osd_padding)
+        LimitOnHDMI = findViewById<Switch>(R.id.settings_osd_limit_on_hdmi)
+        
         fill()
     }
 
     private fun fill() {
-        settingsVolumePosition.setSelection(PropertyOSDPositions().getIndexByKey(settingsOSD.getPosition()))
-        settingsVolumeDuration.setText(settingsOSD.getDuration().toString())
-        settingsVolumeSize.setText(settingsOSD.getSize().toString())
-        settingsVolumeLimitOnHDMI.setChecked(settingsOSD.getLimitOnHDMI())
+        Position.setSelection(PropertyOSDPositions().getIndexByKey(settingsOSD.getPosition()))
+        Duration.setText(settingsOSD.getDuration().toString())
+        Size.setText(settingsOSD.getSize().toString())
+        Padding.setText(settingsOSD.getPadding().toString())
+        LimitOnHDMI.setChecked(settingsOSD.getLimitOnHDMI())
     }
 
-    fun ActionSave(view: View?) {
+    override fun save() {
         settingsOSD.SaveSettings(
-            PropertyOSDPositions().getByIndex(settingsVolumePosition.selectedItemPosition).key,
-            settingsVolumeDuration.getText().toString().toInt(),
-            settingsVolumeSize.getText().toString().toInt(),
-            settingsVolumeLimitOnHDMI.isChecked()
+            PropertyOSDPositions().getByIndex(Position.selectedItemPosition).key,
+            Duration.getText().toString().toInt(),
+            Size.getText().toString().toInt(),
+            Padding.getText().toString().toInt(),
+            LimitOnHDMI.isChecked()
         )
-        setResultAndFinish(true)
     }
 
 

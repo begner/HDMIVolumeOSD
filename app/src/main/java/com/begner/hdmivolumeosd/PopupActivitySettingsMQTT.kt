@@ -6,14 +6,13 @@ import android.view.Window
 import android.widget.Switch
 import android.widget.TextView
 
-
 class PopupActivitySettingsMQTT : PopupActivity() {
 
-    lateinit var settingsMQTTActive: Switch
-    lateinit var settingsMQTTServer: TextView
-    lateinit var settingsMQTTTopic: TextView
-    lateinit var settingsMQTTUser: TextView
-    lateinit var settingsMQTTPassword: TextView
+    lateinit var Active: Switch
+    lateinit var Server: TextView
+    lateinit var Topic: TextView
+    lateinit var User: TextView
+    lateinit var Password: TextView
 
     lateinit var settingsMQTT: SettingsMQTT
 
@@ -22,34 +21,31 @@ class PopupActivitySettingsMQTT : PopupActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_mqtt)
 
-        settingsMQTTActive = findViewById(R.id.settings_mmqt_active);
-        settingsMQTTServer = findViewById(R.id.settings_mqtt_server);
-        settingsMQTTTopic = findViewById(R.id.settings_mqtt_topic);
-        settingsMQTTUser = findViewById(R.id.settings_mqtt_username);
-        settingsMQTTPassword = findViewById(R.id.settings_mqtt_password);
-
         settingsMQTT = SettingsMQTT(applicationContext)
+
+        Active = findViewById(R.id.settings_mmqt_active);
+        Server = findViewById(R.id.settings_mqtt_server);
+        Topic = findViewById(R.id.settings_mqtt_topic);
+        User = findViewById(R.id.settings_mqtt_username);
+        Password = findViewById(R.id.settings_mqtt_password);
 
         fill()
     }
 
     private fun fill() {
-        settingsMQTTActive.setChecked(settingsMQTT.getMQTTActive())
-        settingsMQTTServer.setText(settingsMQTT.getMQTTServer())
-        settingsMQTTTopic.setText(settingsMQTT.getMQTTTopic())
-        settingsMQTTUser.setText(settingsMQTT.getMQTTUser())
-        settingsMQTTPassword.setText(settingsMQTT.getMQTTPassword())
+        Active.setChecked(settingsMQTT.getMQTTActive())
+        Server.setText(settingsMQTT.getMQTTServer())
+        Topic.setText(settingsMQTT.getMQTTTopic())
+        User.setText(settingsMQTT.getMQTTUser())
+        Password.setText(settingsMQTT.getMQTTPassword())
     }
 
-    fun ActionSave(view: View?) {
+    override fun save() {
         settingsMQTT.SaveSettings(
-            settingsMQTTActive.isChecked(),
-            settingsMQTTServer.getText().toString(),
-            settingsMQTTTopic.getText().toString(),
-            settingsMQTTUser.getText().toString(),
-            settingsMQTTPassword.getText().toString())
-        setResultAndFinish(true)
+            Active.isChecked(),
+            Server.getText().toString(),
+            Topic.getText().toString(),
+            User.getText().toString(),
+            Password.getText().toString())
     }
-
-
 }
