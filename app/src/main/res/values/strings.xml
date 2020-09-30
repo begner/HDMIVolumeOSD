@@ -18,6 +18,7 @@ Example: /temperature/+</string>
     <string name="volume_setting_label_position">Position</string>
     <string name="volume_setting_label_duration">Duration</string>
     <string name="mqtt_setting_label_limit_to_hdmi">Only show on HDMI</string>
+    <string name="volume_setting_label_size">Size (in %)</string>
 
 
 </resources>

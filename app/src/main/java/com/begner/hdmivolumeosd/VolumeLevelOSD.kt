@@ -7,14 +7,12 @@ import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
 import android.provider.Settings
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
-import androidx.core.graphics.rotationMatrix
 import com.begner.hdmivolumeosd.MainService
-import com.begner.hdmivolumeosd.PropertyOSDPositions
 import com.begner.hdmivolumeosd.SettingsVolume
 import java.util.*
+
 
 class VolumeLevelOSD(s: MainService, c: Context) {
     private var settingsContentObserver: ContentObserver
@@ -44,12 +42,6 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
         removePopup()
 
-        val props = VolumeLevelOSDProps(
-            currentVolume,
-            maxVolume,
-            currentTemp
-        )
-
         mOverlay = when (val overlay = mOverlay) {
             is FrameLayout -> overlay
             else -> FrameLayout(service).apply {
@@ -68,18 +60,15 @@ class VolumeLevelOSD(s: MainService, c: Context) {
                 wm.addView(this, params)
             }
         }.also {
-
             // inflate the popup layout
-            mPopup = VolumeLevelOSDView.build(applicationContext, props)
+            mPopup = VolumeLevelOSDView.build(applicationContext, VolumeLevelOSDProps(
+                currentVolume,
+                maxVolume,
+                currentTemp
+            ))
+            it.addView(mPopup)
 
-            it.addView(mPopup, FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            ). apply {
-                gravity = PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).gravity
-            })
-
-
+            mPopup!!.afterDraw()
         }
 
         mHandler.postDelayed({

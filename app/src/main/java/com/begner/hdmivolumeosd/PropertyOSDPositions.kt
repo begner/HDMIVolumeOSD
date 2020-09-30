@@ -12,7 +12,9 @@ class PropertyOSDPositions() {
         PropertyOSDPosition("bottomLeft", "Bottom Left", Gravity.BOTTOM or Gravity.START),
         PropertyOSDPosition("bottomCenter", "Bottom Center", Gravity.BOTTOM or Gravity.CENTER),
         PropertyOSDPosition("bottomRight", "Bottom Right", Gravity.BOTTOM or Gravity.END),
-        PropertyOSDPosition("sideLeft","Left", Gravity.CENTER or Gravity.START, false)
+        PropertyOSDPosition("sideLeft","Left", Gravity.CENTER or Gravity.START, false),
+        PropertyOSDPosition("mid","Mid", Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL, false)
+
     )
 
     public fun getByIndex(index: Int) : PropertyOSDPosition {
