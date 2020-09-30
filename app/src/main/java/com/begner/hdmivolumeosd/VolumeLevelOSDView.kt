@@ -4,12 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.begner.hdmivolumeosd.PropertyOSDPositions
 import com.begner.hdmivolumeosd.R
 import com.begner.hdmivolumeosd.SettingsMQTT
@@ -37,22 +33,14 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
         }
 
 
-        val title = findViewById<TextView>(R.id.vosd_title)
+        val title = findViewById<TextView>(R.id.vosd_volume)
         title.text = mapVolume(props.curVolume).toString() // + "/" + mapVolume(props.maxVolume).toString()
 
-        val bar = findViewById<SeekBar>(R.id.vosd_bar)
+        val bar = findViewById<ProgressBar>(R.id.vosd_bar)
         bar.max = mapVolume(props.maxVolume)
         bar.progress = mapVolume(props.curVolume)
-/*
-        if (!PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
-            val barContainer = findViewById<FrameLayout>(R.id.vosd_bar_container)
 
-            var lp = bar.layoutParams
-            lp.height = 40
-            lp.width = 400
-            bar.setLayoutParams(lp)
-        }
-*/
+
         val temp = findViewById<TextView>(R.id.vosd_temp)
         if (settingsMQTT.getMQTTActive()) {
             val tempRounded = round(props.curTemp * 10).toFloat() / 10f
@@ -71,27 +59,9 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
         } else {
             speakerIcon.setImageResource(R.drawable.ic_icon_speaker_3)
         }
+
     }
 
-    open fun afterDraw() {
-        var settingsVolume = SettingsVolume(context)
-
-        val mainContainer = findViewById<LinearLayout>(R.id.vosd_main_container)
-        mainContainer.gravity = PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).gravity
-
-        val metrics = context.getResources().getDisplayMetrics()
-
-        val osdContainer = findViewById<ConstraintLayout>(R.id.vosd_osd_container)
-        val osdContainerLayoutParams = osdContainer.layoutParams
-
-
-        if (PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
-            osdContainerLayoutParams.width = round(metrics.widthPixels.toFloat() / 100f * settingsVolume.getSize().toFloat())
-        } else {
-            osdContainerLayoutParams.height = round(metrics.heightPixels.toFloat() / 100f * settingsVolume.getSize().toFloat())
-        }
-        osdContainer.layoutParams = osdContainerLayoutParams
-    }
 
     open fun destroy() {}
 

@@ -3,50 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/vosd_main_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vosd_osd_container"
         android:layout_width="40dp"
         android:layout_height="match_parent"
         >
 
-        <FrameLayout
-            android:id="@+id/vosd_bar_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <ProgressBar
+            android:id="@+id/vosd_bar"
+            style="@style/Widget.ProgressBar.Vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/vosd_temp"
+            android:indeterminate="false"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+
             android:paddingTop="45dp"
             android:paddingBottom="45dp"
+
             android:background="@drawable/layout_bg"
-            >
-
-            <SeekBar
-                android:id="@+id/vosd_bar"
-                style="@android:style/Widget.Material.SeekBar"
-                android:indeterminate="false"
-                android:layout_height="40dp"
-                android:layout_width="match_parent"
-                android:background="#44ff8800"
-                android:max="60"
-                android:progress="20"
-                android:progressTint="#FFFFFF"
-                android:shadowColor="#ff000000"
-                android:shadowDx="1.0"
-                android:shadowDy="1.0"
-                android:shadowRadius="5.0"
-                android:splitTrack="false"
-                android:thumbTint="#FFFFFF"
-                android:rotation="270"
-                />
-
-            </FrameLayout>
+            android:max="60"
+            android:progress="20"
+            />
 
         <ImageView
             android:id="@+id/vosd_icon_speaker"
@@ -54,7 +34,7 @@
             android:layout_height="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/vosd_bar_container"
+            app:layout_constraintTop_toTopOf="@id/vosd_bar"
             android:paddingTop="15dp"
 
             android:contentDescription="SpeakerIcon"
@@ -65,12 +45,12 @@
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/vosd_title"
+            android:id="@+id/vosd_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/vosd_bar_container"
+            app:layout_constraintBottom_toBottomOf="@id/vosd_bar"
             android:paddingBottom="15dp"
 
             android:gravity="center"
@@ -91,7 +71,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vosd_bar"
             app:layout_constraintBottom_toBottomOf="parent"
+
             android:layout_marginTop="32dp"
             android:paddingTop="30dp"
             android:paddingBottom="15dp"
@@ -110,29 +92,28 @@
             android:visibility="visible"
             />
 
-<!--
         <ImageView
-            android:id="@+id/vsod_icon_temp"
+            android:id="@+id/vosd_icon_temp"
             android:layout_width="0dp"
-            android:layout_height="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/vosd_temp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingStart="10dp"
+            android:layout_height="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vosd_temp"
+
+            android:paddingTop="10dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:contentDescription="Temperature"
             android:cropToPadding="true"
-            android:scaleType="fitStart"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_icon_temperature"
             android:tint="#FFFFFF"
             android:visibility="visible"
             tools:ignore="RtlSymmetry" />
--->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</LinearLayout>
 
 </merge>

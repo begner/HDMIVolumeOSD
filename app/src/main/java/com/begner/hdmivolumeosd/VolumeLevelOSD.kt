@@ -7,9 +7,15 @@ import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
 import android.provider.Settings
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.rotationMatrix
 import com.begner.hdmivolumeosd.MainService
+import com.begner.hdmivolumeosd.PropertyOSDPositions
+import com.begner.hdmivolumeosd.R
 import com.begner.hdmivolumeosd.SettingsVolume
 import java.util.*
 
@@ -46,7 +52,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             is FrameLayout -> overlay
             else -> FrameLayout(service).apply {
 
-                setPadding(20, 20, 20, 20)
+                this.setPadding(20, 20, 20, 20)
 
                 val params = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.MATCH_PARENT,
@@ -66,10 +72,32 @@ class VolumeLevelOSD(s: MainService, c: Context) {
                 maxVolume,
                 currentTemp
             ))
-            it.addView(mPopup)
+            val metrics = applicationContext.getResources().getDisplayMetrics()
 
-            mPopup!!.afterDraw()
+            var newWidth = ViewGroup.LayoutParams.WRAP_CONTENT
+            var newHeight = ViewGroup.LayoutParams.WRAP_CONTENT
+
+            if (PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
+                newWidth = Math.round(
+                    metrics.widthPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
+                )
+            } else {
+                newHeight = Math.round(
+                    metrics.heightPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
+                )
+            }
+
+            it.addView(mPopup, FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            ). apply {
+                gravity = PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).gravity
+                width = newWidth
+                height = newHeight
+            })
         }
+
+
 
         mHandler.postDelayed({
             removePopup(true)

@@ -3,20 +3,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/vosd_main_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vosd_osd_container"
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
-        <SeekBar
+        <ProgressBar
             android:id="@+id/vosd_bar"
-            style="@android:style/Widget.Material.SeekBar"
+            style="@style/Widget.ProgressBar.Horizontal"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/vosd_temp"
@@ -29,13 +24,6 @@
             android:indeterminate="false"
             android:max="60"
             android:progress="20"
-            android:progressTint="#FFFFFF"
-            android:shadowColor="#ff000000"
-            android:shadowDx="1.0"
-            android:shadowDy="1.0"
-            android:shadowRadius="5.0"
-            android:splitTrack="false"
-            android:thumbTint="#FFFFFF"
             />
 
         <ImageView
@@ -55,7 +43,7 @@
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/vosd_title"
+            android:id="@+id/vosd_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +91,7 @@
             />
 
         <ImageView
-            android:id="@+id/vsod_icon_temp"
+            android:id="@+id/vosd_icon_temp"
             android:layout_width="0dp"
             android:layout_height="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -123,7 +111,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </LinearLayout>
 
 </merge>

@@ -6,14 +6,20 @@ class PropertyOSDPositions() {
 
     private val availablePositions = listOf(
         PropertyOSDPosition("topLeft", "Top Left", Gravity.TOP or Gravity.START),
-        PropertyOSDPosition("topCenter", "Top Center", Gravity.TOP or Gravity.CENTER),
+        PropertyOSDPosition("topCenter", "Top", Gravity.TOP or Gravity.CENTER),
         PropertyOSDPosition("topRight","Top Right", Gravity.TOP or Gravity.END),
-        PropertyOSDPosition("sideRight","Right", Gravity.CENTER or Gravity.END, false),
+
+        PropertyOSDPosition("rightTop","Right Top", Gravity.TOP or Gravity.END, false),
+        PropertyOSDPosition("rightCenter","Right", Gravity.CENTER or Gravity.END, false),
+        PropertyOSDPosition("rightBottom","Right Bottom", Gravity.BOTTOM or Gravity.END, false),
+
         PropertyOSDPosition("bottomLeft", "Bottom Left", Gravity.BOTTOM or Gravity.START),
-        PropertyOSDPosition("bottomCenter", "Bottom Center", Gravity.BOTTOM or Gravity.CENTER),
+        PropertyOSDPosition("bottomCenter", "Bottom", Gravity.BOTTOM or Gravity.CENTER),
         PropertyOSDPosition("bottomRight", "Bottom Right", Gravity.BOTTOM or Gravity.END),
-        PropertyOSDPosition("sideLeft","Left", Gravity.CENTER or Gravity.START, false),
-        PropertyOSDPosition("mid","Mid", Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL, false)
+
+        PropertyOSDPosition("leftTop","Left Top", Gravity.TOP or Gravity.START, false),
+        PropertyOSDPosition("leftCenter","Left", Gravity.CENTER or Gravity.START, false),
+        PropertyOSDPosition("leftBottom","Left Bottom", Gravity.BOTTOM or Gravity.START, false)
 
     )
 
