@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 import com.begner.hdmivolumeosd.PropertyOSDPositions
 import com.begner.hdmivolumeosd.R
 import com.begner.hdmivolumeosd.SettingsMQTT
-import com.begner.hdmivolumeosd.SettingsVolume
+import com.begner.hdmivolumeosd.SettingsOSD
 import java.lang.Math.floor
 import java.lang.Math.round
 
@@ -24,7 +24,7 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
     open fun create() {
 
         val settingsMQTT = SettingsMQTT(context)
-        var settingsVolume = SettingsVolume(context)
+        var settingsVolume = SettingsOSD(context)
 
         if (PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
             inflate(context, R.layout.volume_osd_horizontal,this)

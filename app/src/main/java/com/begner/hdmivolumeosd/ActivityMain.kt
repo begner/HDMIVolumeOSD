@@ -47,7 +47,7 @@ class ActivityMain : Activity() {
     }
 
     fun openSettingsVolume(view: View) {
-        val intent = Intent(this, PopupActivitySettingsVolume::class.java)
+        val intent = Intent(this, PopupActivitySettingsOSD::class.java)
         startActivityForResult(intent, REQUEST_CODE_SETTINGS_VOLUME);
     }
 

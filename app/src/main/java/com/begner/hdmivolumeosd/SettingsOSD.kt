@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import java.time.Duration
 
-class SettingsVolume(applicationContext: Context) : Settings() {
+class SettingsOSD(applicationContext: Context) : Settings() {
 
     init {
         context = applicationContext

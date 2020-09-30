@@ -5,14 +5,14 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 
-class PopupActivitySettingsVolume : PopupActivity() {
+class PopupActivitySettingsOSD : PopupActivity() {
 
     lateinit var settingsVolumePosition: Spinner
     lateinit var settingsVolumeDuration: EditText
     lateinit var settingsVolumeSize: EditText
     lateinit var settingsVolumeLimitOnHDMI: Switch
 
-    lateinit var settingsVolume: SettingsVolume
+    lateinit var settingsOSD: SettingsOSD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -26,20 +26,20 @@ class PopupActivitySettingsVolume : PopupActivity() {
         settingsVolumeDuration = findViewById<EditText>(R.id.settings_volume_duration)
         settingsVolumeSize = findViewById<EditText>(R.id.settings_volume_size)
         settingsVolumeLimitOnHDMI = findViewById<Switch>(R.id.settings_limit_on_hdmi)
-        settingsVolume = SettingsVolume(applicationContext)
+        settingsOSD = SettingsOSD(applicationContext)
 
         fill()
     }
 
     private fun fill() {
-        settingsVolumePosition.setSelection(PropertyOSDPositions().getIndexByKey(settingsVolume.getPosition()))
-        settingsVolumeDuration.setText(settingsVolume.getDuration().toString())
-        settingsVolumeSize.setText(settingsVolume.getSize().toString())
-        settingsVolumeLimitOnHDMI.setChecked(settingsVolume.getLimitOnHDMI())
+        settingsVolumePosition.setSelection(PropertyOSDPositions().getIndexByKey(settingsOSD.getPosition()))
+        settingsVolumeDuration.setText(settingsOSD.getDuration().toString())
+        settingsVolumeSize.setText(settingsOSD.getSize().toString())
+        settingsVolumeLimitOnHDMI.setChecked(settingsOSD.getLimitOnHDMI())
     }
 
     fun ActionSave(view: View?) {
-        settingsVolume.SaveSettings(
+        settingsOSD.SaveSettings(
             PropertyOSDPositions().getByIndex(settingsVolumePosition.selectedItemPosition).key,
             settingsVolumeDuration.getText().toString().toInt(),
             settingsVolumeSize.getText().toString().toInt(),

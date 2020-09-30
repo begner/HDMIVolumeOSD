@@ -7,16 +7,12 @@ import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
 import android.provider.Settings
-import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.rotationMatrix
 import com.begner.hdmivolumeosd.MainService
 import com.begner.hdmivolumeosd.PropertyOSDPositions
-import com.begner.hdmivolumeosd.R
-import com.begner.hdmivolumeosd.SettingsVolume
+import com.begner.hdmivolumeosd.SettingsOSD
 import java.util.*
 
 
@@ -44,7 +40,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
     fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
 
-        val settingsVolume = SettingsVolume(applicationContext)
+        val settingsVolume = SettingsOSD(applicationContext)
 
         removePopup()
 
@@ -126,7 +122,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
         ContentObserver(handler) {
         var context: Context
         var service: VolumeLevelOSD
-        var settingsVolume: SettingsVolume
+        var settingsOSD: SettingsOSD
 
         override fun deliverSelfNotifications(): Boolean {
             return super.deliverSelfNotifications()
@@ -142,7 +138,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             val routeName = routeInfo.getName().toString()
             var routeMax = routeInfo.getVolumeMax()
 
-            if (routeName.equals("HDMI") || !settingsVolume.getLimitOnHDMI()) {
+            if (routeName.equals("HDMI") || !settingsOSD.getLimitOnHDMI()) {
                 // val message: String = "DirectVolume: " + currentVolume.toString() + "/" + routeMax.toString()
                 // val props = PopupProps(4,PopupProps.Position.BottomRight,"#88000000", message, 16f)
                 service.createOverlay(routeMax, currentVolume, service.service.getAverageTemp())
@@ -154,7 +150,7 @@ class VolumeLevelOSD(s: MainService, c: Context) {
         init {
             context = c
             service = s
-            settingsVolume = SettingsVolume(context)
+            settingsOSD = SettingsOSD(context)
         }
     }
 
