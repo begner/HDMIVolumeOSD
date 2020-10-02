@@ -3,11 +3,11 @@ package com.begner.hdmivolumeosd
 import android.content.Context
 import android.content.SharedPreferences
 
-class SettingsMQTT(applicationContext: Context) : Settings() {
+class SettingsTemperature(applicationContext: Context) : Settings() {
 
     init {
         context = applicationContext
-        preferenceId = "mqtt"
+        preferenceId = "SettingsTemperature"
     }
 
     fun getMQTTActive(): Boolean {
@@ -18,6 +18,15 @@ class SettingsMQTT(applicationContext: Context) : Settings() {
     fun getPosition(): String {
         loadPreferences()
         return getValueAsString("Position", "bottomRight")
+    }
+
+    fun getMaxTemp(): Int {
+        loadPreferences()
+        var size = getValueAsInt("MaxTemp", 75)
+        if (size < 1) {
+            size = 1
+        }
+        return size
     }
 
     fun getMQTTServer(): String? {
@@ -43,6 +52,7 @@ class SettingsMQTT(applicationContext: Context) : Settings() {
     fun SaveSettings(
         active: Boolean,
         position: String,
+        maxTemp: Int,
         server: String,
         topic: String,
         user: String,
@@ -52,6 +62,7 @@ class SettingsMQTT(applicationContext: Context) : Settings() {
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putBoolean("Active", active)
         editor.putString("Position", position)
+        editor.putInt("MaxTemp", maxTemp)
         editor.putString("Server", server)
         editor.putString("Topic", topic)
         editor.putString("User", user)

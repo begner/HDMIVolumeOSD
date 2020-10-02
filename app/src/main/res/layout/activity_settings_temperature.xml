@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.leanback.widget.TitleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".PopupActivitySettingsTemperature">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="@dimen/popup_width"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/popup_layout_padding"
+            android:paddingTop="@dimen/popup_layout_padding"
+            android:text="@string/settings_temperature_popup_headline"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/popup_layout_padding">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="350dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/popup_layout_padding">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_temperature_label_active"
+                            android:labelFor="@id/active"/>
+                        <Switch
+                            android:id="@+id/active"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:showText="true"
+                            tools:checked="false" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/position"
+                            android:text="@string/settings_temperature_label_position"
+                            />
+                        <Spinner
+                            android:id="@+id/position"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/max_temp"
+                            android:text="@string/settings_temperature_label_max_temp" />
+                        <EditText
+                            android:id="@+id/max_temp"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text=""
+                            android:theme="@style/AppTheme" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/server"
+                            android:text="@string/settings_temperature_label_host" />
+                        <EditText
+                            android:id="@+id/server"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content"
+                            android:inputType="textUri"
+                            android:text=""
+                            android:theme="@style/AppTheme" />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/popup_field_label_width"
+                        android:text="@string/settings_temperature_description_host"
+                        android:textSize="@dimen/popup_description_text_size" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/topic"
+                            android:text="@string/settings_temperature_label_topic" />
+                        <EditText
+                            android:id="@+id/topic"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:text="" />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/popup_field_label_width"
+                        android:text="@string/settings_temperature_description_topic"
+                        android:textSize="@dimen/popup_description_text_size" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/username"
+                            android:text="@string/settings_temperature_label_username" />
+                        <EditText
+                            android:id="@+id/username"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:text="" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/password"
+                            android:text="@string/settings_temperature_label_password" />
+                        <EditText
+                            android:id="@+id/password"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:text="" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <include layout="@layout/include_settings_buttons" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.leanback.widget.TitleView>

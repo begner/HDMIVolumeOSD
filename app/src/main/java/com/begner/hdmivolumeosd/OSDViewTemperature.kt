@@ -5,28 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_settings_mqtt.view.*
 import java.lang.Math.round
 
-class TemperatureOSDView(applicationContext: Context, view: FrameLayout) {
+class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
 
     lateinit var context: Context
     lateinit var osdView: FrameLayout
-    lateinit var settings  : SettingsMQTT
+    lateinit var settings  : SettingsTemperature
     lateinit var osdPosition : OSDPosition
 
     init {
         context = applicationContext
         osdView = view
-        settings = SettingsMQTT(context)
+        settings = SettingsTemperature(context)
         osdPosition = OSDPositionsTemperature().getPositionByKey(settings.getPosition())
     }
 
-    open fun addView(currentTemperature: Float, maxTemperature: Int):TemperatureOSDView {
+    open fun addView(currentTemperature: Float):OSDViewTemperature {
 
-        val view : View = LayoutInflater.from(context).inflate(R.layout.temperature_osd, null);
-
-        val settingsMQTT = SettingsMQTT(context)
+        val view : View = LayoutInflater.from(context).inflate(osdPosition.layoutID, null);
+        val settingsMQTT = SettingsTemperature(context)
 
         val temp = view.findViewById<TextView>(R.id.vosd_temp)
         if (settingsMQTT.getMQTTActive()) {
@@ -37,11 +35,13 @@ class TemperatureOSDView(applicationContext: Context, view: FrameLayout) {
         }
 
         val bar = view.findViewById<ProgressBar>(R.id.vosd_bar)
-        bar.max = maxTemperature
+        bar.max = settingsMQTT.getMaxTemp()
         bar.progress = currentTemperature.toInt()
 
         val barContainer = view.findViewById<FrameLayout>(R.id.vosd_bar_container)
-        barContainer.rotation = osdPosition.dimmerRotation
+        barContainer.rotation = osdPosition.layoutRotation
+        barContainer.rotationX = osdPosition.layoutRotationX
+        barContainer.rotationY = osdPosition.layoutRotationY
 
         osdView.addView(view, FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -52,22 +52,21 @@ class TemperatureOSDView(applicationContext: Context, view: FrameLayout) {
             gravity = osdPosition.gravity
         })
 
-
         return this
     }
 
-    fun addBackground():TemperatureOSDView {
+    fun addBackground():OSDViewTemperature {
         var backgroundWidth = 0
         var backgroundHeight = 0
         val backgroundView = ImageView(context).apply {
-            setImageResource(R.drawable.layout_dimmer_circular)
+            setImageResource(osdPosition.backgroundID)
             backgroundWidth = 250
             backgroundHeight = 250
 
             // set the ImageView bounds to match the Drawable's dimensions
             adjustViewBounds = true
         }
-        backgroundView.rotation = osdPosition.dimmerRotation
+        backgroundView.rotation = osdPosition.backgroundRotation
 
         osdView.addView(
             backgroundView, FrameLayout.LayoutParams(

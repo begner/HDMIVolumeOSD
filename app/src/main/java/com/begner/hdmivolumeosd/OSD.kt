@@ -7,10 +7,8 @@ import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
 import android.provider.Settings
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.ImageView
 import java.util.*
 
 
@@ -62,20 +60,19 @@ class OSD(s: MainService, c: Context) {
                 wm.addView(this, params)
             }
         }.also {
-            VolumeLevelOSDView(applicationContext, it)
+            OSDViewVolume(applicationContext, it)
                 .addBackground()
                 .addView(currentVolume, maxVolume)
 
-            TemperatureOSDView(applicationContext, it)
+            OSDViewTemperature(applicationContext, it)
                 .addBackground()
-                .addView(service.getAverageTemp(), 70)
-
+                .addView(service.getAverageTemp())
         }
 
-        val settingsOSD = SettingsOSD(applicationContext)
+        val settingsGlobal = SettingsGlobal(applicationContext)
         mHandler.postDelayed({
             removePopup(true)
-        }, (settingsOSD.getDuration() * 1000).toLong())
+        }, (settingsGlobal.getDuration() * 1000).toLong())
     }
 
 
@@ -96,7 +93,7 @@ class OSD(s: MainService, c: Context) {
         ContentObserver(handler) {
         var context: Context
         var service: OSD
-        var settingsOSD: SettingsOSD
+        var settingsVolume: SettingsVolume
 
         override fun deliverSelfNotifications(): Boolean {
             return super.deliverSelfNotifications()
@@ -112,7 +109,7 @@ class OSD(s: MainService, c: Context) {
             val routeName = routeInfo.getName().toString()
             var routeMax = routeInfo.getVolumeMax()
 
-            if (routeName.equals("HDMI") || !settingsOSD.getLimitOnHDMI()) {
+            if (routeName.equals("HDMI") || !settingsVolume.getLimitOnHDMI()) {
                 // val message: String = "DirectVolume: " + currentVolume.toString() + "/" + routeMax.toString()
                 // val props = PopupProps(4,PopupProps.Position.BottomRight,"#88000000", message, 16f)
                 service.createOverlay(routeMax, currentVolume, service.service.getAverageTemp())
@@ -124,7 +121,7 @@ class OSD(s: MainService, c: Context) {
         init {
             context = c
             service = s
-            settingsOSD = SettingsOSD(context)
+            settingsVolume = SettingsVolume(context)
         }
     }
 

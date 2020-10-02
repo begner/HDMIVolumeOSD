@@ -4,30 +4,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import java.time.Duration
 
-class SettingsOSD(applicationContext: Context) : Settings() {
+class SettingsVolume(applicationContext: Context) : Settings() {
 
     init {
         context = applicationContext
-        preferenceId = "volume"
+        preferenceId = "SettingsVolume"
     }
 
     fun getPosition(): String {
         loadPreferences()
-        return getValueAsString("Position", "topRight")
-    }
-
-    fun getDuration(): Int {
-        loadPreferences()
-        var dur = getValueAsInt("Duration", 3)
-        if (dur < 0) {
-            dur = 0
-        }
-        return dur
+        return getValueAsString("Position", "leftCenter")
     }
 
     fun getSize(): Int {
         loadPreferences()
-        var size = getValueAsInt("Size", 80)
+        var size = getValueAsInt("Size", 60)
         if (size < 1) {
             size = 1
         }
@@ -39,7 +30,7 @@ class SettingsOSD(applicationContext: Context) : Settings() {
 
     fun getPadding() : Int {
         loadPreferences()
-        var padding = getValueAsInt("Padding", 20)
+        var padding = getValueAsInt("Padding", 5)
         if (padding < 0) {
             padding = 0
         }
@@ -53,7 +44,6 @@ class SettingsOSD(applicationContext: Context) : Settings() {
 
     fun SaveSettings(
         position: String,
-        duration: Int,
         size: Int,
         padding: Int,
         limitOnHDMI: Boolean
@@ -61,7 +51,6 @@ class SettingsOSD(applicationContext: Context) : Settings() {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putString("Position", position)
-        editor.putInt("Duration", duration)
         editor.putInt("Size", size)
         editor.putInt("Padding", padding)
         editor.putBoolean("LimitOnHDMI", limitOnHDMI)

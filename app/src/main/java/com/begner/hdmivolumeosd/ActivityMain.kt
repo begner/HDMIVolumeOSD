@@ -14,7 +14,6 @@
 
 package com.begner.hdmivolumeosd
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -22,15 +21,15 @@ import android.provider.Settings.canDrawOverlays
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.begner.hdmivolumeosd.BuildConfig;
 
 
 class ActivityMain : Activity() {
 
     lateinit var mainServiceIntent: Intent
 
-    val REQUEST_CODE_SETTINGS_MQTT = 1
+    val REQUEST_CODE_SETTINGS_GLOBAL = 1
     val REQUEST_CODE_SETTINGS_VOLUME = 2
+    val REQUEST_CODE_SETTINGS_TEMPERATURE = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,22 +48,30 @@ class ActivityMain : Activity() {
         startForegroundService(mainServiceIntent)
     }
 
+
     @Suppress("UNUSED_PARAMETER")
-    fun openSettingsMQTT(view: View) {
-        val intent = Intent(this, PopupActivitySettingsMQTT::class.java)
-        startActivityForResult(intent, REQUEST_CODE_SETTINGS_MQTT);
+    fun openSettingsGlobal(view: View) {
+        val intent = Intent(this, PopupActivitySettingsGlobal::class.java)
+        startActivityForResult(intent, REQUEST_CODE_SETTINGS_GLOBAL);
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun openSettingsOSD(view: View) {
-        val intent = Intent(this, PopupActivitySettingsOSD::class.java)
+    fun openSettingsVolume(view: View) {
+        val intent = Intent(this, PopupActivitySettingsVolume::class.java)
         startActivityForResult(intent, REQUEST_CODE_SETTINGS_VOLUME);
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun openSettingsTemperature(view: View) {
+        val intent = Intent(this, PopupActivitySettingsTemperature::class.java)
+        startActivityForResult(intent, REQUEST_CODE_SETTINGS_TEMPERATURE);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SETTINGS_MQTT ||
-            requestCode == REQUEST_CODE_SETTINGS_VOLUME) {
+        if (requestCode == REQUEST_CODE_SETTINGS_GLOBAL ||
+            requestCode == REQUEST_CODE_SETTINGS_VOLUME ||
+            requestCode == REQUEST_CODE_SETTINGS_TEMPERATURE) {
             if (resultCode == RESULT_OK) {
                 stopService(mainServiceIntent)
                 startForegroundService(mainServiceIntent)

@@ -18,8 +18,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="100dp"
-            android:layout_height="100dp">
-
+            android:layout_height="100dp"
+            android:rotation="0"
+            android:rotationX="180"
+            android:rotationY="0">
         <ProgressBar
             android:id="@+id/vosd_bar"
             style="@style/Widget.ProgressBar.Circular"

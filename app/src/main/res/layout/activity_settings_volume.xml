@@ -3,149 +3,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".PopupActivitySettingsMQTT"
     android:orientation="vertical"
-    >
+    tools:context=".PopupActivitySettingsTemperature">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="@dimen/popup_width"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_osd_popup_headline"
-        android:textSize="20sp"
-        android:paddingHorizontal="@dimen/popup_layout_padding"
-        android:paddingTop="@dimen/popup_layout_padding"
-        />
-
-    <View style="@style/Divider"/>
-
-    <LinearLayout
-        android:padding="@dimen/popup_layout_padding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        <TextView
+            android:layout_width="@dimen/popup_width"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/popup_layout_padding"
+            android:paddingTop="@dimen/popup_layout_padding"
+            android:text="@string/settings_volume_popup_headline"
+            android:textSize="20sp" />
+        <View style="@style/Divider" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/popup_field_margin_top">
-            <TextView
-                android:layout_width="@dimen/popup_field_label_width"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_position"
-                android:labelFor="@id/settings_osd_position"/>
+            android:orientation="vertical"
+            android:padding="@dimen/popup_layout_padding">
 
-            <Spinner
-                android:id="@+id/settings_osd_position"
-                android:layout_width="@dimen/popup_field_input_width"
-                android:layout_height="wrap_content"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/popup_field_margin_top">
-            <TextView
-                android:layout_width="@dimen/popup_field_label_width"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_size"
-                android:labelFor="@id/settings_osd_size"/>
-            <EditText
-                android:id="@+id/settings_osd_size"
-                android:layout_width="@dimen/popup_field_input_width"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/popup_field_margin_top">
-            <TextView
-                android:layout_width="@dimen/popup_field_label_width"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_padding"
-                android:labelFor="@id/settings_osd_padding"/>
-            <EditText
-                android:id="@+id/settings_osd_padding"
-                android:layout_width="@dimen/popup_field_input_width"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/popup_field_margin_top">
-            <TextView
-                android:layout_width="@dimen/popup_field_label_width"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_limit_to_hdmi"
-                android:labelFor="@id/settings_osd_limit_on_hdmi"/>
-            <Switch
-                android:id="@+id/settings_osd_limit_on_hdmi"
-                android:layout_width="@dimen/popup_field_input_width"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:showText="true"
-                tools:checked="false" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/popup_field_margin_top">
-            <TextView
-                android:layout_width="@dimen/popup_field_label_width"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_duration"
-                android:labelFor="@id/settings_osd_duration"/>
-            <EditText
-                android:id="@+id/settings_osd_duration"
-                android:layout_width="@dimen/popup_field_input_width"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="@dimen/popup_field_margin_top">
-
-            <Button
-                android:id="@+id/settings_btn_cancel"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="ActionCancel"
-                android:text="@string/settings_button_cancel"
-                />
+                android:layout_marginTop="@dimen/popup_field_margin_top"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/popup_field_label_width"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/position"
+                    android:text="@string/settings_volume_label_position" />
+                <Spinner
+                    android:id="@+id/position"
+                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/settings_btn_save"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="ActionSave"
-                android:text="@string/settings_button_save"
-                />
-        </LinearLayout>
+                android:layout_marginTop="@dimen/popup_field_margin_top"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/popup_field_label_width"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/size"
+                    android:text="@string/settings_volume_label_size" />
+                <EditText
+                    android:id="@+id/size"
+                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/popup_field_margin_top"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/popup_field_label_width"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/padding"
+                    android:text="@string/settings_volume_label_padding" />
+                <EditText
+                    android:id="@+id/padding"
+                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/popup_field_margin_top"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/popup_field_label_width"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/limit_on_hdmi"
+                    android:text="@string/settings_volume_label_limit_to_hdmi" />
+                <Switch
+                    android:id="@+id/limit_on_hdmi"
+                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:showText="true"
+                    tools:checked="false" />
+            </LinearLayout>
+
+            <include layout="@layout/include_settings_buttons" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.leanback.widget.TitleView>

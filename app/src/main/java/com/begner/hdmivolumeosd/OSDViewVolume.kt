@@ -2,7 +2,6 @@ package com.begner.hdmivolumeosd
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -10,34 +9,29 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import java.lang.Math.floor
 
-class VolumeLevelOSDView(applicationContext: Context, view: FrameLayout) {
+class OSDViewVolume(applicationContext: Context, view: FrameLayout) {
 
     lateinit var context: Context
     lateinit var osdView: FrameLayout
-    lateinit var settingsOSD  : SettingsOSD
+    lateinit var settingsVolume  : SettingsVolume
     lateinit var osdPosition : OSDPosition
 
     init {
         context = applicationContext
         osdView = view
-        settingsOSD = SettingsOSD(context)
-        osdPosition = OSDPositionsVolume().getPositionByKey(settingsOSD.getPosition())
+        settingsVolume = SettingsVolume(context)
+        osdPosition = OSDPositionsVolume().getPositionByKey(settingsVolume.getPosition())
     }
 
-    open fun addView(curVolume: Int, maxVolume: Int):VolumeLevelOSDView {
+    open fun addView(curVolume: Int, maxVolume: Int):OSDViewVolume {
 
-        val view : View
-        if (osdPosition.isHorizontal) {
-            view = LayoutInflater.from(context).inflate(R.layout.volume_osd_horizontal, null);
-        } else {
-            view = LayoutInflater.from(context).inflate(R.layout.volume_osd_vertical, null);
-        }
+        val view = LayoutInflater.from(context).inflate(osdPosition.layoutID, null);
 
         view.setPadding(
-            settingsOSD.getPadding(),
-            settingsOSD.getPadding(),
-            settingsOSD.getPadding(),
-            settingsOSD.getPadding()
+            settingsVolume.getPadding(),
+            settingsVolume.getPadding(),
+            settingsVolume.getPadding(),
+            settingsVolume.getPadding()
         )
 
         val title = view.findViewById<TextView>(R.id.vosd_volume)
@@ -67,11 +61,11 @@ class VolumeLevelOSDView(applicationContext: Context, view: FrameLayout) {
 
         if (osdPosition.isHorizontal) {
             newWidth = Math.round(
-                metrics.widthPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
+                metrics.widthPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
             )
         } else {
             newHeight = Math.round(
-                metrics.heightPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
+                metrics.heightPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
             )
         }
 
@@ -86,27 +80,22 @@ class VolumeLevelOSDView(applicationContext: Context, view: FrameLayout) {
         return this
     }
 
-
-
-    fun addBackground():VolumeLevelOSDView {
-        var backgroundWidth = 0
-        var backgroundHeight = 0
+    fun addBackground():OSDViewVolume {
+        var backgroundWidth = ViewGroup.LayoutParams.MATCH_PARENT
+        var backgroundHeight = ViewGroup.LayoutParams.MATCH_PARENT
         val backgroundView = ImageView(context).apply {
+            setImageResource(osdPosition.backgroundID)
             if (osdPosition.isHorizontal) {
-                setImageResource(R.drawable.layout_dimmer_horizontal)
-                backgroundWidth = ViewGroup.LayoutParams.MATCH_PARENT
-                backgroundHeight = 120 + settingsOSD.getPadding()
+                backgroundHeight = 120 + settingsVolume.getPadding()
             }
             else {
-                setImageResource(R.drawable.layout_dimmer_vertical)
-                backgroundWidth = 120 + settingsOSD.getPadding()
-                backgroundHeight = ViewGroup.LayoutParams.MATCH_PARENT
+                backgroundWidth = 120 + settingsVolume.getPadding()
             }
 
             // set the ImageView bounds to match the Drawable's dimensions
             adjustViewBounds = true
         }
-        backgroundView.rotation = osdPosition.dimmerRotation
+        backgroundView.rotation = osdPosition.backgroundRotation
 
         osdView.addView(
             backgroundView, FrameLayout.LayoutParams(

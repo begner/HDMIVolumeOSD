@@ -1,0 +1,25 @@
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <LinearLayout
+        android:gravity="end"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/popup_field_margin_top"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/settings_btn_cancel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:onClick="ActionCancel"
+            android:text="@string/settings_button_cancel" />
+
+        <Button
+            android:id="@+id/settings_btn_save"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:onClick="ActionSave"
+            android:text="@string/settings_button_save" />
+    </LinearLayout>
+</merge>

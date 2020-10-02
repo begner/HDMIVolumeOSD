@@ -1,27 +1,30 @@
 <resources>
     <string name="app_name">HDMIVolumeOSD</string>
 
-    <string name="settings_mqtt_popup_headline">Temperatur Monitor (MQTT)</string>
-    <string name="settings_mqtt_label_active">Active</string>
-    <string name="settings_mqtt_label_position">Position</string>
-    <string name="settings_mqtt_label_host">Host</string>
-    <string name="settings_mqtt_description_host">Protocol, host and port of the MQTT Server.\nExample: tcp://192.168.1.13:1883</string>
-    <string name="settings_mqtt_label_topic">Topic</string>
-    <string name="settings_mqtt_description_topic">MQTT Topic, which results in one or many values (float)\nExample: TopicFoo/Bar/+</string>
-    <string name="settings_mqtt_label_username">Username</string>
-    <string name="settings_mqtt_label_password">Password</string>
+    <string name="settings_global_popup_headline">Global Settings</string>
+    <string name="settings_global_label_duration">Duration</string>
 
-    <string name="settings_osd_popup_headline">OSD Settings</string>
-    <string name="settings_osd_label_position">Position</string>
-    <string name="settings_osd_label_duration">Duration</string>
-    <string name="settings_osd_label_limit_to_hdmi">Only show on HDMI</string>
-    <string name="settings_osd_label_size">Size (in %)</string>
-    <string name="settings_osd_label_padding">Padding</string>
+    <string name="settings_temperature_popup_headline">Temperatur Monitor (MQTT)</string>
+    <string name="settings_temperature_label_active">Active</string>
+    <string name="settings_temperature_label_max_temp">Max. Temperature</string>
+    <string name="settings_temperature_label_position">Position</string>
+    <string name="settings_temperature_label_host">Host</string>
+    <string name="settings_temperature_description_host">Protocol, host and port of the MQTT Server.\nExample: tcp://192.168.1.13:1883</string>
+    <string name="settings_temperature_label_topic">Topic</string>
+    <string name="settings_temperature_description_topic">MQTT Topic, which results in one or many values (float)\nExample: TopicFoo/Bar/+</string>
+    <string name="settings_temperature_label_username">Username</string>
+    <string name="settings_temperature_label_password">Password</string>
 
+    <string name="settings_volume_popup_headline">OSD Settings</string>
+    <string name="settings_volume_label_position">Position</string>
+    <string name="settings_volume_label_limit_to_hdmi">Only show on HDMI</string>
+    <string name="settings_volume_label_size">Size (in %)</string>
+    <string name="settings_volume_label_padding">Padding</string>
 
 
     <string name="settings_button_save">Save</string>
     <string name="settings_button_cancel">Cancel</string>
+
 
     <string name="main_headline">HDMI Volume OSD</string>
     <string name="main_version_tag">Version: v%1$s\nBuild: %2$d</string>
@@ -32,4 +35,5 @@
 
     <string name="main_button_settings_osd">OSD Settings</string>
     <string name="main_button_settings_mqtt">Temperatur Monitor</string>
+    <string name="main_button_settings_global">Global</string>
 </resources>

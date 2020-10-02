@@ -112,16 +112,22 @@
                 android:orientation="vertical"
                 android:gravity="bottom|right">
                 <Button
+                    android:id="@+id/main_btn_open_settings_global"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="openSettingsGlobal"
+                    android:text="@string/main_button_settings_global" />
+                <Button
                     android:id="@+id/main_btn_open_settings_volume"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="openSettingsOSD"
+                    android:onClick="openSettingsVolume"
                     android:text="@string/main_button_settings_osd" />
                 <Button
                     android:id="@+id/main_btn_open_settings_mqtt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="openSettingsMQTT"
+                    android:onClick="openSettingsTemperature"
                     android:text="@string/main_button_settings_mqtt" />
             </LinearLayout>
         </LinearLayout>

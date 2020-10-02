@@ -4,11 +4,8 @@
     package="com.begner.hdmivolumeosd">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -62,12 +59,17 @@
         </activity>
 
         <activity
-            android:name=".PopupActivitySettingsMQTT"
+            android:name=".PopupActivitySettingsGlobal"
             android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
 
         <activity
-            android:name=".PopupActivitySettingsOSD"
+            android:name=".PopupActivitySettingsVolume"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+
+        <activity
+            android:name=".PopupActivitySettingsTemperature"
             android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
     </application>
