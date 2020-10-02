@@ -4,11 +4,9 @@
     <string name="settings_mqtt_popup_headline">Temperatur Monitor (MQTT)</string>
     <string name="settings_mqtt_label_active">Active</string>
     <string name="settings_mqtt_label_host">Host</string>
-    <string name="settings_mqtt_description_host">Protocol, host and port of the MQTT Server.
-Example: tcp://192.168.1.13:1883</string>
+    <string name="settings_mqtt_description_host">Protocol, host and port of the MQTT Server.\nExample: tcp://192.168.1.13:1883</string>
     <string name="settings_mqtt_label_topic">Topic</string>
-    <string name="settings_mqtt_description_topic">MQTT Topic, which results in one or many values (float)
-Example: /temperature/+</string>
+    <string name="settings_mqtt_description_topic">MQTT Topic, which results in one or many values (float)\nExample: TopicFoo/Bar/+</string>
     <string name="settings_mqtt_label_username">Username</string>
     <string name="settings_mqtt_label_password">Password</string>
 
@@ -19,8 +17,18 @@ Example: /temperature/+</string>
     <string name="settings_osd_label_size">Size (in %)</string>
     <string name="settings_osd_label_padding">Padding</string>
 
+
+
     <string name="settings_button_save">Save</string>
     <string name="settings_button_cancel">Cancel</string>
+
+    <string name="main_headline">HDMI Volume OSD</string>
+    <string name="main_version_tag">Version: v%1$s\nBuild: %2$d</string>
+    <string name="main_sub_headline">For Philips Android 9 TVs</string>
+    <string name="main_permisson_hint_headline">Permission not set</string>
+    <string name="main_permisson_hint_description">You need to grant permission to "display overlays" to this app.</string>
+    <string name="main_permisson_hint_how_to">Open Settings\n-> Android Settings\n-> Device Settings\n-> Storage\n-> Internal shared storage\n-> Apps\n-> Special app Access\n-> Display over other apps\n\nSet the switch next to this App to on and open this app again.</string>
+
     <string name="main_button_settings_osd">OSD Settings</string>
     <string name="main_button_settings_mqtt">Temperatur Monitor</string>
 </resources>

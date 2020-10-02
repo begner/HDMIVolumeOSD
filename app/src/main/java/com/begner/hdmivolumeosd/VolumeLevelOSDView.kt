@@ -24,14 +24,16 @@ sealed class VolumeLevelOSDView(context: Context, val props: VolumeLevelOSDProps
     open fun create() {
 
         val settingsMQTT = SettingsMQTT(context)
-        var settingsVolume = SettingsOSD(context)
+        var settingsOSD = SettingsOSD(context)
 
-        if (PropertyOSDPositions().getPositionByKey(settingsVolume.getPosition()).isHorizontal) {
+        if (PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).isHorizontal) {
             inflate(context, R.layout.volume_osd_horizontal,this)
         } else {
             inflate(context, R.layout.volume_osd_vertical,this)
         }
 
+        val padding = settingsOSD.getPadding()
+        this.setPadding(padding, padding, padding, padding)
 
         val title = findViewById<TextView>(R.id.vosd_volume)
         title.text = mapVolume(props.curVolume).toString() // + "/" + mapVolume(props.maxVolume).toString()

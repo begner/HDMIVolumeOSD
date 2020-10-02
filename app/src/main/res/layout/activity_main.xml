@@ -5,11 +5,107 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Settings Pane -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|right">
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/main_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/main_headline"
+            android:textSize="50sp"
+            android:textColor="#ff8800"
+            android:textFontWeight="300"
+            />
+        <TextView
+            android:id="@+id/main_sub_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_headline"
+            android:text="@string/main_sub_headline"
+            android:textSize="30sp"
+            android:textColor="#ff8800"
+            android:textFontWeight="300"
+            />
+
+        <TextView
+            android:id="@+id/main_build_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAlignment="textEnd"
+            android:textColor="#44ffffff"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/main_permission_required"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_icon_warning"
+                        android:scaleType="fitStart"
+                        android:padding="5dp"
+                        android:tint="#FF8800" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_permisson_hint_headline"
+                    android:textSize="30sp"
+                    android:textColor="#ff8800"
+                    android:textFontWeight="600"
+                    />
+            </LinearLayout>
+
+            <View style="@style/Divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_permisson_hint_description"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_permisson_hint_how_to"
+                android:paddingTop="10dp"
+                />
+
+        </LinearLayout>
+
+
+        <!-- Settings Pane -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            >
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,6 +124,10 @@
                     android:onClick="openSettingsMQTT"
                     android:text="@string/main_button_settings_mqtt" />
             </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.leanback.widget.TitleView>

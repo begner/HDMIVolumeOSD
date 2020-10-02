@@ -14,11 +14,15 @@
 
 package com.begner.hdmivolumeosd
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings.canDrawOverlays
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.begner.hdmivolumeosd.BuildConfig;
 
 
 class ActivityMain : Activity() {
@@ -33,9 +37,13 @@ class ActivityMain : Activity() {
 
         setContentView(R.layout.activity_main)
 
-        if (!canDrawOverlays(applicationContext)) {
-            // TODO: display message to adjust app settings
+        val permissionRequired = findViewById<LinearLayout>(R.id.main_permission_required)
+        if (canDrawOverlays(applicationContext)) {
+            permissionRequired.visibility = LinearLayout.GONE
         }
+
+        val buildVersion = findViewById<TextView>(R.id.main_build_version)
+        buildVersion.text = getString(R.string.main_version_tag, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
 
         mainServiceIntent = Intent(this, MainService::class.java)
         startForegroundService(mainServiceIntent)

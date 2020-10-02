@@ -23,7 +23,6 @@
             android:paddingTop="45dp"
             android:paddingBottom="45dp"
 
-            android:background="@drawable/layout_bg"
             android:max="60"
             android:progress="20"
             />

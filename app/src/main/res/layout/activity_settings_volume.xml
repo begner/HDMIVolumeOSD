@@ -7,10 +7,22 @@
     android:orientation="vertical"
     >
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
     <TextView
         android:layout_width="@dimen/popup_width"
         android:layout_height="wrap_content"
-        android:text="@string/settings_osd_popup_headline" />
+        android:text="@string/settings_osd_popup_headline"
+        android:textSize="20sp"
+        android:paddingHorizontal="@dimen/popup_layout_padding"
+        android:paddingTop="@dimen/popup_layout_padding"
+        />
+
+    <View style="@style/Divider"/>
 
     <LinearLayout
         android:padding="@dimen/popup_layout_padding"
@@ -27,7 +39,8 @@
             <TextView
                 android:layout_width="@dimen/popup_field_label_width"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_position" />
+                android:text="@string/settings_osd_label_position"
+                android:labelFor="@id/settings_osd_position"/>
 
             <Spinner
                 android:id="@+id/settings_osd_position"
@@ -44,13 +57,13 @@
             <TextView
                 android:layout_width="@dimen/popup_field_label_width"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_size" />
+                android:text="@string/settings_osd_label_size"
+                android:labelFor="@id/settings_osd_size"/>
             <EditText
                 android:id="@+id/settings_osd_size"
                 android:layout_width="@dimen/popup_field_input_width"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="3"
                 />
         </LinearLayout>
         <LinearLayout
@@ -61,13 +74,13 @@
             <TextView
                 android:layout_width="@dimen/popup_field_label_width"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_padding" />
+                android:text="@string/settings_osd_label_padding"
+                android:labelFor="@id/settings_osd_padding"/>
             <EditText
                 android:id="@+id/settings_osd_padding"
                 android:layout_width="@dimen/popup_field_input_width"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="3"
                 />
         </LinearLayout>
 
@@ -79,7 +92,8 @@
             <TextView
                 android:layout_width="@dimen/popup_field_label_width"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_limit_to_hdmi" />
+                android:text="@string/settings_osd_label_limit_to_hdmi"
+                android:labelFor="@id/settings_osd_limit_on_hdmi"/>
             <Switch
                 android:id="@+id/settings_osd_limit_on_hdmi"
                 android:layout_width="@dimen/popup_field_input_width"
@@ -97,13 +111,13 @@
             <TextView
                 android:layout_width="@dimen/popup_field_label_width"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_osd_label_duration" />
+                android:text="@string/settings_osd_label_duration"
+                android:labelFor="@id/settings_osd_duration"/>
             <EditText
                 android:id="@+id/settings_osd_duration"
                 android:layout_width="@dimen/popup_field_input_width"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="3"
                 />
         </LinearLayout>
 
@@ -119,16 +133,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="ActionCancel"
-                android:text="@string/settings_button_cancel" />
+                android:text="@string/settings_button_cancel"
+                />
 
             <Button
                 android:id="@+id/settings_btn_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="ActionSave"
-                android:text="@string/settings_button_save" />
+                android:text="@string/settings_button_save"
+                />
         </LinearLayout>
 
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.leanback.widget.TitleView>

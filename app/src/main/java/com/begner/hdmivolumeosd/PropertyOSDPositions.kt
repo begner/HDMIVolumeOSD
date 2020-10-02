@@ -5,21 +5,22 @@ import android.view.Gravity
 class PropertyOSDPositions() {
 
     private val availablePositions = listOf(
+
+        PropertyOSDPosition("leftTop","Left Top", Gravity.TOP or Gravity.START, 0f,false),
+        PropertyOSDPosition("leftCenter","Left", Gravity.CENTER or Gravity.START, 0f,false),
+        PropertyOSDPosition("leftBottom","Left Bottom", Gravity.BOTTOM or Gravity.START, 0f,false),
+
         PropertyOSDPosition("topLeft", "Top Left", Gravity.TOP or Gravity.START),
         PropertyOSDPosition("topCenter", "Top", Gravity.TOP or Gravity.CENTER),
-        PropertyOSDPosition("topRight","Top Right", Gravity.TOP or Gravity.END),
+        PropertyOSDPosition("topRight","Top Right", Gravity.TOP or Gravity.END ),
 
-        PropertyOSDPosition("rightTop","Right Top", Gravity.TOP or Gravity.END, false),
-        PropertyOSDPosition("rightCenter","Right", Gravity.CENTER or Gravity.END, false),
-        PropertyOSDPosition("rightBottom","Right Bottom", Gravity.BOTTOM or Gravity.END, false),
+        PropertyOSDPosition("rightTop","Right Top", Gravity.TOP or Gravity.END, 180f,false),
+        PropertyOSDPosition("rightCenter","Right", Gravity.CENTER or Gravity.END, 180f, false),
+        PropertyOSDPosition("rightBottom","Right Bottom", Gravity.BOTTOM or Gravity.END,180f, false),
 
-        PropertyOSDPosition("bottomLeft", "Bottom Left", Gravity.BOTTOM or Gravity.START),
-        PropertyOSDPosition("bottomCenter", "Bottom", Gravity.BOTTOM or Gravity.CENTER),
-        PropertyOSDPosition("bottomRight", "Bottom Right", Gravity.BOTTOM or Gravity.END),
-
-        PropertyOSDPosition("leftTop","Left Top", Gravity.TOP or Gravity.START, false),
-        PropertyOSDPosition("leftCenter","Left", Gravity.CENTER or Gravity.START, false),
-        PropertyOSDPosition("leftBottom","Left Bottom", Gravity.BOTTOM or Gravity.START, false)
+        PropertyOSDPosition("bottomLeft", "Bottom Left", Gravity.BOTTOM or Gravity.START, 180f),
+        PropertyOSDPosition("bottomCenter", "Bottom", Gravity.BOTTOM or Gravity.CENTER, 180f),
+        PropertyOSDPosition("bottomRight", "Bottom Right", Gravity.BOTTOM or Gravity.END, 180f),
 
     )
 

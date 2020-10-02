@@ -2,16 +2,24 @@ package nl.rogro82.pipup
 
 import android.content.Context
 import android.database.ContentObserver
+import android.graphics.Color
 import android.graphics.PixelFormat
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
 import android.provider.Settings
+import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat.getDrawable
 import com.begner.hdmivolumeosd.MainService
 import com.begner.hdmivolumeosd.PropertyOSDPositions
+import com.begner.hdmivolumeosd.R
 import com.begner.hdmivolumeosd.SettingsOSD
 import java.util.*
 
@@ -40,6 +48,11 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
     fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
 
+        if (!Settings.canDrawOverlays(applicationContext))
+        {
+            return
+        }
+
         val settingsOSD = SettingsOSD(applicationContext)
         val padding = settingsOSD.getPadding()
 
@@ -48,8 +61,6 @@ class VolumeLevelOSD(s: MainService, c: Context) {
         mOverlay = when (val overlay = mOverlay) {
             is FrameLayout -> overlay
             else -> FrameLayout(service).apply {
-
-                this.setPadding(padding, padding, padding, padding)
 
                 val params = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.MATCH_PARENT,
@@ -63,7 +74,34 @@ class VolumeLevelOSD(s: MainService, c: Context) {
                 wm.addView(this, params)
             }
         }.also {
-            // inflate the popup layout
+
+            // Instantiate an ImageView and define its properties
+            var backgroundWidth = 0
+            var backgroundHeight = 0
+            val backgroundView = ImageView(applicationContext).apply {
+                if (PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).isHorizontal) {
+                    setImageResource(R.drawable.layout_dimmer_horizontal)
+                    backgroundWidth = ViewGroup.LayoutParams.MATCH_PARENT
+                    backgroundHeight = 120 + padding
+                }
+                else {
+                    setImageResource(R.drawable.layout_dimmer_vertical)
+                    backgroundWidth = 120 + padding
+                    backgroundHeight = ViewGroup.LayoutParams.MATCH_PARENT
+                }
+
+                // set the ImageView bounds to match the Drawable's dimensions
+                adjustViewBounds = true
+            }
+            backgroundView.rotation = PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).dimmerRotation
+            it.addView(backgroundView, FrameLayout.LayoutParams(
+                backgroundWidth,
+                backgroundHeight,
+                PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).gravity
+            ))
+
+
+                // inflate the popup layout
             mPopup = VolumeLevelOSDView.build(applicationContext, VolumeLevelOSDProps(
                 currentVolume,
                 maxVolume,
@@ -77,11 +115,11 @@ class VolumeLevelOSD(s: MainService, c: Context) {
             if (PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).isHorizontal) {
                 newWidth = Math.round(
                     metrics.widthPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
-                ) - padding * 2
+                )
             } else {
                 newHeight = Math.round(
                     metrics.heightPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
-                ) - padding * 2
+                )
             }
 
             it.addView(mPopup, FrameLayout.LayoutParams(
