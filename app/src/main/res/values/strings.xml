@@ -3,6 +3,7 @@
 
     <string name="settings_mqtt_popup_headline">Temperatur Monitor (MQTT)</string>
     <string name="settings_mqtt_label_active">Active</string>
+    <string name="settings_mqtt_label_position">Position</string>
     <string name="settings_mqtt_label_host">Host</string>
     <string name="settings_mqtt_description_host">Protocol, host and port of the MQTT Server.\nExample: tcp://192.168.1.13:1883</string>
     <string name="settings_mqtt_label_topic">Topic</string>

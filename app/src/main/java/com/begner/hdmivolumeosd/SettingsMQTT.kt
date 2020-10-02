@@ -12,31 +12,37 @@ class SettingsMQTT(applicationContext: Context) : Settings() {
 
     fun getMQTTActive(): Boolean {
         loadPreferences()
-        return getValueAsBoolean("MQTTActive", false)
+        return getValueAsBoolean("Active", false)
+    }
+
+    fun getPosition(): String {
+        loadPreferences()
+        return getValueAsString("Position", "bottomRight")
     }
 
     fun getMQTTServer(): String? {
         loadPreferences()
-        return getValueAsString("MQTTServer", "")
+        return getValueAsString("Server", "")
     }
 
     fun getMQTTTopic(): String? {
         loadPreferences()
-        return getValueAsString("MQTTTopic", "")
+        return getValueAsString("Topic", "")
     }
 
     fun getMQTTUser(): String? {
         loadPreferences()
-        return getValueAsString("MQTTUser", "")
+        return getValueAsString("User", "")
     }
 
     fun getMQTTPassword(): String? {
         loadPreferences()
-        return getValueAsString("MQTTPass", "")
+        return getValueAsString("Pass", "")
     }
 
     fun SaveSettings(
         active: Boolean,
+        position: String,
         server: String,
         topic: String,
         user: String,
@@ -44,11 +50,12 @@ class SettingsMQTT(applicationContext: Context) : Settings() {
     ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
-        editor.putBoolean("MQTTActive", active)
-        editor.putString("MQTTServer", server)
-        editor.putString("MQTTTopic", topic)
-        editor.putString("MQTTUser", user)
-        editor.putString("MQTTPass", passwd)
+        editor.putBoolean("Active", active)
+        editor.putString("Position", position)
+        editor.putString("Server", server)
+        editor.putString("Topic", topic)
+        editor.putString("User", user)
+        editor.putString("Pass", passwd)
         editor.commit()
     }
 

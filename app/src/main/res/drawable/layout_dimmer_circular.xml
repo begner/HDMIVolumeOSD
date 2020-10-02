@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/dimmer"
+        android:width="120dp"
+        android:height="120dp">
+        <shape
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shape="rectangle"
+            >
+            <gradient
+                android:centerX="1"
+                android:centerY="1"
+                android:type="radial"
+                android:gradientRadius="120dp"
+                android:startColor="#88000000"
+                android:centerColor="#88000000"
+                android:endColor="#11000000"
+                />
+        </shape>
+    </item>
+</layer-list>

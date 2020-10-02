@@ -6,14 +6,13 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import nl.rogro82.pipup.VolumeLevelOSD
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
 
 class MainService : Service() {
-    private lateinit var volumeLevelOSD: VolumeLevelOSD
+    private lateinit var osd: OSD
 
     private lateinit var mqttClient: MqttClient
     private var temperatures: MutableMap<String, Float> = mutableMapOf<String, Float>()
@@ -40,7 +39,7 @@ class MainService : Service() {
 
         startForeground(Companion.ONGOING_NOTIFICATION_ID, mBuilder.build())
         startMqtt()
-        volumeLevelOSD = VolumeLevelOSD(this, applicationContext)
+        osd = OSD(this, applicationContext)
     }
 
 
@@ -49,7 +48,7 @@ class MainService : Service() {
     }
 
     override fun onDestroy() {
-        volumeLevelOSD.destroy()
+        osd.destroy()
         super.onDestroy()
     }
 

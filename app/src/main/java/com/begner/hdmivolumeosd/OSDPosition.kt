@@ -1,6 +1,6 @@
 package com.begner.hdmivolumeosd
 
-data class PropertyOSDPosition (
+data class OSDPosition (
     val key: String = "",
     val label: String = "",
     val gravity: Int = 0,

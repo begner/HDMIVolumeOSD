@@ -1,37 +1,25 @@
-package nl.rogro82.pipup
+package com.begner.hdmivolumeosd
 
 import android.content.Context
 import android.database.ContentObserver
-import android.graphics.Color
 import android.graphics.PixelFormat
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
 import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
 import android.provider.Settings
-import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat.getDrawable
-import com.begner.hdmivolumeosd.MainService
-import com.begner.hdmivolumeosd.PropertyOSDPositions
-import com.begner.hdmivolumeosd.R
-import com.begner.hdmivolumeosd.SettingsOSD
 import java.util.*
 
 
-class VolumeLevelOSD(s: MainService, c: Context) {
+class OSD(s: MainService, c: Context) {
     private var settingsContentObserver: ContentObserver
     private var applicationContext: Context = c
     private var service: MainService = s
-
     private val mHandler: Handler = Handler()
     private var mOverlay: FrameLayout? = null
-    private var mPopup: VolumeLevelOSDView? = null
 
     init {
         settingsContentObserver = SettingsContentObserver(service, this, Handler())
@@ -48,13 +36,13 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
     fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
 
+        // if permission is not granted - leave!
         if (!Settings.canDrawOverlays(applicationContext))
         {
             return
         }
 
-        val settingsOSD = SettingsOSD(applicationContext)
-        val padding = settingsOSD.getPadding()
+
 
         removePopup()
 
@@ -74,66 +62,17 @@ class VolumeLevelOSD(s: MainService, c: Context) {
                 wm.addView(this, params)
             }
         }.also {
+            VolumeLevelOSDView(applicationContext, it)
+                .addBackground()
+                .addView(currentVolume, maxVolume)
 
-            // Instantiate an ImageView and define its properties
-            var backgroundWidth = 0
-            var backgroundHeight = 0
-            val backgroundView = ImageView(applicationContext).apply {
-                if (PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).isHorizontal) {
-                    setImageResource(R.drawable.layout_dimmer_horizontal)
-                    backgroundWidth = ViewGroup.LayoutParams.MATCH_PARENT
-                    backgroundHeight = 120 + padding
-                }
-                else {
-                    setImageResource(R.drawable.layout_dimmer_vertical)
-                    backgroundWidth = 120 + padding
-                    backgroundHeight = ViewGroup.LayoutParams.MATCH_PARENT
-                }
+            TemperatureOSDView(applicationContext, it)
+                .addBackground()
+                .addView(service.getAverageTemp(), 70)
 
-                // set the ImageView bounds to match the Drawable's dimensions
-                adjustViewBounds = true
-            }
-            backgroundView.rotation = PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).dimmerRotation
-            it.addView(backgroundView, FrameLayout.LayoutParams(
-                backgroundWidth,
-                backgroundHeight,
-                PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).gravity
-            ))
-
-
-                // inflate the popup layout
-            mPopup = VolumeLevelOSDView.build(applicationContext, VolumeLevelOSDProps(
-                currentVolume,
-                maxVolume,
-                currentTemp
-            ))
-            val metrics = applicationContext.getResources().getDisplayMetrics()
-
-            var newWidth = ViewGroup.LayoutParams.WRAP_CONTENT
-            var newHeight = ViewGroup.LayoutParams.WRAP_CONTENT
-
-            if (PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).isHorizontal) {
-                newWidth = Math.round(
-                    metrics.widthPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
-                )
-            } else {
-                newHeight = Math.round(
-                    metrics.heightPixels.toFloat() / 100f * settingsOSD.getSize().toFloat()
-                )
-            }
-
-            it.addView(mPopup, FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            ). apply {
-                gravity = PropertyOSDPositions().getPositionByKey(settingsOSD.getPosition()).gravity
-                width = newWidth
-                height = newHeight
-            })
         }
 
-
-
+        val settingsOSD = SettingsOSD(applicationContext)
         mHandler.postDelayed({
             removePopup(true)
         }, (settingsOSD.getDuration() * 1000).toLong())
@@ -142,10 +81,6 @@ class VolumeLevelOSD(s: MainService, c: Context) {
 
     private fun removePopup(removeOverlay: Boolean = false) {
         mHandler.removeCallbacksAndMessages(null)
-        mPopup = mPopup?.let {
-            it.destroy()
-            null
-        }
         mOverlay?.apply {
             removeAllViews()
             if (removeOverlay) {
@@ -157,10 +92,10 @@ class VolumeLevelOSD(s: MainService, c: Context) {
     }
 
 
-    class SettingsContentObserver internal constructor(c: Context, s: VolumeLevelOSD, handler: Handler?) :
+    class SettingsContentObserver internal constructor(c: Context, s: OSD, handler: Handler?) :
         ContentObserver(handler) {
         var context: Context
-        var service: VolumeLevelOSD
+        var service: OSD
         var settingsOSD: SettingsOSD
 
         override fun deliverSelfNotifications(): Boolean {

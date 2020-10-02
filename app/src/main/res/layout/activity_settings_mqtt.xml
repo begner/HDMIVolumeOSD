@@ -57,6 +57,24 @@
             <TextView
                 android:layout_width="@dimen/popup_field_label_width"
                 android:layout_height="wrap_content"
+                android:text="@string/settings_mqtt_label_position"
+                android:labelFor="@id/settings_mqtt_position"/>
+
+            <Spinner
+                android:id="@+id/settings_mqtt_position"
+                android:layout_width="@dimen/popup_field_input_width"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/popup_field_margin_top">
+            <TextView
+                android:layout_width="@dimen/popup_field_label_width"
+                android:layout_height="wrap_content"
                 android:text="@string/settings_mqtt_label_host" />
             <EditText
                 android:id="@+id/settings_mqtt_server"
