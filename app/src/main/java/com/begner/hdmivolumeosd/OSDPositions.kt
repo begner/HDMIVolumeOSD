@@ -1,6 +1,7 @@
 package com.begner.hdmivolumeosd
 
 import android.view.Gravity
+import android.widget.ScrollView
 
 abstract class OSDPositions() {
 

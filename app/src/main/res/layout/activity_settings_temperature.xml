@@ -30,34 +30,18 @@
             android:padding="@dimen/popup_layout_padding">
 
             <!-- TABS -->
-            <LinearLayout
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/navigationTab"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                style="@style/Widget.Tab.Bar"
-                >
-
-                <Button
-                    android:id="@+id/tab_btn_main"
-                    android:text="MAIN"
-                    android:onClick="activateTabMain"
-                    style="@style/Widget.Tab.Button"
-                    />
-                <Button
-                    android:id="@+id/tab_btn_mqtt"
-                    android:text="MQTT"
-                    android:onClick="activateTabMqtt"
-                    style="@style/Widget.Tab.Button"
-                    />
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                />
 
             <ScrollView
                 android:id="@+id/main_settings"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:visibility="visible"
-                style="@style/Widget.Tab.Container">
+                >
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,8 +100,7 @@
                             android:layout_width="@dimen/popup_field_input_width"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text=""
-                            android:theme="@style/AppTheme" />
+                            android:text="" />
                     </LinearLayout>
 <!-- MAIN SETTINGS END -->
 
@@ -130,9 +113,9 @@
             <ScrollView
                 android:id="@+id/mqtt_settings"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
-                style="@style/Widget.Tab.Container">
+                >
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -157,8 +140,7 @@
                             android:layout_width="@dimen/popup_field_input_width"
                             android:layout_height="wrap_content"
                             android:inputType="textUri"
-                            android:text=""
-                            android:theme="@style/AppTheme" />
+                            android:text="" />
                     </LinearLayout>
                     <TextView
                         android:layout_width="@dimen/popup_field_input_width"

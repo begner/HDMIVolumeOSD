@@ -21,9 +21,10 @@ import android.provider.Settings.canDrawOverlays
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 
-class ActivityMain : Activity() {
+class ActivityMain : AppCompatActivity() {
 
     lateinit var mainServiceIntent: Intent
 

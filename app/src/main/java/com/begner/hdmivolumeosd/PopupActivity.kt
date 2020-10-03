@@ -3,8 +3,9 @@ package com.begner.hdmivolumeosd
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
-abstract class PopupActivity : Activity() {
+abstract class PopupActivity : AppCompatActivity() {
 
     public fun setResultAndFinish(success: Boolean) {
         setResult(success)

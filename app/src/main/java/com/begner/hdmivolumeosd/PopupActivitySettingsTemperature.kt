@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.leanback.widget.Visibility
+import com.google.android.material.tabs.TabItem
+import com.google.android.material.tabs.TabLayout
 
 
-class PopupActivitySettingsTemperature : PopupActivity() {
+class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelectedListener {
 
     lateinit var Active: Switch
     lateinit var Position: Spinner
@@ -16,11 +19,9 @@ class PopupActivitySettingsTemperature : PopupActivity() {
     lateinit var User: TextView
     lateinit var Password: TextView
 
-    lateinit var TabContentMain: ScrollView
-    lateinit var TabContentMqtt: ScrollView
+    lateinit var NavigationTab: TabLayout
 
-    lateinit var TabButtonMain: Button
-    lateinit var TabButtonMqtt: Button
+    lateinit var TabList    : List<TabData>
 
     lateinit var settingsTemperature: SettingsTemperature
 
@@ -47,11 +48,17 @@ class PopupActivitySettingsTemperature : PopupActivity() {
         User = findViewById(R.id.username);
         Password = findViewById(R.id.password);
 
-        TabContentMain = findViewById(R.id.main_settings)
-        TabContentMqtt = findViewById(R.id.mqtt_settings)
-        TabButtonMain = findViewById(R.id.tab_btn_main)
-        TabButtonMqtt = findViewById(R.id.tab_btn_mqtt)
-        activateTabMain()
+        TabList = listOf(
+            TabData("main", "Main", findViewById(R.id.main_settings)),
+            TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
+        )
+
+        NavigationTab = findViewById(R.id.navigationTab)
+        NavigationTab.addOnTabSelectedListener(this)
+        TabList.forEach {
+            NavigationTab.addTab(NavigationTab.newTab().setText(it.label))
+        }
+
         fill()
     }
 
@@ -77,19 +84,28 @@ class PopupActivitySettingsTemperature : PopupActivity() {
         )
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun activateTabMain(view: View? = null) {
-        TabContentMain.visibility = ScrollView.VISIBLE
-        TabContentMqtt.visibility = ScrollView.GONE
-        TabButtonMain.isSelected = true
-        TabButtonMqtt.isSelected = false
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val tabIndex = NavigationTab.selectedTabPosition
+        TabList.forEachIndexed { index, tabData ->
+            if (index == tabIndex) {
+                tabData.contentContainer.visibility = ScrollView.VISIBLE
+            }
+            else {
+                tabData.contentContainer.visibility = ScrollView.GONE
+            }
+        }
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun activateTabMqtt(view: View? = null) {
-        TabContentMain.visibility = ScrollView.GONE
-        TabContentMqtt.visibility = ScrollView.VISIBLE
-        TabButtonMain.isSelected = false
-        TabButtonMqtt.isSelected = true
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
     }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+    }
+
+    data class TabData (
+        var key: String = "",
+        var label: String = "",
+        var contentContainer: ScrollView
+    )
 }
+

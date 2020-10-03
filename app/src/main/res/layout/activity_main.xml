@@ -20,9 +20,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/main_headline"
-            android:textSize="50sp"
-            android:textColor="#ff8800"
-            android:textFontWeight="300"
+            android:textAppearance="?textAppearanceHeadline1"
             />
         <View style="@style/Divider"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -38,9 +36,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_headline"
             android:text="@string/main_sub_headline"
-            android:textSize="30sp"
-            android:textColor="#ff8800"
-            android:textFontWeight="300"
+            android:textAppearance="?textAppearanceHeadline2"
             />
 
         <TextView
@@ -81,9 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_permisson_hint_headline"
-                    android:textSize="30sp"
-                    android:textColor="#ff8800"
-                    android:textFontWeight="600"
+                    android:textAppearance="?textAppearanceHeadline2"
                     />
             </LinearLayout>
 
@@ -93,8 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_permisson_hint_description"
-                android:textSize="20sp"
                 android:paddingTop="10dp"
+                android:textAppearance="?textAppearanceBody1"
                 />
 
             <TextView
@@ -102,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/main_permisson_hint_how_to"
                 android:paddingTop="10dp"
+                android:textAppearance="?textAppearanceBody2"
                 />
 
         </LinearLayout>

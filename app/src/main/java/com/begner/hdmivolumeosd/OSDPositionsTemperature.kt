@@ -1,6 +1,7 @@
 package com.begner.hdmivolumeosd
 
 import android.view.Gravity
+import android.widget.ScrollView
 
 class OSDPositionsTemperature() : OSDPositions() {
     init {
@@ -40,3 +41,4 @@ class OSDPositionsTemperature() : OSDPositions() {
         )
     }
 }
+

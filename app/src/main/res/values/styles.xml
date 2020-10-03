@@ -1,11 +1,6 @@
-<resources>
-    <style name="AppTheme" parent="@android:style/Theme.Holo">
-        <item name="android:buttonStyle">@style/Widget.Button</item>
-    </style>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="PopupTheme" parent="@android:style/Theme.Holo.Dialog">
-        <item name="android:buttonStyle">@style/Widget.Button</item>
-    </style>
+
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
@@ -41,21 +36,6 @@
         <item name="android:progressDrawable">@drawable/progress_bar_circular</item>
         <item name="android:minWidth">1dip</item>
         <item name="android:maxWidth">1dip</item>
-    </style>
-
-    <style name="Widget.Tab"></style>
-    <style name="Widget.Tab.Container">
-        <item name="android:background">@drawable/tab_container</item>
-    </style>
-    <style name="Widget.Tab.Bar">
-        <item name="android:background">@drawable/tab_bar</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingTop">5dp</item>
-    </style>
-    <style name="Widget.Tab.Button">
-        <item name="android:background">@drawable/tab_button_background</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_width">wrap_content</item>
     </style>
 
 

@@ -1,9 +1,35 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="primary_color">#ff8800</color>
+    <!--
+    <color name="primaryColor">#ffa000</color>
+    <color name="primaryLightColor">#ffd149</color>
+    <color name="primaryDarkColor">#c67100</color>
+    <color name="secondaryColor">#90a4ae</color>
+    <color name="secondaryLightColor">#c1d5e0</color>
+    <color name="secondaryDarkColor">#62757f</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
+
+-->
+    <color name="theme_primary">#ffa000</color>
+    <color name="theme_primary_variant">#c67100</color>
+    <color name="theme_secondary">#90a4ae</color>
+    <color name="theme_secondary_variant">#62757f</color>
+    <color name="theme_background">#282828</color>
+    <color name="theme_surface">#888888</color>
+    <color name="theme_error">#ee0000</color>
+
+    <color name="theme_on_primary">#ffffff</color>
+    <color name="theme_on_secondary">#ffffff</color>
+    <color name="theme_on_background">#ffffff</color>
+    <color name="theme_on_surface">#ffffff</color>
+    <color name="theme_on_error">#ffffff</color>
+
+
+    <color name="theme_text_color">#ffffff</color>
+    <color name="theme_headline_color">#ffa000</color>
 
     <color name="background_activity">#282828</color>
     <color name="background_popup">#282828</color>
-
     <color name="tab_border_color">#888888</color>
 </resources>
