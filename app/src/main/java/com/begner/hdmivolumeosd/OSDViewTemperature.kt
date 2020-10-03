@@ -9,10 +9,10 @@ import java.lang.Math.round
 
 class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
 
-    lateinit var context: Context
-    lateinit var osdView: FrameLayout
-    lateinit var settings  : SettingsTemperature
-    lateinit var osdPosition : OSDPosition
+    var context: Context
+    var osdView: FrameLayout
+    var settings  : SettingsTemperature
+    var osdPosition : OSDPosition
 
     init {
         context = applicationContext
@@ -21,7 +21,7 @@ class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
         osdPosition = OSDPositionsTemperature().getPositionByKey(settings.getPosition())
     }
 
-    open fun addView(currentTemperature: Float):OSDViewTemperature {
+    fun addView(currentTemperature: Float):OSDViewTemperature {
 
         val view : View = LayoutInflater.from(context).inflate(osdPosition.layoutID, null);
         val settingsMQTT = SettingsTemperature(context)
@@ -56,13 +56,8 @@ class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
     }
 
     fun addBackground():OSDViewTemperature {
-        var backgroundWidth = 0
-        var backgroundHeight = 0
         val backgroundView = ImageView(context).apply {
             setImageResource(osdPosition.backgroundID)
-            backgroundWidth = 250
-            backgroundHeight = 250
-
             // set the ImageView bounds to match the Drawable's dimensions
             adjustViewBounds = true
         }
@@ -70,8 +65,8 @@ class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
 
         osdView.addView(
             backgroundView, FrameLayout.LayoutParams(
-                backgroundWidth,
-                backgroundHeight,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
                 osdPosition.gravity
             )
         )

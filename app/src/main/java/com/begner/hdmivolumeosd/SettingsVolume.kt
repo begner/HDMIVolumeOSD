@@ -37,23 +37,16 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         return padding
     }
 
-    fun getLimitOnHDMI() : Boolean {
-        loadPreferences()
-        return getValueAsBoolean("LimitOnHDMI", true)
-    }
-
     fun SaveSettings(
         position: String,
         size: Int,
         padding: Int,
-        limitOnHDMI: Boolean
     ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putString("Position", position)
         editor.putInt("Size", size)
         editor.putInt("Padding", padding)
-        editor.putBoolean("LimitOnHDMI", limitOnHDMI)
         editor.commit()
     }
 

@@ -8,7 +8,6 @@ class PopupActivitySettingsVolume : PopupActivity() {
 
     lateinit var Position: Spinner
     lateinit var Size: EditText
-    lateinit var LimitOnHDMI: Switch
     lateinit var Padding: EditText
     
     lateinit var settingsVolume: SettingsVolume
@@ -26,8 +25,7 @@ class PopupActivitySettingsVolume : PopupActivity() {
 
         Size = findViewById<EditText>(R.id.size)
         Padding = findViewById<EditText>(R.id.padding)
-        LimitOnHDMI = findViewById<Switch>(R.id.limit_on_hdmi)
-        
+
         fill()
     }
 
@@ -35,7 +33,6 @@ class PopupActivitySettingsVolume : PopupActivity() {
         Position.setSelection(OSDPositionsVolume().getIndexByKey(settingsVolume.getPosition()))
         Size.setText(settingsVolume.getSize().toString())
         Padding.setText(settingsVolume.getPadding().toString())
-        LimitOnHDMI.setChecked(settingsVolume.getLimitOnHDMI())
     }
 
     override fun save() {
@@ -43,7 +40,6 @@ class PopupActivitySettingsVolume : PopupActivity() {
             OSDPositionsVolume().getByIndex(Position.selectedItemPosition).key,
             Size.getText().toString().toInt(),
             Padding.getText().toString().toInt(),
-            LimitOnHDMI.isChecked()
         )
     }
 

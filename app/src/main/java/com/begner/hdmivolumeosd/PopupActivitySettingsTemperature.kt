@@ -1,11 +1,10 @@
 package com.begner.hdmivolumeosd
 
 import android.os.Bundle
+import android.view.View
 import android.view.Window
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Switch
-import android.widget.TextView
+import android.widget.*
+
 
 class PopupActivitySettingsTemperature : PopupActivity() {
 
@@ -16,6 +15,12 @@ class PopupActivitySettingsTemperature : PopupActivity() {
     lateinit var Topic: TextView
     lateinit var User: TextView
     lateinit var Password: TextView
+
+    lateinit var TabContentMain: ScrollView
+    lateinit var TabContentMqtt: ScrollView
+
+    lateinit var TabButtonMain: Button
+    lateinit var TabButtonMqtt: Button
 
     lateinit var settingsTemperature: SettingsTemperature
 
@@ -28,8 +33,12 @@ class PopupActivitySettingsTemperature : PopupActivity() {
 
         Active = findViewById(R.id.active);
 
-        Position = findViewById<Spinner>(R.id.position);
-        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, OSDPositionsTemperature().getLabelArray())
+        Position = findViewById(R.id.position);
+        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            OSDPositionsTemperature().getLabelArray()
+        )
         Position.setAdapter(arrayAdapter);
 
         MaxTemp = findViewById(R.id.max_temp)
@@ -38,6 +47,11 @@ class PopupActivitySettingsTemperature : PopupActivity() {
         User = findViewById(R.id.username);
         Password = findViewById(R.id.password);
 
+        TabContentMain = findViewById(R.id.main_settings)
+        TabContentMqtt = findViewById(R.id.mqtt_settings)
+        TabButtonMain = findViewById(R.id.tab_btn_main)
+        TabButtonMqtt = findViewById(R.id.tab_btn_mqtt)
+        activateTabMain()
         fill()
     }
 
@@ -59,6 +73,23 @@ class PopupActivitySettingsTemperature : PopupActivity() {
             Server.getText().toString(),
             Topic.getText().toString(),
             User.getText().toString(),
-            Password.getText().toString())
+            Password.getText().toString()
+        )
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun activateTabMain(view: View? = null) {
+        TabContentMain.visibility = ScrollView.VISIBLE
+        TabContentMqtt.visibility = ScrollView.GONE
+        TabButtonMain.isSelected = true
+        TabButtonMqtt.isSelected = false
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun activateTabMqtt(view: View? = null) {
+        TabContentMain.visibility = ScrollView.GONE
+        TabContentMqtt.visibility = ScrollView.VISIBLE
+        TabButtonMain.isSelected = false
+        TabButtonMqtt.isSelected = true
     }
 }

@@ -11,10 +11,10 @@ import java.lang.Math.floor
 
 class OSDViewVolume(applicationContext: Context, view: FrameLayout) {
 
-    lateinit var context: Context
-    lateinit var osdView: FrameLayout
-    lateinit var settingsVolume  : SettingsVolume
-    lateinit var osdPosition : OSDPosition
+    var context: Context
+    var osdView: FrameLayout
+    var settingsVolume  : SettingsVolume
+    var osdPosition : OSDPosition
 
     init {
         context = applicationContext
@@ -23,7 +23,7 @@ class OSDViewVolume(applicationContext: Context, view: FrameLayout) {
         osdPosition = OSDPositionsVolume().getPositionByKey(settingsVolume.getPosition())
     }
 
-    open fun addView(curVolume: Int, maxVolume: Int):OSDViewVolume {
+    fun addView(curVolume: Int, maxVolume: Int):OSDViewVolume {
 
         val view = LayoutInflater.from(context).inflate(osdPosition.layoutID, null);
 

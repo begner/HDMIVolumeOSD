@@ -20,12 +20,19 @@ class SettingsGlobal(applicationContext: Context) : Settings() {
         return dur
     }
 
+    fun getLimitOnHDMI() : Boolean {
+        loadPreferences()
+        return getValueAsBoolean("LimitOnHDMI", true)
+    }
+
     fun SaveSettings(
         duration: Int,
+        limitOnHDMI: Boolean
     ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putInt("Duration", duration)
+        editor.putBoolean("LimitOnHDMI", limitOnHDMI)
         editor.commit()
     }
 

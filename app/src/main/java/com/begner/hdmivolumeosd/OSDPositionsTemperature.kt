@@ -11,7 +11,7 @@ class OSDPositionsTemperature() : OSDPositions() {
                 layoutRotationX = 180f
                 layoutRotationY = 0f
                 backgroundID = R.drawable.layout_dimmer_circular
-                backgroundRotation = 0f
+                backgroundRotation = 180f
             },
             OSDPosition("topRight","Top Right", Gravity.TOP or Gravity.END).apply {
                 layoutID = R.layout.temperature_osd
@@ -35,7 +35,7 @@ class OSDPositionsTemperature() : OSDPositions() {
                 layoutRotationX = 0f
                 layoutRotationY = 0f
                 backgroundID = R.drawable.layout_dimmer_circular
-                backgroundRotation = 180f
+                backgroundRotation = 0f
             },
         )
     }

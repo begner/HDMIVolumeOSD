@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.leanback.widget.TitleView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.leanback.widget.TitleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_activity"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <TextView
             android:id="@+id/main_headline"
@@ -22,6 +24,12 @@
             android:textColor="#ff8800"
             android:textFontWeight="300"
             />
+        <View style="@style/Divider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_headline"
+            />
+
         <TextView
             android:id="@+id/main_sub_headline"
             android:layout_width="wrap_content"
@@ -107,28 +115,43 @@
             app:layout_constraintRight_toRightOf="parent"
             >
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="bottom|right">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:textColor="#ff8800"
+                    android:textFontWeight="300"
+                    android:text="@string/main_settings_headline"
+                    android:textAlignment="textStart"
+                    />
                 <Button
                     android:id="@+id/main_btn_open_settings_global"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="openSettingsGlobal"
-                    android:text="@string/main_button_settings_global" />
+                    android:text="@string/main_settings_button_global"
+                    android:drawableLeft="@drawable/ic_icon_button_settings_global"
+                    />
                 <Button
                     android:id="@+id/main_btn_open_settings_volume"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="openSettingsVolume"
-                    android:text="@string/main_button_settings_osd" />
+                    android:text="@string/main_settings_button_label_volume"
+                    android:drawableLeft="@drawable/ic_icon_button_settings_volume"
+                    />
                 <Button
                     android:id="@+id/main_btn_open_settings_mqtt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="openSettingsTemperature"
-                    android:text="@string/main_button_settings_mqtt" />
+                    android:text="@string/main_settings_button_temperature"
+                    android:drawableLeft="@drawable/ic_icon_button_settings_temperature"
+                    />
             </LinearLayout>
         </LinearLayout>
 

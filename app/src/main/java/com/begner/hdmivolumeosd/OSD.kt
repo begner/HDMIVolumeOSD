@@ -6,6 +6,7 @@ import android.graphics.PixelFormat
 import android.media.AudioManager
 import android.media.MediaRouter
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -16,11 +17,11 @@ class OSD(s: MainService, c: Context) {
     private var settingsContentObserver: ContentObserver
     private var applicationContext: Context = c
     private var service: MainService = s
-    private val mHandler: Handler = Handler()
+    private val mHandler: Handler? = Looper.myLooper()?.let { Handler(it) }
     private var mOverlay: FrameLayout? = null
 
     init {
-        settingsContentObserver = SettingsContentObserver(service, this, Handler())
+        settingsContentObserver = SettingsContentObserver(service, this, Looper.myLooper()?.let { Handler(it) })
         applicationContext.contentResolver.registerContentObserver(
             Settings.System.CONTENT_URI,
             true,
@@ -32,15 +33,13 @@ class OSD(s: MainService, c: Context) {
         applicationContext.contentResolver.unregisterContentObserver(settingsContentObserver)
     }
 
-    fun createOverlay(maxVolume : Int, currentVolume : Int, currentTemp : Float) {
+    fun createOverlay(maxVolume : Int, currentVolume : Int) {
 
         // if permission is not granted - leave!
         if (!Settings.canDrawOverlays(applicationContext))
         {
             return
         }
-
-
 
         removePopup()
 
@@ -70,14 +69,18 @@ class OSD(s: MainService, c: Context) {
         }
 
         val settingsGlobal = SettingsGlobal(applicationContext)
-        mHandler.postDelayed({
-            removePopup(true)
-        }, (settingsGlobal.getDuration() * 1000).toLong())
+        if (mHandler != null) {
+            mHandler.postDelayed({
+                removePopup(true)
+            }, (settingsGlobal.getDuration() * 1000).toLong())
+        }
     }
 
 
     private fun removePopup(removeOverlay: Boolean = false) {
-        mHandler.removeCallbacksAndMessages(null)
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null)
+        }
         mOverlay?.apply {
             removeAllViews()
             if (removeOverlay) {
@@ -88,12 +91,10 @@ class OSD(s: MainService, c: Context) {
         }
     }
 
-
     class SettingsContentObserver internal constructor(c: Context, s: OSD, handler: Handler?) :
         ContentObserver(handler) {
         var context: Context
         var service: OSD
-        var settingsVolume: SettingsVolume
 
         override fun deliverSelfNotifications(): Boolean {
             return super.deliverSelfNotifications()
@@ -109,19 +110,14 @@ class OSD(s: MainService, c: Context) {
             val routeName = routeInfo.getName().toString()
             var routeMax = routeInfo.getVolumeMax()
 
-            if (routeName.equals("HDMI") || !settingsVolume.getLimitOnHDMI()) {
-                // val message: String = "DirectVolume: " + currentVolume.toString() + "/" + routeMax.toString()
-                // val props = PopupProps(4,PopupProps.Position.BottomRight,"#88000000", message, 16f)
-                service.createOverlay(routeMax, currentVolume, service.service.getAverageTemp())
-                //service.createPopup(props)
+            if (routeName.equals("HDMI") || !SettingsGlobal(context).getLimitOnHDMI()) {
+                service.createOverlay(routeMax, currentVolume)
             }
-
         }
 
         init {
             context = c
             service = s
-            settingsVolume = SettingsVolume(context)
         }
     }
 

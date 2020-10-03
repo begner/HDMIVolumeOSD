@@ -50,7 +50,7 @@
             android:banner="@mipmap/ic_banner"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.Leanback">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,17 +60,17 @@
 
         <activity
             android:name=".PopupActivitySettingsGlobal"
-            android:theme="@android:style/Theme.Holo.Dialog" >
+            android:theme="@style/PopupTheme" >
         </activity>
 
         <activity
             android:name=".PopupActivitySettingsVolume"
-            android:theme="@android:style/Theme.Holo.Dialog" >
+            android:theme="@style/PopupTheme" >
         </activity>
 
         <activity
             android:name=".PopupActivitySettingsTemperature"
-            android:theme="@android:style/Theme.Holo.Dialog" >
+            android:theme="@style/PopupTheme" >
         </activity>
     </application>
 

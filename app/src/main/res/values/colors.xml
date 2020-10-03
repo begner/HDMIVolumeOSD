@@ -1,0 +1,9 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<resources>
+    <color name="primary_color">#ff8800</color>
+
+    <color name="background_activity">#282828</color>
+    <color name="background_popup">#282828</color>
+
+    <color name="tab_border_color">#888888</color>
+</resources>
