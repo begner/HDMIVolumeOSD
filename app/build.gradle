@@ -24,6 +24,7 @@ android {
 
         def autoIncBuildNumber = versionProps['VersionAutoIncBuildNumber'].toInteger() + 1
         versionProps['VersionAutoIncBuildNumber']=autoIncBuildNumber.toString()
+        System.setProperty("line.separator", "\n")
         versionProps.store(versionPropsFile.newWriter(), null)
 
         applicationId "com.begner.hdmivolumeosd"

@@ -29,6 +29,15 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         return size
     }
 
+    fun getMinTemp(): Int {
+        loadPreferences()
+        var size = getValueAsInt("MinTemp", 20)
+        if (size < 0) {
+            size = 0
+        }
+        return size
+    }
+
     fun getMQTTServer(): String? {
         loadPreferences()
         return getValueAsString("Server", "")
@@ -52,6 +61,7 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
     fun SaveSettings(
         active: Boolean,
         position: String,
+        minTemp: Int,
         maxTemp: Int,
         server: String,
         topic: String,
@@ -62,6 +72,7 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putBoolean("Active", active)
         editor.putString("Position", position)
+        editor.putInt("MinTemp", minTemp)
         editor.putInt("MaxTemp", maxTemp)
         editor.putString("Server", server)
         editor.putString("Topic", topic)

@@ -11,17 +11,19 @@ import com.google.android.material.tabs.TabLayout
 
 class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelectedListener {
 
-    lateinit var Active: Switch
-    lateinit var Position: Spinner
-    lateinit var MaxTemp: TextView
-    lateinit var Server: TextView
-    lateinit var Topic: TextView
-    lateinit var User: TextView
-    lateinit var Password: TextView
-
-    lateinit var NavigationTab: TabLayout
-
-    lateinit var TabList    : List<TabData>
+    val Active: com.google.android.material.switchmaterial.SwitchMaterial = findViewById(R.id.active)
+    val Position: Spinner = findViewById(R.id.position)
+    val MinTemp: TextView = findViewById(R.id.min_temp)
+    val MaxTemp: TextView = findViewById(R.id.max_temp)
+    val Server: TextView = findViewById(R.id.server)
+    val Topic: TextView = findViewById(R.id.topic)
+    val User: TextView = findViewById(R.id.username)
+    val Password: TextView = findViewById(R.id.password)
+    val NavigationTab: TabLayout = findViewById(R.id.navigationTab)
+    val TabList: List<TabData> = listOf(
+        TabData("main", "Main", findViewById(R.id.main_settings)),
+        TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
+    )
 
     lateinit var settingsTemperature: SettingsTemperature
 
@@ -32,9 +34,6 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
 
         settingsTemperature = SettingsTemperature(applicationContext)
 
-        Active = findViewById(R.id.active);
-
-        Position = findViewById(R.id.position);
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
             android.R.layout.simple_spinner_item,
@@ -42,18 +41,6 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
         )
         Position.setAdapter(arrayAdapter);
 
-        MaxTemp = findViewById(R.id.max_temp)
-        Server = findViewById(R.id.server);
-        Topic = findViewById(R.id.topic);
-        User = findViewById(R.id.username);
-        Password = findViewById(R.id.password);
-
-        TabList = listOf(
-            TabData("main", "Main", findViewById(R.id.main_settings)),
-            TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
-        )
-
-        NavigationTab = findViewById(R.id.navigationTab)
         NavigationTab.addOnTabSelectedListener(this)
         TabList.forEach {
             NavigationTab.addTab(NavigationTab.newTab().setText(it.label))
@@ -65,6 +52,7 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
     private fun fill() {
         Active.setChecked(settingsTemperature.getMQTTActive())
         Position.setSelection(OSDPositionsTemperature().getIndexByKey(settingsTemperature.getPosition()))
+        MinTemp.setText(settingsTemperature.getMinTemp().toString())
         MaxTemp.setText(settingsTemperature.getMaxTemp().toString())
         Server.setText(settingsTemperature.getMQTTServer())
         Topic.setText(settingsTemperature.getMQTTTopic())
@@ -76,6 +64,7 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
         settingsTemperature.SaveSettings(
             Active.isChecked(),
             OSDPositionsTemperature().getByIndex(Position.selectedItemPosition).key,
+            MinTemp.getText().toString().toInt(),
             MaxTemp.getText().toString().toInt(),
             Server.getText().toString(),
             Topic.getText().toString(),
@@ -105,7 +94,7 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
     data class TabData (
         var key: String = "",
         var label: String = "",
-        var contentContainer: ScrollView
+        var contentContainer: LinearLayout
     )
 }
 

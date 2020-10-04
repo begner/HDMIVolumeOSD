@@ -35,8 +35,12 @@ class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
         }
 
         val bar = view.findViewById<ProgressBar>(R.id.vosd_bar)
-        bar.max = settingsMQTT.getMaxTemp()
-        bar.progress = currentTemperature.toInt()
+        bar.max = settingsMQTT.getMaxTemp() - settingsMQTT.getMinTemp()
+        var progress = currentTemperature.toInt() - settingsMQTT.getMinTemp()
+        if (progress < 0) {
+            progress = 0
+        }
+        bar.progress = progress
 
         val barContainer = view.findViewById<FrameLayout>(R.id.vosd_bar_container)
         barContainer.rotation = osdPosition.layoutRotation

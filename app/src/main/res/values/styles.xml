@@ -5,7 +5,7 @@
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>
-        <item name="android:background">#88ff8800</item>
+        <item name="android:background">@color/theme_primary_variant</item>
     </style>
 
     <style name="Widget">
@@ -37,7 +37,6 @@
         <item name="android:minWidth">1dip</item>
         <item name="android:maxWidth">1dip</item>
     </style>
-
 
     <style name="Widget.Button">
 <!--

@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:labelFor="@id/limit_on_hdmi"
                     android:text="@string/settings_volume_label_limit_to_hdmi" />
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/limit_on_hdmi"
                     android:layout_width="@dimen/popup_field_input_width"
                     android:layout_height="wrap_content"

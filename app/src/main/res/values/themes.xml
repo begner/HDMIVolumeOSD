@@ -16,7 +16,8 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--Top level DayNight theme to be used in AndroidManifest.xml-->
-    <style name="Theme.MyApp" parent="Base.Theme.MyApp"/>
+    <style name="Theme.MyApp" parent="Base.Theme.MyApp">
+    </style>
 
     <style name="PopupTheme" parent="Base.Theme.MyApp">
         <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
@@ -60,6 +61,8 @@
         <item name="colorOnError">@color/theme_on_error</item>
         <!--Material type attributes-->
 
+        <item name="colorControlActivated">@color/theme_primary</item>
+
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
@@ -67,6 +70,8 @@
         <item name="textAppearanceBody1">@style/TextAppearance.MyTheme.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
         <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
+
+
 <!--
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent</item>
