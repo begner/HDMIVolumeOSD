@@ -27,6 +27,7 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_temperature)
+        HideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
 
         settingsTemperature = SettingsTemperature(applicationContext)
 
@@ -39,7 +40,6 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
             OSDPositionsTemperature().getLabelArray()
         )
         Position.setAdapter(arrayAdapter);
-
         MinTemp = findViewById(R.id.min_temp)
         MaxTemp = findViewById(R.id.max_temp)
         Server = findViewById(R.id.server);

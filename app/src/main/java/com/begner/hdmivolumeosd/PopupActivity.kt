@@ -2,8 +2,13 @@ package com.begner.hdmivolumeosd
 
 import android.app.Activity
 import android.content.Intent
+import android.inputmethodservice.InputMethodService
 import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+
 
 abstract class PopupActivity : AppCompatActivity() {
 
@@ -39,5 +44,28 @@ abstract class PopupActivity : AppCompatActivity() {
     override fun onBackPressed() {
         setResultAndFinish(false)
     }
+
+    fun HideKeyboardOnFocus(view: View, activity: Activity?) {
+        if (!(view is EditText)) {
+            view.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+                val x = hasFocus
+                if (hasFocus) {
+                    HideSoftKeyboard()
+                }
+            }
+        }
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                HideKeyboardOnFocus(innerView, activity)
+            }
+        }
+    }
+
+    fun HideSoftKeyboard() {
+        val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0);
+    }
+
 
 }

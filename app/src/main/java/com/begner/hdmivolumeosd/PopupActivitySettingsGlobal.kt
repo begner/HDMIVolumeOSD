@@ -14,12 +14,12 @@ class PopupActivitySettingsGlobal : PopupActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_global)
+        HideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
 
         settingsGlobal = SettingsGlobal(applicationContext)
 
         Duration = findViewById(R.id.duration)
         LimitOnHDMI = findViewById(R.id.limit_on_hdmi)
-
         fill()
     }
 

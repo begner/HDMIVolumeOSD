@@ -15,6 +15,7 @@ class PopupActivitySettingsVolume : PopupActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_volume)
+        HideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
 
         settingsVolume = SettingsVolume(applicationContext)
 
