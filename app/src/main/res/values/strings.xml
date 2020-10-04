@@ -34,7 +34,7 @@
     <string name="main_sub_headline">For Philips Android 9 TVs</string>
     <string name="main_permisson_hint_headline">Permission not set</string>
     <string name="main_permisson_hint_description">You need to grant permission to "display overlays" to this app.</string>
-    <string name="main_permisson_hint_how_to">Open Settings\n-> Android Settings\n-> Device Settings\n-> Storage\n-> Internal shared storage\n-> Apps\n-> Special app Access\n-> Display over other apps\n\nSet the switch next to this App to on and open this app again.</string>
+    <string name="main_permisson_hint_how_to">Open Settings\n↪ Android Settings\n↪ Device Settings\n↪ Storage\n↪ Internal shared storage\n↪ Apps\n↪ Special app Access\n↪ Display over other apps\n\nSet the switch next to this App to on and open this app again.</string>
 
     <string name="main_settings_headline">Settings</string>
     <string name="main_settings_button_global">Global</string>

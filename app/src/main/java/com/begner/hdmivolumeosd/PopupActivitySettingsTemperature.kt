@@ -11,29 +11,28 @@ import com.google.android.material.tabs.TabLayout
 
 class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelectedListener {
 
-    val Active: com.google.android.material.switchmaterial.SwitchMaterial = findViewById(R.id.active)
-    val Position: Spinner = findViewById(R.id.position)
-    val MinTemp: TextView = findViewById(R.id.min_temp)
-    val MaxTemp: TextView = findViewById(R.id.max_temp)
-    val Server: TextView = findViewById(R.id.server)
-    val Topic: TextView = findViewById(R.id.topic)
-    val User: TextView = findViewById(R.id.username)
-    val Password: TextView = findViewById(R.id.password)
-    val NavigationTab: TabLayout = findViewById(R.id.navigationTab)
-    val TabList: List<TabData> = listOf(
-        TabData("main", "Main", findViewById(R.id.main_settings)),
-        TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
-    )
+    lateinit var Active: com.google.android.material.switchmaterial.SwitchMaterial
+    lateinit var Position: Spinner
+    lateinit var MaxTemp: TextView
+    lateinit var MinTemp: TextView
+    lateinit var Server: TextView
+    lateinit var Topic: TextView
+    lateinit var User: TextView
+    lateinit var Password: TextView
+    lateinit var NavigationTab: TabLayout
+    lateinit var TabList    : List<TabData>
 
     lateinit var settingsTemperature: SettingsTemperature
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_temperature)
 
         settingsTemperature = SettingsTemperature(applicationContext)
 
+        Active = findViewById(R.id.active);
+
+        Position = findViewById(R.id.position);
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
             android.R.layout.simple_spinner_item,
@@ -41,6 +40,19 @@ class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelecte
         )
         Position.setAdapter(arrayAdapter);
 
+        MinTemp = findViewById(R.id.min_temp)
+        MaxTemp = findViewById(R.id.max_temp)
+        Server = findViewById(R.id.server);
+        Topic = findViewById(R.id.topic);
+        User = findViewById(R.id.username);
+        Password = findViewById(R.id.password);
+
+        TabList = listOf(
+            TabData("main", "Main", findViewById(R.id.main_settings)),
+            TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
+        )
+
+        NavigationTab = findViewById(R.id.navigationTab)
         NavigationTab.addOnTabSelectedListener(this)
         TabList.forEach {
             NavigationTab.addTab(NavigationTab.newTab().setText(it.label))

@@ -6,21 +6,24 @@ import android.widget.*
 
 class PopupActivitySettingsVolume : PopupActivity() {
 
-    val Position: Spinner = findViewById(R.id.position)
-    val Size: EditText = findViewById(R.id.size)
-    val Padding: EditText = findViewById(R.id.padding)
+    lateinit var Position: Spinner
+    lateinit var Size: EditText
+    lateinit var Padding: EditText
     
     lateinit var settingsVolume: SettingsVolume
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_volume)
 
         settingsVolume = SettingsVolume(applicationContext)
 
+        Position = findViewById<Spinner>(R.id.position);
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, OSDPositionsVolume().getLabelArray())
         Position.setAdapter(arrayAdapter);
+
+        Size = findViewById<EditText>(R.id.size)
+        Padding = findViewById<EditText>(R.id.padding)
 
         fill()
     }

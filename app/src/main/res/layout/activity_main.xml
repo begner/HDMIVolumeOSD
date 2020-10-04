@@ -48,8 +48,9 @@
             app:layout_constraintTop_toTopOf="parent"
             android:textAlignment="textEnd"
             android:textColor="#44ffffff"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
             />
-
 
         <LinearLayout
             android:id="@+id/main_permission_required"

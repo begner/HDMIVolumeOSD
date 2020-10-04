@@ -6,17 +6,19 @@ import android.widget.*
 
 class PopupActivitySettingsGlobal : PopupActivity() {
 
-    val Duration: EditText = findViewById(R.id.duration)
-    val LimitOnHDMI: com.google.android.material.switchmaterial.SwitchMaterial = findViewById(R.id.limit_on_hdmi)
+    lateinit var Duration: EditText
+    lateinit var LimitOnHDMI: com.google.android.material.switchmaterial.SwitchMaterial
 
     lateinit var settingsGlobal: SettingsGlobal
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_global)
 
         settingsGlobal = SettingsGlobal(applicationContext)
+
+        Duration = findViewById(R.id.duration)
+        LimitOnHDMI = findViewById(R.id.limit_on_hdmi)
 
         fill()
     }
