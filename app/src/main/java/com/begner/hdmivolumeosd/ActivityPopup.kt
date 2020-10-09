@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-
-abstract class PopupActivity : AppCompatActivity() {
+abstract class ActivityPopup : ActivityGlobal() {
 
     public fun setResultAndFinish(success: Boolean) {
         setResult(success)
@@ -48,7 +48,6 @@ abstract class PopupActivity : AppCompatActivity() {
     fun HideKeyboardOnFocus(view: View, activity: Activity?) {
         if (!(view is EditText)) {
             view.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-                val x = hasFocus
                 if (hasFocus) {
                     HideSoftKeyboard()
                 }
@@ -66,6 +65,4 @@ abstract class PopupActivity : AppCompatActivity() {
         val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0);
     }
-
-
 }

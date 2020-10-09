@@ -20,17 +20,16 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:rotation="0"
-            android:rotationX="180"
+            android:rotationX="0"
             android:rotationY="0">
-        <ProgressBar
-            android:id="@+id/vosd_bar"
-            style="@style/Widget.ProgressBar.Circular"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:indeterminate="false"
-            android:max="70"
-            android:progress="10"
-            />
+            <com.begner.hdmivolumeosd.LayoutTemperatureIndicator
+                android:id="@+id/vosd_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:value="45"
+                app:minValue="0"
+                app:maxValue="90"
+                />
         </FrameLayout>
 
         <ImageView

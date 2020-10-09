@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="RadioButton">
-        <attr name="buttonValue" format="string" />
+    <declare-styleable name="LayoutTemperatureIndicator">
+        <attr name="value" format="integer" />
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
     </declare-styleable>
 </resources>

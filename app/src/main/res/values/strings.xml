@@ -24,6 +24,7 @@
     <string name="settings_volume_label_size">Size (in %)</string>
     <string name="settings_volume_label_padding">Padding</string>
 
+    <string name="settings_bluetooth_label_devices">Device</string>
 
     <string name="settings_button_save">Save</string>
     <string name="settings_button_cancel">Cancel</string>
@@ -40,4 +41,6 @@
     <string name="main_settings_button_global">Global</string>
     <string name="main_settings_button_label_volume">Volume</string>
     <string name="main_settings_button_temperature">Temperature</string>
+    <string name="main_settings_button_bluetooth">Bluetooth</string>
+    <string name="settings_bluetooth_popup_headline">Bluetooth</string>
 </resources>

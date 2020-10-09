@@ -22,25 +22,19 @@ class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
     }
 
     fun addView(currentTemperature: Float):OSDViewTemperature {
-
         val view : View = LayoutInflater.from(context).inflate(osdPosition.layoutID, null);
-        val settingsMQTT = SettingsTemperature(context)
+        if (!settings.getMQTTActive()) {
+            return this
+        }
 
         val temp = view.findViewById<TextView>(R.id.vosd_temp)
-        if (settingsMQTT.getMQTTActive()) {
-            val tempRounded = round(currentTemperature * 10).toFloat() / 10f
-            temp.text = tempRounded.toString()
-        } else {
-            temp.visibility = View.GONE
-        }
+        val tempRounded = round(currentTemperature * 10).toFloat() / 10f
+        temp.text = tempRounded.toString()
 
-        val bar = view.findViewById<ProgressBar>(R.id.vosd_bar)
-        bar.max = settingsMQTT.getMaxTemp() - settingsMQTT.getMinTemp()
-        var progress = currentTemperature.toInt() - settingsMQTT.getMinTemp()
-        if (progress < 0) {
-            progress = 0
-        }
-        bar.progress = progress
+        val bar = view.findViewById<LayoutTemperatureIndicator>(R.id.vosd_bar)
+        bar.maxValue = settings.getMaxTemp().toInt()
+        bar.minValue = settings.getMinTemp()
+        bar.value = currentTemperature.toInt()
 
         val barContainer = view.findViewById<FrameLayout>(R.id.vosd_bar_container)
         barContainer.rotation = osdPosition.layoutRotation
@@ -60,6 +54,9 @@ class OSDViewTemperature(applicationContext: Context, view: FrameLayout) {
     }
 
     fun addBackground():OSDViewTemperature {
+        if (!settings.getMQTTActive()) {
+            return this
+        }
         val backgroundView = ImageView(context).apply {
             setImageResource(osdPosition.backgroundID)
             // set the ImageView bounds to match the Drawable's dimensions

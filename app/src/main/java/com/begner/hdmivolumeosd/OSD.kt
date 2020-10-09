@@ -12,7 +12,6 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import java.util.*
 
-
 class OSD(s: MainService, c: Context) {
     private var settingsContentObserver: ContentObserver
     private var applicationContext: Context = c
@@ -34,8 +33,6 @@ class OSD(s: MainService, c: Context) {
     }
 
     fun createOverlay(maxVolume : Int, currentVolume : Int) {
-
-        // if permission is not granted - leave!
         if (!Settings.canDrawOverlays(applicationContext))
         {
             return
@@ -46,7 +43,6 @@ class OSD(s: MainService, c: Context) {
         mOverlay = when (val overlay = mOverlay) {
             is FrameLayout -> overlay
             else -> FrameLayout(service).apply {
-
                 val params = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.MATCH_PARENT,
@@ -54,7 +50,6 @@ class OSD(s: MainService, c: Context) {
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                     PixelFormat.TRANSLUCENT
                 )
-
                 val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 wm.addView(this, params)
             }
@@ -75,7 +70,6 @@ class OSD(s: MainService, c: Context) {
             }, (settingsGlobal.getDuration() * 1000).toLong())
         }
     }
-
 
     private fun removePopup(removeOverlay: Boolean = false) {
         if (mHandler != null) {
@@ -120,5 +114,4 @@ class OSD(s: MainService, c: Context) {
             service = s
         }
     }
-
 }

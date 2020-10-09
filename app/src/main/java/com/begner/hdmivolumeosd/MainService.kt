@@ -4,12 +4,10 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
-
 
 class MainService : Service() {
     private lateinit var osd: OSD
@@ -36,12 +34,10 @@ class MainService : Service() {
             .setAutoCancel(false)
             .setOngoing(true)
 
-
         startForeground(Companion.ONGOING_NOTIFICATION_ID, mBuilder.build())
         startMqtt()
         osd = OSD(this, applicationContext)
     }
-
 
     override fun onBind(intent: Intent?): IBinder? {
         TODO("Not yet implemented")
@@ -65,7 +61,6 @@ class MainService : Service() {
         notificationManager.createNotificationChannel(channel)
     }
 
-
     fun getAverageTemp(): Float {
         var avarageTemp : Float = 0f
         if (temperatures.isNotEmpty()) {
@@ -78,26 +73,18 @@ class MainService : Service() {
     }
 
     fun startMqtt() {
+        temperatures = mutableMapOf<String, Float>()
+
         mqttClient = MqttClient(applicationContext)
         mqttClient.setCallback(object : MqttCallbackExtended {
-            override fun connectComplete(b: Boolean, s: String) {
-                Log.w("connectComplete", s)
-            }
-
-            override fun connectionLost(throwable: Throwable) {
-
-            }
-
+            override fun connectionLost(cause: Throwable?) {}
+            override fun deliveryComplete(token: IMqttDeliveryToken?) {}
+            override fun connectComplete(reconnect: Boolean, serverURI: String?) {}
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 temperatures.put(topic, mqttMessage.toString().toFloat())
-
-                Log.w("Debug", mqttMessage.toString())
             }
-
-            override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {}
         })
-
     }
 
     companion object {

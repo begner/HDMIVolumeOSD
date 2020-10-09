@@ -16,6 +16,9 @@
     <uses-feature
         android:name="android.software.leanback"
         android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +28,7 @@
         android:theme="@style/Theme.MyApp">
 
         <receiver
-            android:name="Receiver"
+            android:name="ReceiverWakeUp"
             android:enabled="true"
             android:exported="true" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
@@ -34,6 +37,13 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".ReceiverMute" >
+            <intent-filter>
+                <action android:name="android.media.EXTRA_MASTER_VOLUME_MUTED" />
+                <action android:name="android.media.RINGER_MODE_CHANGED" />
             </intent-filter>
         </receiver>
 
@@ -59,19 +69,20 @@
         </activity>
 
         <activity
-            android:name=".PopupActivitySettingsGlobal"
+            android:name=".ActivityPopupSettingsGlobal"
             android:theme="@style/PopupTheme" >
         </activity>
 
         <activity
-            android:name=".PopupActivitySettingsVolume"
+            android:name=".ActivityPopupSettingsVolume"
             android:theme="@style/PopupTheme" >
         </activity>
 
         <activity
-            android:name=".PopupActivitySettingsTemperature"
+            android:name=".ActivityPopupSettingsTemperature"
             android:theme="@style/PopupTheme" >
         </activity>
+
     </application>
 
 </manifest>

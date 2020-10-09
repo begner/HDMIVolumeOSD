@@ -1,10 +1,9 @@
 package com.begner.hdmivolumeosd
 
 import android.os.Bundle
-import android.view.Window
 import android.widget.*
 
-class PopupActivitySettingsVolume : PopupActivity() {
+class ActivityPopupSettingsVolume : ActivityPopup() {
 
     lateinit var Position: Spinner
     lateinit var Size: EditText
@@ -42,6 +41,4 @@ class PopupActivitySettingsVolume : PopupActivity() {
             Padding.getText().toString().toInt(),
         )
     }
-
-
 }

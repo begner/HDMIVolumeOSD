@@ -1,10 +1,9 @@
 package com.begner.hdmivolumeosd
 
 import android.os.Bundle
-import android.view.Window
 import android.widget.*
 
-class PopupActivitySettingsGlobal : PopupActivity() {
+class ActivityPopupSettingsGlobal : ActivityPopup() {
 
     lateinit var Duration: EditText
     lateinit var LimitOnHDMI: com.google.android.material.switchmaterial.SwitchMaterial
@@ -35,6 +34,4 @@ class PopupActivitySettingsGlobal : PopupActivity() {
             LimitOnHDMI.isChecked()
         )
     }
-
-
 }

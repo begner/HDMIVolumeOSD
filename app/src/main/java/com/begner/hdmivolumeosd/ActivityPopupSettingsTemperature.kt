@@ -1,15 +1,10 @@
 package com.begner.hdmivolumeosd
 
 import android.os.Bundle
-import android.view.View
-import android.view.Window
 import android.widget.*
-import androidx.leanback.widget.Visibility
-import com.google.android.material.tabs.TabItem
 import com.google.android.material.tabs.TabLayout
 
-
-class PopupActivitySettingsTemperature : PopupActivity(), TabLayout.OnTabSelectedListener {
+class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelectedListener {
 
     lateinit var Active: com.google.android.material.switchmaterial.SwitchMaterial
     lateinit var Position: Spinner
