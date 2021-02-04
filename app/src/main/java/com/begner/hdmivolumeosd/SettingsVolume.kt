@@ -37,16 +37,23 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         return padding
     }
 
+    fun getStyle() : String {
+        loadPreferences()
+        return getValueAsString("Style", "android")
+    }
+
     fun SaveSettings(
         position: String,
         size: Int,
         padding: Int,
+        style: String,
     ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putString("Position", position)
         editor.putInt("Size", size)
         editor.putInt("Padding", padding)
+        editor.putString("Style", style)
         editor.commit()
     }
 

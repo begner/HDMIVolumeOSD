@@ -92,6 +92,23 @@
                         <TextView
                             android:layout_width="@dimen/popup_field_label_width"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/style"
+                            android:text="@string/settings_temperature_label_style" />
+                        <Spinner
+                            android:id="@+id/style"
+                            android:layout_width="@dimen/popup_field_input_width"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/popup_field_margin_top"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="@dimen/popup_field_label_width"
+                            android:layout_height="wrap_content"
                             android:labelFor="@id/min_temp"
                             android:text="@string/settings_temperature_label_min_temp" />
                         <EditText
@@ -126,7 +143,7 @@
                 </LinearLayout>
 
 
-            <LinearLayout
+                <LinearLayout
                 android:id="@+id/mqtt_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -224,6 +241,42 @@
 <!-- MQTT SETTINGS END -->
 
                 </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/extra_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/popup_layout_padding"
+                android:visibility="gone"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/popup_field_margin_top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/popup_field_label_width"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/server"
+                        android:text="@string/settings_temperature_label_clientid" />
+                    <EditText
+                        android:id="@+id/clientId"
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content"
+                        android:inputType="textUri"
+                        android:text="" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/popup_field_label_width"
+                    android:text="@string/settings_temperature_description_clientid"
+                    android:textSize="@dimen/popup_description_text_size" />
+
+
+            </LinearLayout>
 
             <include layout="@layout/include_settings_buttons" />
 

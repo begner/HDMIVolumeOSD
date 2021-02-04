@@ -17,7 +17,7 @@ public class MqttClient {
     public MqttAndroidClient mqttAndroidClient;
 
     private String serverUri = ""; // tcp://192.168.1.17:1883
-    final String clientId = "HDMIVolumeOSD";
+    private String clientId = "";
     private String subscriptionTopic = ""; // philipsTV/TempSensor/+
     private String username = "";
     private String password = "";
@@ -29,6 +29,7 @@ public class MqttClient {
         subscriptionTopic = settings.getMQTTTopic();
         username = settings.getMQTTUser();
         password = settings.getMQTTPassword();
+        clientId = settings.getMQTTClientId() + "HDMIVolumeOSD";
 
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
@@ -39,7 +40,7 @@ public class MqttClient {
 
             @Override
             public void connectionLost(Throwable throwable) {
-
+                Log.w("Mqtt", "CONNECTION LOST!");
             }
 
             @Override
@@ -62,6 +63,7 @@ public class MqttClient {
     private void connect(){
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
+        mqttConnectOptions.setKeepAliveInterval(10);
         mqttConnectOptions.setCleanSession(false);
         if (!username.equals("")) {
             mqttConnectOptions.setUserName(username);

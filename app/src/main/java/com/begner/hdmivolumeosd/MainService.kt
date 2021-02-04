@@ -4,16 +4,21 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainService : Service() {
-    private lateinit var osd: OSD
+    private var osd: OSD = OSD()
 
     private lateinit var mqttClient: MqttClient
     private var temperatures: MutableMap<String, Float> = mutableMapOf<String, Float>()
+    private var lastMqttValue: Long = System.currentTimeMillis()
+
 
     override fun onCreate() {
         super.onCreate()
@@ -36,7 +41,8 @@ class MainService : Service() {
 
         startForeground(Companion.ONGOING_NOTIFICATION_ID, mBuilder.build())
         startMqtt()
-        osd = OSD(this, applicationContext)
+        osd.initialize(this, applicationContext)
+        osd.createOverlay()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -54,11 +60,19 @@ class MainService : Service() {
 
     private fun initNotificationChannel(id: String, name: String, description: String) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(id, name,
+        val channel = NotificationChannel(
+            id, name,
             NotificationManager.IMPORTANCE_DEFAULT
         )
         channel.description = description
         notificationManager.createNotificationChannel(channel)
+    }
+
+    fun getLastMqttValueString(): String {
+        val timeDiff = System.currentTimeMillis() - lastMqttValue
+        val date : Date = Date(timeDiff)
+        val formatter = SimpleDateFormat("mm:ss")
+        return formatter.format(date)
     }
 
     fun getAverageTemp(): Float {
@@ -77,14 +91,25 @@ class MainService : Service() {
 
         mqttClient = MqttClient(applicationContext)
         mqttClient.setCallback(object : MqttCallbackExtended {
-            override fun connectionLost(cause: Throwable?) {}
-            override fun deliveryComplete(token: IMqttDeliveryToken?) {}
-            override fun connectComplete(reconnect: Boolean, serverURI: String?) {}
+            override fun connectionLost(cause: Throwable?) {
+                Log.w("Mqtt", "connectionLost")
+            }
+
+            override fun deliveryComplete(token: IMqttDeliveryToken?) {
+                Log.w("Mqtt", "deliveryComplete")
+            }
+
+            override fun connectComplete(reconnect: Boolean, serverURI: String?) {
+                Log.w("Mqtt", "connectComplete")
+            }
+
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 temperatures.put(topic, mqttMessage.toString().toFloat())
+                lastMqttValue = System.currentTimeMillis()
             }
         })
+
     }
 
     companion object {

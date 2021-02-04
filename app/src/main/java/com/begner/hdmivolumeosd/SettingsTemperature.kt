@@ -20,6 +20,11 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         return getValueAsString("Position", "bottomRight")
     }
 
+    fun getStyle(): String {
+        loadPreferences()
+        return getValueAsString("Style", "android")
+    }
+
     fun getMaxTemp(): Int {
         loadPreferences()
         var size = getValueAsInt("MaxTemp", 75)
@@ -58,26 +63,35 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         return getValueAsString("Pass", "")
     }
 
+    fun getMQTTClientId(): String? {
+        loadPreferences()
+        return getValueAsString("ClientId", "")
+    }
+
     fun SaveSettings(
         active: Boolean,
         position: String,
+        style: String,
         minTemp: Int,
         maxTemp: Int,
         server: String,
         topic: String,
         user: String,
-        passwd: String
+        passwd: String,
+        clientId: String
     ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putBoolean("Active", active)
         editor.putString("Position", position)
+        editor.putString("Style", style)
         editor.putInt("MinTemp", minTemp)
         editor.putInt("MaxTemp", maxTemp)
         editor.putString("Server", server)
         editor.putString("Topic", topic)
         editor.putString("User", user)
         editor.putString("Pass", passwd)
+        editor.putString("ClientId", clientId)
         editor.commit()
     }
 

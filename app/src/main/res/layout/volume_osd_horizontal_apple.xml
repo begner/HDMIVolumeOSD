@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vosd_osd_container"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ProgressBar
+            android:id="@+id/vosd_bar"
+            style="@style/Widget.ProgressBar.Horizontal.Apple"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:indeterminate="false"
+            android:max="60"
+            android:progress="10"
+            />
+
+        <ImageView
+            android:id="@+id/vosd_icon_speaker"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/vosd_bar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="15dp"
+
+            android:contentDescription="SpeakerIcon"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_icon_speaker_1"
+            android:tint="#888888"
+            android:visibility="visible"
+            tools:ignore="RtlSymmetry" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

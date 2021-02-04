@@ -54,6 +54,22 @@
                 <TextView
                     android:layout_width="@dimen/popup_field_label_width"
                     android:layout_height="wrap_content"
+                    android:labelFor="@id/style"
+                    android:text="@string/settings_volume_label_style" />
+                <Spinner
+                    android:id="@+id/style"
+                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/popup_field_margin_top"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/popup_field_label_width"
+                    android:layout_height="wrap_content"
                     android:labelFor="@id/size"
                     android:text="@string/settings_volume_label_size" />
                 <EditText

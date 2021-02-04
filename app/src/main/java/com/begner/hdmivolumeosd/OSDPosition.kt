@@ -14,5 +14,4 @@ data class OSDPosition (
     var backgroundRotationX: Float = 0f
     var backgroundRotationY: Float = 0f
     var isHorizontal: Boolean = true
-
 }

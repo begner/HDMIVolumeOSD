@@ -8,12 +8,14 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
 
     lateinit var Active: com.google.android.material.switchmaterial.SwitchMaterial
     lateinit var Position: Spinner
+    lateinit var Style: Spinner
     lateinit var MaxTemp: TextView
     lateinit var MinTemp: TextView
     lateinit var Server: TextView
     lateinit var Topic: TextView
     lateinit var User: TextView
     lateinit var Password: TextView
+    lateinit var ClientId: TextView
     lateinit var NavigationTab: TabLayout
     lateinit var TabList    : List<TabData>
 
@@ -29,22 +31,33 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
         Active = findViewById(R.id.active);
 
         Position = findViewById(R.id.position);
-        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+        val positionArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
             android.R.layout.simple_spinner_item,
             OSDPositionsTemperature().getLabelArray()
         )
-        Position.setAdapter(arrayAdapter);
+        Position.setAdapter(positionArrayAdapter);
+
+        Style = findViewById(R.id.style);
+        val styleArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            OSDStylesTemperature().getLabelArray()
+        )
+        Style.setAdapter(styleArrayAdapter);
+
         MinTemp = findViewById(R.id.min_temp)
         MaxTemp = findViewById(R.id.max_temp)
         Server = findViewById(R.id.server);
         Topic = findViewById(R.id.topic);
         User = findViewById(R.id.username);
         Password = findViewById(R.id.password);
+        ClientId = findViewById(R.id.clientId);
 
         TabList = listOf(
             TabData("main", "Main", findViewById(R.id.main_settings)),
             TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
+            TabData("extra", "Extras", findViewById(R.id.extra_settings)),
         )
 
         NavigationTab = findViewById(R.id.navigationTab)
@@ -59,24 +72,28 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
     private fun fill() {
         Active.setChecked(settingsTemperature.getMQTTActive())
         Position.setSelection(OSDPositionsTemperature().getIndexByKey(settingsTemperature.getPosition()))
+        Style.setSelection(OSDStylesTemperature().getIndexByKey(settingsTemperature.getStyle()))
         MinTemp.setText(settingsTemperature.getMinTemp().toString())
         MaxTemp.setText(settingsTemperature.getMaxTemp().toString())
         Server.setText(settingsTemperature.getMQTTServer())
         Topic.setText(settingsTemperature.getMQTTTopic())
         User.setText(settingsTemperature.getMQTTUser())
         Password.setText(settingsTemperature.getMQTTPassword())
+        ClientId.setText(settingsTemperature.getMQTTClientId())
     }
 
     override fun save() {
         settingsTemperature.SaveSettings(
             Active.isChecked(),
             OSDPositionsTemperature().getByIndex(Position.selectedItemPosition).key,
+            OSDStylesTemperature().getByIndex(Style.selectedItemPosition).key,
             MinTemp.getText().toString().toInt(),
             MaxTemp.getText().toString().toInt(),
             Server.getText().toString(),
             Topic.getText().toString(),
             User.getText().toString(),
-            Password.getText().toString()
+            Password.getText().toString(),
+            ClientId.getText().toString()
         )
     }
 
