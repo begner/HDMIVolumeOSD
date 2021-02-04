@@ -31,6 +31,18 @@ class LayoutTemperatureIndicator : FrameLayout {
             doOnChange()
         }
 
+    @ExportedProperty(category = "backgroundId")
+    public var backgroundId: Int = 0
+        set(value) {
+            field = value
+        }
+
+    @ExportedProperty(category = "chartId")
+    public var chartId: Int = 0
+        set(value) {
+            field = value
+        }
+
     private var mWidth: Int = 0
     private var mHeight: Int = 0
 
@@ -68,6 +80,8 @@ class LayoutTemperatureIndicator : FrameLayout {
                 value = getInteger(R.styleable.LayoutTemperatureIndicator_value, 0)
                 minValue = getInteger(R.styleable.LayoutTemperatureIndicator_minValue, 0)
                 maxValue = getInteger(R.styleable.LayoutTemperatureIndicator_maxValue, 100)
+                backgroundId = getResourceId(R.styleable.LayoutTemperatureIndicator_backgroundId, 0)
+                chartId = getResourceId(R.styleable.LayoutTemperatureIndicator_chartId, 0)
             } finally {
                 recycle()
             }
@@ -78,13 +92,13 @@ class LayoutTemperatureIndicator : FrameLayout {
 
         chartProgress = ResourcesCompat.getDrawable(
             resources,
-            R.drawable.temperature_indicator_chart,
+            chartId,
             null
         )!!
 
         chartBackground = ResourcesCompat.getDrawable(
             resources,
-            R.drawable.temperature_indicator_background,
+            backgroundId,
             null
         )!!
     }

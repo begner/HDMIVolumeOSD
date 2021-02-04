@@ -9,15 +9,16 @@ import java.lang.Math.round
 
 class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) : OSDView(applicationContext, frameLayout) {
 
-    var settings  : SettingsTemperature
+    var settingsTemperature  : SettingsTemperature
     lateinit var temp : TextView
     lateinit var lastMqtt : TextView
     lateinit var bar : LayoutTemperatureIndicator
 
     init {
-        settings = SettingsTemperature(context)
-        osdPosition = OSDPositionsTemperature().getPositionByKey(settings.getPosition())
-        osdStyle = OSDStylesTemperature().getPositionByKey(settings.getStyle())
+        settingsTemperature = SettingsTemperature(context)
+        settingsGlobal = SettingsGlobal(context)
+        osdPosition = OSDPositionsTemperature().getPositionByKey(settingsTemperature.getPosition())
+        osdStyle = OSDStylesTemperature().getPositionByKey(settingsTemperature.getStyle())
         addBackground()
         addView()
     }
@@ -26,9 +27,9 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         val currentTemperature = 0f
         val lastMqttView = ""
 
-        view = LayoutInflater.from(context).inflate(osdPosition.layoutID, null);
+        view = LayoutInflater.from(context).inflate(osdStyle.getLayout(false), null);
         view.visibility = View.GONE
-        if (!settings.getMQTTActive()) {
+        if (!settingsTemperature.getMQTTActive()) {
             return
         }
 
@@ -59,15 +60,15 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
 
         lastMqtt.text = lastMqttView
 
-        bar.maxValue = settings.getMaxTemp().toInt()
-        bar.minValue = settings.getMinTemp()
+        bar.maxValue = settingsTemperature.getMaxTemp().toInt()
+        bar.minValue = settingsTemperature.getMinTemp()
         bar.value = currentTemperature.toInt()
 
         updated()
     }
 
     override public fun addBackground() {
-        if (!settings.getMQTTActive()) {
+        if (!settingsTemperature.getMQTTActive()) {
             return
         }
         val backgroundRes = osdStyle.getBackground(osdPosition.isHorizontal)

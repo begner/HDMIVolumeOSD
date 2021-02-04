@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 
 abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
 
+    lateinit var settingsGlobal  : SettingsGlobal
     lateinit var osdPosition: OSDPosition
     lateinit var view: View
     var backgroundView: View? = null
@@ -38,7 +39,7 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
     }
 
     public fun updated() {
-        val duration = 2L
+        val duration = settingsGlobal.getDuration().toLong()
         if (closeTimer != null) {
             closeTimer!!.cancel()
         }

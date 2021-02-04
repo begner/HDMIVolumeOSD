@@ -11,7 +11,8 @@ class OSDStylesTemperature() : OSDStyles() {
                 backgroundID = R.drawable.layout_dimmer_circular
             },
             OSDStyle("apple14","Apple TvOS").apply {
-                layoutID = R.layout.temperature_osd
+                layoutID = R.layout.temperature_osd_apple
+                animationClass = StyleAnimationTemperatureApple()
                 backgroundID = null
             }
         )
