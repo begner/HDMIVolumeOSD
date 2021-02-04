@@ -10,11 +10,9 @@ import java.lang.Math.round
 class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) : OSDView(applicationContext, frameLayout) {
 
     var settings  : SettingsTemperature
-    var osdStyle : OSDStyle
     lateinit var temp : TextView
     lateinit var lastMqtt : TextView
     lateinit var bar : LayoutTemperatureIndicator
-
 
     init {
         settings = SettingsTemperature(context)
@@ -77,12 +75,14 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
             return
         }
 
-        val backgroundView = ImageView(context).apply {
+        backgroundView = ImageView(context).apply {
             setImageResource(backgroundRes)
             // set the ImageView bounds to match the Drawable's dimensions
             adjustViewBounds = true
         }
-        backgroundView.rotation = osdPosition.backgroundRotation
+        backgroundView!!.visibility = View.GONE
+
+        backgroundView!!.rotation = osdPosition.backgroundRotation
 
         frameLayout.addView(
             backgroundView, FrameLayout.LayoutParams(

@@ -23,7 +23,6 @@ import java.lang.Math.floor
 class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSDView(applicationContext, frameLayout) {
 
     var settingsVolume  : SettingsVolume
-    var osdStyle : OSDStyle
     var title : TextView? = null
     lateinit var bar : ProgressBar
     lateinit var speakerIcon : ImageView
@@ -124,7 +123,7 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
 
         var backgroundWidth = ViewGroup.LayoutParams.MATCH_PARENT
         var backgroundHeight = ViewGroup.LayoutParams.MATCH_PARENT
-        val backgroundView = ImageView(context).apply {
+        backgroundView = ImageView(context).apply {
             setImageResource(backgroundRes)
             if (osdPosition.isHorizontal) {
                 backgroundHeight = 120 + settingsVolume.getPadding()
@@ -136,7 +135,8 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
             // set the ImageView bounds to match the Drawable's dimensions
             adjustViewBounds = true
         }
-        backgroundView.rotation = osdPosition.backgroundRotation
+        backgroundView!!.visibility = View.GONE
+        backgroundView!!.rotation = osdPosition.backgroundRotation
 
         frameLayout.addView(backgroundView, FrameLayout.LayoutParams(
                 backgroundWidth,

@@ -1,5 +1,7 @@
 package com.begner.hdmivolumeosd
 
+import android.animation.Animator
+
 data class OSDStyle (
     var key: String = "",
     var label: String = ""
@@ -11,6 +13,7 @@ data class OSDStyle (
     var backgroundIDVertical: Int? = R.drawable.layout_dimmer_vertical
     var backgroundIDHorizontal: Int? = R.drawable.layout_dimmer_horizontal
     var animationDuration: Long = 0
+    var animationClass: StyleAnimation = StyleAnimation()
 
     fun getLayout(isHorizontal : Boolean) : Int {
         if (layoutID != null) {

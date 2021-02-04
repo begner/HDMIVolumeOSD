@@ -1,5 +1,8 @@
 package com.begner.hdmivolumeosd
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+
 
 class OSDStylesVolume() : OSDStyles() {
     init {
@@ -9,6 +12,7 @@ class OSDStylesVolume() : OSDStyles() {
                 layoutIDHorizontal = R.layout.volume_osd_horizontal
                 backgroundIDVertical = R.drawable.layout_dimmer_vertical
                 backgroundIDHorizontal = R.drawable.layout_dimmer_horizontal
+                animationClass = StyleAnimationVolume()
                 animationDuration = 0
             },
             OSDStyle("apple14","Apple TvOS").apply {
@@ -16,6 +20,7 @@ class OSDStylesVolume() : OSDStyles() {
                 layoutIDHorizontal = R.layout.volume_osd_horizontal_apple
                 backgroundIDVertical = null
                 backgroundIDHorizontal = null
+                animationClass = StyleAnimationVolumeApple()
                 animationDuration = 500
             }
         )

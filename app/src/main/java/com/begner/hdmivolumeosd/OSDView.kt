@@ -15,6 +15,8 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
 
     lateinit var osdPosition: OSDPosition
     lateinit var view: View
+    var backgroundView: View? = null
+    lateinit var osdStyle : OSDStyle
     abstract fun addView()
     abstract fun addBackground()
     var isVisible: Boolean = false
@@ -51,84 +53,49 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
 
     @SuppressLint("RtlHardcoded")
     private fun animate(animateIn: Boolean) {
-        val metrics = context.getResources().getDisplayMetrics()
-        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        var animationProperty = ""
-        var outOfScreenPos = 0f
-        var onScreenPos = 0f
-
-        if (osdPosition.isHorizontal) {
-            val horizontalGravity = osdPosition.gravity and Gravity.VERTICAL_GRAVITY_MASK
-            val height = view.getMeasuredHeight()
-            animationProperty = "translationY"
-
-            if (horizontalGravity == Gravity.TOP) {
-                outOfScreenPos = 0f - height
-            }
-            if (horizontalGravity == Gravity.BOTTOM) {
-                outOfScreenPos = 0f + height
-            }
-            onScreenPos = 0f
-
-            if (animateIn) {
-                view.y = outOfScreenPos
-            } else {
-                view.y = onScreenPos
-            }
-
+        val animationLib = osdStyle.animationClass
+        animationLib.context = context
+        animationLib.mainView = view
+        if (backgroundView != null) {
+            animationLib.backgroundView = backgroundView
         }
-        else {
-            val verticalGravity = osdPosition.gravity and Gravity.HORIZONTAL_GRAVITY_MASK
-            val width = view.getMeasuredWidth()
-            animationProperty = "translationX"
-
-            if (verticalGravity == Gravity.LEFT) {
-                outOfScreenPos = 0f - width
-            }
-            if (verticalGravity == Gravity.RIGHT) {
-                outOfScreenPos = 0f + width
-            }
-            onScreenPos = 0f
-            if (animateIn) {
-                view.x = outOfScreenPos
-            } else {
-                view.x = onScreenPos
-            }
-        }
+        animationLib.osdPosition = osdPosition
 
         if (animatorSet != null) {
             animatorSet!!.cancel()
         }
         animatorSet = AnimatorSet()
-        val animations: MutableList<Animator> = ArrayList()
+        val animations: MutableList<Animator>
         if (animateIn) {
-            animations.add(
-                ObjectAnimator.ofFloat(view, animationProperty, onScreenPos).setDuration(
-                    500
-                )
-            );
+            animations = animationLib.animateIn()
             animatorSet!!.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {
                     view.visibility = View.VISIBLE
+                    if (backgroundView != null) {
+                        backgroundView!!.visibility = View.VISIBLE
+                    }
                 }
-
                 override fun onAnimationEnd(animation: Animator) {}
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
             })
         } else {
-            animations.add(
-                ObjectAnimator.ofFloat(view, animationProperty, outOfScreenPos).setDuration(500)
-            );
+            animations = animationLib.animateOut()
             animatorSet!!.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {
                     view.visibility = View.VISIBLE
+                    if (backgroundView != null) {
+                        backgroundView!!.visibility = View.VISIBLE
+                    }
                 }
                 override fun onAnimationEnd(animation: Animator) {
                     view.visibility = View.GONE
+                    if (backgroundView != null) {
+                        backgroundView!!.visibility = View.GONE
+                    }
                 }
                 override fun onAnimationCancel(animation: Animator) {
-                    view.visibility = View.GONE
+                    onAnimationEnd(animation)
                 }
                 override fun onAnimationRepeat(animation: Animator) {}
             })
