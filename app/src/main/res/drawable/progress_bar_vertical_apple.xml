@@ -2,21 +2,21 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@android:id/background"
-        android:left="5dp"
-        android:right="5dp">
+        android:left="@dimen/apple_volume_padding"
+        android:right="@dimen/apple_volume_padding">
         <shape>
-            <corners android:radius="10dp" />
-            <solid android:color="#444444" />
+            <corners android:radius="@dimen/apple_volume_radius" />
+            <solid android:color="@color/apple_volume_background"/>
         </shape>
     </item>
 
     <item android:id="@android:id/progress"
-        android:left="5dp"
-        android:right="5dp">
+        android:left="@dimen/apple_volume_padding"
+        android:right="@dimen/apple_volume_padding">
         <clip android:clipOrientation="vertical" android:gravity="bottom">
             <shape android:gravity="bottom">
-                <corners android:radius="10dp" />
-                <solid android:color="#FFFFFF" />
+                <corners android:radius="@dimen/apple_volume_radius" />
+                <solid android:color="@color/apple_volume_active"/>
             </shape>
         </clip>
     </item>

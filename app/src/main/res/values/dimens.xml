@@ -7,7 +7,9 @@
     <dimen name="popup_width">500dp</dimen>
     <dimen name="popup_description_text_size">12sp</dimen>
 
-    <item type="dimen" name="dialog_min_width_major">500dp</item>
-    <item type="dimen" name="dialog_min_width_minor">500dp</item>
+    <dimen name="dialog_min_width_major">500dp</dimen>
+    <dimen name="dialog_min_width_minor">500dp</dimen>
 
+    <dimen name="apple_volume_radius">6dp</dimen>
+    <dimen name="apple_volume_padding">5dp</dimen>
 </resources>

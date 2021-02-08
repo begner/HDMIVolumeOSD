@@ -5,20 +5,22 @@ import com.daimajia.easing.Skill
 
 class StyleAnimationVolumeApple : StyleAnimation() {
 
+    private val animationDuration = 300f
+    private val animationDelay = 0f
+    private val animationScale = 0.7f
+    private val easingScale = Skill.QuadEaseInOut
+
     // Instant in
     override public fun animateIn(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseOut
-        val easingScale = Skill.QuadEaseInOut
-        val duration = 500f
-        val delayElement = 100f
 
         calcAnimationDirections(mainView, !osdPosition.isHorizontal, true)
-        animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, duration, delayElement, easing))
+        animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, animationDuration, animationDelay, easing))
 
-        animations.add(createAnimation(mainView, "scaleX", 0.7f, 1f, duration, delayElement, easingScale))
-        animations.add(createAnimation(mainView, "scaleY", 0.7f, 1f, duration, delayElement, easingScale))
+        animations.add(createAnimation(mainView, "scaleX", animationScale, 1f, animationDuration, animationDelay, easingScale))
+        animations.add(createAnimation(mainView, "scaleY", animationScale, 1f, animationDuration, animationDelay, easingScale))
 
         return animations
     }
@@ -28,16 +30,12 @@ class StyleAnimationVolumeApple : StyleAnimation() {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseIn
-        val easingScale = Skill.QuadEaseInOut
-        val duration = 1000f
-        val delayElement = 0f
-        val delayBackground = 100f
 
         calcAnimationDirections(mainView, !osdPosition.isHorizontal, false)
-        animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, duration, delayElement, easing))
+        animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, animationDuration, animationDelay, easing))
 
-        animations.add(createAnimation(mainView, "scaleX", 1f, 0.7f, duration, delayElement, easingScale))
-        animations.add(createAnimation(mainView, "scaleY", 1f, 0.7f, duration, delayElement, easingScale))
+        animations.add(createAnimation(mainView, "scaleX", 1f, animationScale, animationDuration, animationDelay, easingScale))
+        animations.add(createAnimation(mainView, "scaleY", 1f, animationScale, animationDuration, animationDelay, easingScale))
 
         return animations
     }

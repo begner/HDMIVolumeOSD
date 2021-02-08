@@ -30,11 +30,9 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
 
     init {
         settingsVolume = SettingsVolume(context)
-        settingsGlobal = SettingsGlobal(context)
         osdPosition = OSDPositionsVolume().getPositionByKey(settingsVolume.getPosition())
         osdStyle = OSDStylesVolume().getPositionByKey(settingsVolume.getStyle())
-        addBackground()
-        addView()
+        start()
     }
 
     public fun update(curVolume: Int, oldVolume: Int, maxVolume: Int) {

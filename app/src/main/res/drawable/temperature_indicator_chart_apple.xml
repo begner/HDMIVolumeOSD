@@ -1,65 +1,71 @@
+
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="200dp"
     android:height="200dp"
     android:viewportWidth="200"
     android:viewportHeight="200">
+    <path android:pathData="M22.946,180.612c0,-87.615 70.666,-158.642 157.836,-158.642c0.276,0 0.55,0.009 0.825,0.01"
+        android:strokeWidth="@string/apple_chart_temperature_size"
+        android:strokeLineCap="square">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:centerX="200"
+                android:centerY="200"
+                android:type="sweep">
+                <item android:offset="0.5" android:color="@color/apple_chart_temperature_active_gradient_1"/>
+                <item android:offset="0.55" android:color="@color/apple_chart_temperature_active_gradient_2"/>
+                <item android:offset="0.6" android:color="@color/apple_chart_temperature_active_gradient_3"/>
+                <item android:offset="0.65" android:color="@color/apple_chart_temperature_active_gradient_4"/>
+                <item android:offset="0.7" android:color="@color/apple_chart_temperature_active_gradient_5"/>
+                <item android:offset="0.75" android:color="@color/apple_chart_temperature_active_gradient_6"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <group>
+        <clip-path android:pathData="M22.946,190.612c-5.523,0 -10,-4.478 -10,-10c0,-92.99 75.291,-168.642 167.836,-168.642c0.206,0 0.41,0.003 0.614,0.007l0.246,0.003c5.523,0.02 9.984,4.513 9.965,10.036c-0.02,5.51 -4.493,9.964 -9.999,9.964c-0.013,0 -0.024,0 -0.036,0l-0.79,-0.01c-81.517,0 -147.836,66.681 -147.836,148.642C32.946,186.135 28.469,190.612 22.946,190.612z"/>
+        <path android:pathData="M8.61,195.672L356.237,165.258" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M13.891,225.622L350.955,135.308" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M24.292,254.202L340.554,106.728" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M39.5,280.541L325.347,80.388" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M59.05,303.84L305.798,57.092" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M82.348,323.389L282.499,37.542" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M108.686,338.597L256.161,22.335" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M108.686,338.597L256.161,22.335" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M137.266,348.998L227.58,11.933" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M167.216,354.279L197.629,6.652" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M197.629,354.279L167.215,6.653" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M227.58,348.998L137.264,11.933" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M256.159,338.596L108.684,22.335" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M282.499,323.39L82.345,37.542" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M305.796,303.84L59.046,57.092" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M325.346,280.541L39.496,80.391" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M340.553,254.203L24.289,106.728" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M350.955,225.623L13.887,135.307" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+        <path android:pathData="M356.235,195.671L8.605,165.26" android:strokeWidth="@string/apple_chart_temperature_segment_size_sub" android:strokeColor="@color/apple_chart_temperature_active_segment_main"/>
+    </group>
+    <group>
+        <clip-path android:pathData="M22.946,186.612c-3.313,0 -6,-2.687 -6,-6c0,-90.784 73.497,-164.642 163.836,-164.642l0.847,0.01c3.313,0.012 5.99,2.708 5.979,6.021c-0.012,3.306 -2.696,5.979 -6,5.979c-0.007,0 -0.014,0 -0.021,0l-0.804,-0.01c-83.723,0 -151.836,68.475 -151.836,152.642C28.946,183.926 26.26,186.612 22.946,186.612z"/>
+        <path android:pathData="M7.946,180.465L356.901,180.465" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M10.597,210.762L354.25,150.168" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M18.468,240.14L346.379,120.79" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M31.322,267.704L333.525,93.226" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M48.767,292.617L316.081,68.314" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M70.272,314.123L294.575,46.808" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M95.184,331.568L269.662,29.363" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M95.184,331.568L269.662,29.363" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M122.749,344.421L242.097,16.51" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M152.125,352.292L212.72,8.639" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M182.422,354.943L182.422,5.989" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M212.72,352.292L152.124,8.639" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M242.097,344.421L122.746,16.51" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M269.661,331.568L95.183,29.363" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M294.573,314.123L70.269,46.808" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M316.08,292.617L48.762,68.314" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M333.524,267.704L31.317,93.226" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M346.378,240.14L18.464,120.79" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+        <path android:pathData="M354.249,210.762L10.592,150.168" android:strokeWidth="@string/apple_chart_temperature_segment_size_main" android:strokeColor="@color/apple_chart_temperature_active_segment_sub"/>
+    </group>
 
-    <path
-        android:pathData="M181.243,4.676h-0.208c-1.003,0 -1.972,0.134 -2.903,0.362C82.505,6.645 5.15,84.655 4.61,180.534c-0.002,0.086 -0.013,0.171 -0.013,0.258V181c0,0.037 0.005,0.073 0.005,0.11c0,0.145 -0.005,0.287 -0.005,0.432h0.027C4.905,187.916 10.055,193 16.387,193h21.688c6.332,0 11.482,-5.084 11.762,-11.458h0.027c0,-72.388 58.89,-131.275 131.275,-131.275v-0.325h0.104c6.627,0 12,-5.278 12,-11.789V16.465C193.243,9.953 187.87,4.676 181.243,4.676z"
-        >
-            <aapt:attr name="android:fillColor">
-                <gradient
-                    android:centerX="200"
-                    android:centerY="200"
-                    android:type="sweep">
-                    <item android:offset="0.5" android:color="#4BD7E4"/>
-                    <item android:offset="0.55" android:color="#1FAAD6"/>
-                    <item android:offset="0.6" android:color="#76BA3F"/>
-                    <item android:offset="0.65" android:color="#FDC803"/>
-                    <item android:offset="0.7" android:color="#FF9501"/>
-                    <item android:offset="0.75" android:color="#ee4444"/>
-                </gradient>
-            </aapt:attr>
-        </path>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M10.77,181.542L43.441,181.542"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M181.338,43.646L181.338,10.973"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M157.394,45.742L151.718,13.564"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M134.178,51.962L122.999,21.259"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M112.392,62.121L96.053,33.825"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M92.703,75.907L71.698,50.878"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M75.707,92.904L50.675,71.902"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M61.919,112.595L33.621,96.257"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M51.761,134.379L21.056,123.204"
-        android:strokeColor="#22000000"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M45.541,157.596L13.36,151.924"
-        android:strokeColor="#22000000"/>
 </vector>

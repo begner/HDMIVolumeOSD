@@ -47,4 +47,8 @@
     <string name="main_settings_button_temperature">Temperature</string>
     <string name="main_settings_button_bluetooth">Bluetooth</string>
     <string name="settings_bluetooth_popup_headline">Bluetooth</string>
+
+    <string name="apple_chart_temperature_size">30</string>
+    <string name="apple_chart_temperature_segment_size_main">1</string>
+    <string name="apple_chart_temperature_segment_size_sub">1</string>
 </resources>

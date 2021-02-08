@@ -32,4 +32,25 @@
     <color name="background_activity">#282828</color>
     <color name="background_popup">#282828</color>
     <color name="tab_border_color">#888888</color>
+
+    <color name="apple_volume_background">#444444</color>
+    <color name="apple_volume_active">#FFFFFF</color>
+
+
+    <color name="apple_chart_temperature_background">#444444</color>
+    <color name="apple_chart_temperature_background_segment_main">#44FFFFFF</color>
+    <color name="apple_chart_temperature_background_segment_sub">#33FFFFFF</color>
+
+    <color name="apple_chart_temperature_active_segment_main">#33000000</color>
+    <color name="apple_chart_temperature_active_segment_sub">#22000000</color>
+
+    <color name="apple_chart_temperature_active_gradient_1">#4BD7E4</color>
+    <color name="apple_chart_temperature_active_gradient_2">#1FAAD6</color>
+    <color name="apple_chart_temperature_active_gradient_3">#76BA3F</color>
+    <color name="apple_chart_temperature_active_gradient_4">#FDC803</color>
+    <color name="apple_chart_temperature_active_gradient_5">#FF9501</color>
+    <color name="apple_chart_temperature_active_gradient_6">#ee4444</color>
+
+
+
 </resources>

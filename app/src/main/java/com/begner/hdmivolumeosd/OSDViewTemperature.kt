@@ -16,11 +16,9 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
 
     init {
         settingsTemperature = SettingsTemperature(context)
-        settingsGlobal = SettingsGlobal(context)
         osdPosition = OSDPositionsTemperature().getPositionByKey(settingsTemperature.getPosition())
         osdStyle = OSDStylesTemperature().getPositionByKey(settingsTemperature.getStyle())
-        addBackground()
-        addView()
+        start()
     }
 
     override public fun addView() {

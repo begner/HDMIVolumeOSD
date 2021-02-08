@@ -24,6 +24,15 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
     var closeTimer: CountDownTimer? = null
     var animatorSet: AnimatorSet? = null
 
+    init {
+        settingsGlobal = SettingsGlobal(context)
+    }
+
+    public fun start() {
+        addBackground()
+        addView()
+    }
+
     public fun animateIn() {
         if (!isVisible) {
             isVisible = true

@@ -8,7 +8,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vosd_osd_container"
-        android:layout_width="40dp"
+        android:layout_width="35dp"
         android:layout_height="match_parent"
         >
 
@@ -30,7 +30,7 @@
 
         <ImageView
             android:id="@+id/vosd_icon_speaker"
-            android:layout_width="20dp"
+            android:layout_width="15dp"
             android:layout_height="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
