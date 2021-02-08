@@ -1,5 +1,7 @@
 package com.begner.hdmivolumeosd
 
+import androidx.constraintlayout.widget.ConstraintSet
+
 data class OSDPosition (
     var key: String = "",
     var label: String = "",
@@ -14,4 +16,6 @@ data class OSDPosition (
     var backgroundRotationX: Float = 0f
     var backgroundRotationY: Float = 0f
     var isHorizontal: Boolean = true
+    var displayConstraintX: Int = ConstraintSet.LEFT
+    var displayConstraintY: Int = ConstraintSet.TOP
 }

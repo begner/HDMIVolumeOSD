@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content">
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vosd_osd_container"
@@ -34,14 +35,28 @@
                 />
         </FrameLayout>
 
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vosd_bar_display"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="0"
+            android:rotationX="0"
+            android:rotationY="0"
+            android:padding="10dp"
+            >
+
         <TextView
             android:id="@+id/vosd_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/vosd_mqtt_time"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="15dp"
-
             android:gravity="center"
             android:shadowColor="#ff000000"
             android:shadowDx="1.0"
@@ -60,8 +75,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/vosd_temp"
             app:layout_constraintStart_toEndOf="@id/vosd_temp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginEnd="10dp"
             android:paddingTop="2dp"
             android:gravity="center"
             android:shadowColor="#ff000000"
@@ -74,15 +87,12 @@
             android:textStyle="bold"
             android:visibility="visible"
             />
-
         <TextView
             android:id="@+id/vosd_mqtt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vosd_temp"
             app:layout_constraintEnd_toEndOf="@id/vosd_temp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
             android:shadowColor="#ff000000"
             android:shadowDx="1.0"
             android:shadowDy="1.0"
@@ -93,6 +103,7 @@
             android:textStyle="bold"
             android:visibility="visible"
             />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

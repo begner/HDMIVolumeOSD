@@ -48,7 +48,6 @@ class OSD() {
             return
         }
 
-
         mOverlay = when (val overlay = mOverlay) {
             is FrameLayout -> overlay
             else -> FrameLayout(service).apply {
@@ -86,9 +85,11 @@ class OSD() {
         }
     }
 
-    fun updateViewVolume(curVolume: Int, oldVolume: Int, maxVolume: Int) {
+    fun updateView(curVolume: Int, oldVolume: Int, maxVolume: Int) {
         viewVolume!!.update(curVolume, oldVolume, maxVolume)
-        viewTemperature!!.update(service.getAverageTemp(), service.getLastMqttValueString())
+        var curTemp = service.getAverageTemp();
+        curTemp = 60f;
+        viewTemperature!!.update(curTemp, service.getLastMqttValueString())
     }
 
     class SettingsContentObserver internal constructor(c: Context, s: OSD, handler: Handler?) :
@@ -114,7 +115,7 @@ class OSD() {
             var routeMax = routeInfo.getVolumeMax()
 
             if (routeName.equals("HDMI") || !SettingsGlobal(context).getLimitOnHDMI()) {
-                service.updateViewVolume(currentVolume, oldVolume, routeMax)
+                service.updateView(currentVolume, oldVolume, routeMax)
             }
         }
 

@@ -31,6 +31,7 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
     public fun start() {
         addBackground()
         addView()
+
     }
 
     public fun animateIn() {

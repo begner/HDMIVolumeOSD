@@ -4,10 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import java.lang.Math.round
 
-class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) : OSDView(applicationContext, frameLayout) {
+class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) : OSDView(
+    applicationContext,
+    frameLayout
+) {
 
     var settingsTemperature  : SettingsTemperature
     lateinit var temp : TextView
@@ -31,9 +38,19 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
             return
         }
 
+        view.setPadding(
+            settingsTemperature.getPadding(),
+            settingsTemperature.getPadding(),
+            settingsTemperature.getPadding(),
+            settingsTemperature.getPadding()
+        )
+
         temp = view.findViewById<TextView>(R.id.vosd_temp)
 
         lastMqtt = view.findViewById<TextView>(R.id.vosd_mqtt_time)
+
+
+        val osdContainer = view.findViewById<ConstraintLayout>(R.id.vosd_osd_container)
 
         bar = view.findViewById<LayoutTemperatureIndicator>(R.id.vosd_bar)
 
@@ -41,6 +58,17 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         barContainer.rotation = osdPosition.layoutRotation
         barContainer.rotationX = osdPosition.layoutRotationX
         barContainer.rotationY = osdPosition.layoutRotationY
+
+        val displayContainer = view.findViewById<ConstraintLayout>(R.id.vosd_bar_display)
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(osdContainer)
+        constraintSet.clear(displayContainer.id, ConstraintSet.LEFT)
+        constraintSet.clear(displayContainer.id, ConstraintSet.RIGHT)
+        constraintSet.clear(displayContainer.id, ConstraintSet.TOP)
+        constraintSet.clear(displayContainer.id, ConstraintSet.BOTTOM)
+        constraintSet.connect(displayContainer.id, osdPosition.displayConstraintY, ConstraintSet.PARENT_ID, osdPosition.displayConstraintY,0);
+        constraintSet.connect(displayContainer.id, osdPosition.displayConstraintX, ConstraintSet.PARENT_ID, osdPosition.displayConstraintX,0);
+        constraintSet.applyTo(osdContainer);
 
         frameLayout.addView(view, FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,

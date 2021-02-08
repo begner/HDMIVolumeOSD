@@ -27,20 +27,29 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
 
     fun getMaxTemp(): Int {
         loadPreferences()
-        var size = getValueAsInt("MaxTemp", 75)
-        if (size < 1) {
-            size = 1
+        var value = getValueAsInt("MaxTemp", 75)
+        if (value < 1) {
+            value = 1
         }
-        return size
+        return value
     }
 
     fun getMinTemp(): Int {
         loadPreferences()
-        var size = getValueAsInt("MinTemp", 20)
-        if (size < 0) {
-            size = 0
+        var value = getValueAsInt("MinTemp", 20)
+        if (value < 0) {
+            value = 0
         }
-        return size
+        return value
+    }
+
+    fun getPadding(): Int {
+        loadPreferences()
+        var value = getValueAsInt("Padding", 5)
+        if (value < 0) {
+            value = 0
+        }
+        return value
     }
 
     fun getMQTTServer(): String? {
@@ -78,8 +87,9 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         topic: String,
         user: String,
         passwd: String,
-        clientId: String
-    ) {
+        clientId: String,
+        padding: Int,
+        ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putBoolean("Active", active)
@@ -92,6 +102,7 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         editor.putString("User", user)
         editor.putString("Pass", passwd)
         editor.putString("ClientId", clientId)
+        editor.putInt("Padding", padding)
         editor.commit()
     }
 

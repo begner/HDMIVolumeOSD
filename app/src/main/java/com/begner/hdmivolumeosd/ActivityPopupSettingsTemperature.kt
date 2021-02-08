@@ -18,6 +18,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
     lateinit var ClientId: TextView
     lateinit var NavigationTab: TabLayout
     lateinit var TabList    : List<TabData>
+    lateinit var Padding: EditText
 
     lateinit var settingsTemperature: SettingsTemperature
 
@@ -46,6 +47,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
         )
         Style.setAdapter(styleArrayAdapter);
 
+        Padding = findViewById(R.id.padding)
         MinTemp = findViewById(R.id.min_temp)
         MaxTemp = findViewById(R.id.max_temp)
         Server = findViewById(R.id.server);
@@ -56,6 +58,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
 
         TabList = listOf(
             TabData("main", "Main", findViewById(R.id.main_settings)),
+            TabData("visual", "Visual", findViewById(R.id.visual_settings)),
             TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
             TabData("extra", "Extras", findViewById(R.id.extra_settings)),
         )
@@ -73,6 +76,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
         Active.setChecked(settingsTemperature.getMQTTActive())
         Position.setSelection(OSDPositionsTemperature().getIndexByKey(settingsTemperature.getPosition()))
         Style.setSelection(OSDStylesTemperature().getIndexByKey(settingsTemperature.getStyle()))
+        Padding.setText(settingsTemperature.getPadding().toString())
         MinTemp.setText(settingsTemperature.getMinTemp().toString())
         MaxTemp.setText(settingsTemperature.getMaxTemp().toString())
         Server.setText(settingsTemperature.getMQTTServer())
@@ -93,7 +97,8 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
             Topic.getText().toString(),
             User.getText().toString(),
             Password.getText().toString(),
-            ClientId.getText().toString()
+            ClientId.getText().toString(),
+            Padding.getText().toString().toInt(),
         )
     }
 
