@@ -24,11 +24,13 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
     var settingsTemperature  : SettingsTemperature
     lateinit var temperatureDisplay : TextView
     lateinit var lastMqttDisplay : TextView
+    lateinit var animationContainerScale : View
+    lateinit var animationContainerBar : View
     lateinit var bar : LayoutTemperatureIndicator
     var progressAnimation : Animation? = null
     val mainHandler = Handler(Looper.getMainLooper())
     val animationDelayHandler = Handler(Looper.getMainLooper())
-
+    private val animationResolutionFactor = 10
     var lastUpdated : Long = 0
 
     init {
@@ -36,7 +38,15 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         osdPosition = OSDPositionsTemperature().getPositionByKey(settingsTemperature.getPosition())
         osdStyle = OSDStylesTemperature().getPositionByKey(settingsTemperature.getStyle())
         start()
+    }
 
+    override fun getAnimationSubPart(name: String): View? {
+        var view: View? = null
+        when (name) {
+            "scale" -> view = animationContainerScale
+            "bar" -> view = animationContainerBar
+        }
+        return view
     }
 
     override public fun addView() {
@@ -58,6 +68,9 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         lastMqttDisplay= view.findViewById<TextView>(R.id.vosd_mqtt_time)
 
         val osdContainer = view.findViewById<ConstraintLayout>(R.id.vosd_osd_container)
+
+        animationContainerScale = view.findViewById(R.id.vosd_scale_animation_container)
+        animationContainerBar = view.findViewById(R.id.vosd_bar_animation_container)
 
         bar = view.findViewById(R.id.vosd_bar)
 
@@ -161,11 +174,9 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         lastUpdated = lastMqttUpdate
         updateClock()
 
-        val animationFactor = 1000
-        bar.maxValue = settingsTemperature.getMaxTemp().toInt() * animationFactor
-        bar.minValue = settingsTemperature.getMinTemp() * animationFactor
-
-        val curVal = currentTemperature.toInt() * animationFactor
+        bar.maxValue = settingsTemperature.getMaxTemp().toInt() * animationResolutionFactor
+        bar.minValue = settingsTemperature.getMinTemp() * animationResolutionFactor
+        val curVal = currentTemperature.toInt() * animationResolutionFactor
 
         if (justAppeared) {
             bar.value = bar.minValue

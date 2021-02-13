@@ -28,6 +28,7 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
     lateinit var speakerIcon : ImageView
     var progressAnimation : Animation? = null
     var osdMapping: OSDMapping
+    private val animationResolutionFactor = 100
 
     init {
         settingsVolume = SettingsVolume(context)
@@ -63,11 +64,10 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
             speakerIcon.setImageResource(R.drawable.ic_icon_speaker_3)
         }
 
-        val animationFactor = 1000
 
-        val oldProgress = mappedOldVolume.toFloat() * animationFactor
-        val newProgress = mappedCurVolume.toFloat() * animationFactor
-        bar.max = (mappedMaxVolume.toFloat() * animationFactor).toInt()
+        val oldProgress = mappedOldVolume.toFloat() * animationResolutionFactor
+        val newProgress = mappedCurVolume.toFloat() * animationResolutionFactor
+        bar.max = (mappedMaxVolume.toFloat() * animationResolutionFactor).toInt()
         if (progressAnimation != null) {
             progressAnimation!!.cancel()
         }

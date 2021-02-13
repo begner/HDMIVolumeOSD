@@ -12,29 +12,33 @@ import kotlin.math.tan
 
 class LayoutTemperatureIndicator : FrameLayout {
 
+
     @ExportedProperty(category = "value")
     var value: Int = 0
         set(value) {
-            field = value
-            doOnChange()
+            if (value != field) {
+                field = value
+                doOnChange()
+            }
         }
 
     @ExportedProperty(category = "minValue")
     var minValue: Int = 0
         set(value) {
-            field = value
-            doOnChange()
+            if (value != field) {
+                field = value
+                doOnChange()
+            }
         }
 
     @ExportedProperty(category = "maxValue")
     var maxValue: Int = 0
         set(value) {
-            field = value
-            doOnChange()
+            if (value != field) {
+                field = value
+                doOnChange()
+            }
         }
-
-    @ExportedProperty(category = "backgroundId")
-    var backgroundId: Int = 0
 
     @ExportedProperty(category = "chartId")
     var chartId: Int = 0
@@ -46,7 +50,6 @@ class LayoutTemperatureIndicator : FrameLayout {
     private lateinit var chartCanvasBitmap: Bitmap
 
     private lateinit var chartProgress: Drawable
-    private lateinit var chartBackground: Drawable
 
     constructor(context: Context) : super(context) {
         init(context, null, 0)
@@ -75,7 +78,6 @@ class LayoutTemperatureIndicator : FrameLayout {
                 value = getInteger(R.styleable.LayoutTemperatureIndicator_value, 0)
                 minValue = getInteger(R.styleable.LayoutTemperatureIndicator_minValue, 0)
                 maxValue = getInteger(R.styleable.LayoutTemperatureIndicator_maxValue, 100)
-                backgroundId = getResourceId(R.styleable.LayoutTemperatureIndicator_backgroundId, 0)
                 chartId = getResourceId(R.styleable.LayoutTemperatureIndicator_chartId, 0)
             } finally {
                 recycle()
@@ -91,11 +93,6 @@ class LayoutTemperatureIndicator : FrameLayout {
             null
         )!!
 
-        chartBackground = ResourcesCompat.getDrawable(
-            resources,
-            backgroundId,
-            null
-        )!!
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -112,7 +109,6 @@ class LayoutTemperatureIndicator : FrameLayout {
         chartCanvasBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888)
         chartCanvas = Canvas(chartCanvasBitmap)
         chartProgress.setBounds(0, 0, mWidth, mHeight)
-        chartBackground.setBounds(0, 0, mWidth, mHeight)
         invalidate()
     }
 
@@ -149,7 +145,6 @@ class LayoutTemperatureIndicator : FrameLayout {
         if (canvas != null) {
             chartCanvas.clipPath(clipPath)
             chartProgress.draw(chartCanvas)
-            chartBackground.draw(canvas)
             canvas.drawBitmap(chartCanvasBitmap, 0f, 0f, Paint())
             // DRAW CLIP PATH for DEBUG purpose
             /*

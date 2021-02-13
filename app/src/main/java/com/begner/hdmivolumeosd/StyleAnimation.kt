@@ -11,16 +11,16 @@ import com.daimajia.easing.Glider
 import com.daimajia.easing.Skill
 
 open class StyleAnimation  {
-    public lateinit var mainView: View
-    public var backgroundView: View? = null
-    public lateinit var context: Context
-    public lateinit var osdPosition: OSDPosition
-    public var animationProperty: String = "translationX"
-    public var onScreenPos: Float = 0f
-    public var outOfScreenPos: Float = 0f
+    lateinit var mainView: View
+    var backgroundView: View? = null
+    var osdView: OSDView? = null
+    lateinit var context: Context
+    lateinit var osdPosition: OSDPosition
+    var animationProperty: String = "translationX"
+    var onScreenPos: Float = 0f
+    var outOfScreenPos: Float = 0f
 
-
-    open public fun calcAnimationDirections(animView: View, horizontal: Boolean, animateIn: Boolean) {
+    open fun calcAnimationDirections(animView: View, horizontal: Boolean, animateIn: Boolean) {
         animView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
         if (!horizontal) {
@@ -52,7 +52,7 @@ open class StyleAnimation  {
     }
 
     // Instant in
-    open public fun animateIn(): MutableList<Animator> {
+    open fun animateIn(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseOut
@@ -78,7 +78,7 @@ open class StyleAnimation  {
     }
 
     // Instant out
-    open public fun animateOut(): MutableList<Animator> {
+    open fun animateOut(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseIn
@@ -103,7 +103,7 @@ open class StyleAnimation  {
         return animations
     }
 
-    public fun setViewProperty(view: View, propertyName: String, value: Float) {
+    fun setViewProperty(view: View, propertyName: String, value: Float) {
         when (propertyName) {
             "translationX" -> view.translationX = value
             "translationY" -> view.translationY = value
@@ -118,7 +118,7 @@ open class StyleAnimation  {
         }
     }
 
-    public fun createAnimation(view:View, property: String, start: Float, end: Float, duration: Float, startDelay: Float, easing: Skill) : ValueAnimator {
+    fun createAnimation(view:View, property: String, start: Float, end: Float, duration: Float, startDelay: Float, easing: Skill) : ValueAnimator {
         setViewProperty(view, property, start)
         val animation = ObjectAnimator.ofFloat(view, property, end)
         animation.setDuration((duration - startDelay).toLong())

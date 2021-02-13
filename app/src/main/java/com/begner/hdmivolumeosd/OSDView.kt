@@ -62,11 +62,16 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
         animateIn()
     }
 
+    open public fun getAnimationSubPart(name: String): View? {
+        return null
+    }
+
     @SuppressLint("RtlHardcoded")
     private fun animate(animateIn: Boolean) {
         val animationLib = osdStyle.animationClass
         animationLib.context = context
         animationLib.mainView = view
+        animationLib.osdView = this
         if (backgroundView != null) {
             animationLib.backgroundView = backgroundView
         }
