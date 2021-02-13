@@ -7,9 +7,9 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
 
     lateinit var Position: Spinner
     lateinit var Style: Spinner
+    lateinit var Mapping: Spinner
     lateinit var Size: EditText
     lateinit var Padding: EditText
-    
     lateinit var settingsVolume: SettingsVolume
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +27,23 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
         val styleArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, OSDStylesVolume().getLabelArray())
         Style.setAdapter(styleArrayAdapter);
 
+        Mapping = findViewById<Spinner>(R.id.mapping);
+        val mappingArrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, OSDMappingVolume().getLabelArray())
+        Mapping.setAdapter(mappingArrayAdapter);
+
         Size = findViewById<EditText>(R.id.size)
         Padding = findViewById<EditText>(R.id.padding)
+
+        TabList = listOf(
+            TabData(
+                "apperence", "Apperence", findViewById(R.id.apperence_settings)
+            )
+        )
+        NavigationTab = findViewById(R.id.navigationTab)
+        NavigationTab.addOnTabSelectedListener(this)
+        TabList.forEach {
+            NavigationTab.addTab(NavigationTab.newTab().setText(it.label))
+        }
 
         fill()
     }
@@ -38,6 +53,7 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
         Style.setSelection(OSDStylesVolume().getIndexByKey(settingsVolume.getStyle()))
         Size.setText(settingsVolume.getSize().toString())
         Padding.setText(settingsVolume.getPadding().toString())
+        Mapping.setSelection(OSDMappingVolume().getIndexByKey(settingsVolume.getMapping()))
     }
 
     override fun save() {
@@ -45,7 +61,8 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
             OSDPositionsVolume().getByIndex(Position.selectedItemPosition).key,
             Size.getText().toString().toInt(),
             Padding.getText().toString().toInt(),
-            OSDStylesVolume().getByIndex(Style.selectedItemPosition).key
+            OSDStylesVolume().getByIndex(Style.selectedItemPosition).key,
+            OSDMappingVolume().getByIndex(Mapping.selectedItemPosition).key,
         )
     }
 }
