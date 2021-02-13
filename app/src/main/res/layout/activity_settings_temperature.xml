@@ -109,9 +109,9 @@
 
                 </LinearLayout>
 
-            <!-- VISUAL SETTINGS -->
+            <!-- apperence SETTINGS -->
             <LinearLayout
-                android:id="@+id/visual_settings"
+                android:id="@+id/apperence_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

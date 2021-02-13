@@ -87,9 +87,7 @@ class OSD() {
 
     fun updateView(curVolume: Int, oldVolume: Int, maxVolume: Int) {
         viewVolume!!.update(curVolume, oldVolume, maxVolume)
-        var curTemp = service.getAverageTemp();
-        curTemp = 60f;
-        viewTemperature!!.update(curTemp, service.getLastMqttValueString())
+        viewTemperature!!.update(service.getAverageTemp(), service.getLastMqttValue(), !viewTemperature!!.isVisible)
     }
 
     class SettingsContentObserver internal constructor(c: Context, s: OSD, handler: Handler?) :

@@ -68,11 +68,8 @@ class MainService : Service() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun getLastMqttValueString(): String {
-        val timeDiff = System.currentTimeMillis() - lastMqttValue
-        val date : Date = Date(timeDiff)
-        val formatter = SimpleDateFormat("mm:ss")
-        return formatter.format(date)
+    fun getLastMqttValue(): Long {
+        return lastMqttValue
     }
 
     fun getAverageTemp(): Float {

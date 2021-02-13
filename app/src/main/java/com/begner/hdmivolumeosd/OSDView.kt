@@ -13,7 +13,7 @@ import android.widget.FrameLayout
 
 abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
 
-    lateinit var settingsGlobal  : SettingsGlobal
+    var settingsGlobal  : SettingsGlobal
     lateinit var osdPosition: OSDPosition
     lateinit var view: View
     var backgroundView: View? = null

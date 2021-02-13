@@ -1,15 +1,20 @@
 package com.begner.hdmivolumeosd
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import java.lang.Math.round
+import java.text.SimpleDateFormat
+import java.util.*
 
 class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) : OSDView(
     applicationContext,
@@ -17,21 +22,24 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
 ) {
 
     var settingsTemperature  : SettingsTemperature
-    lateinit var temp : TextView
-    lateinit var lastMqtt : TextView
+    lateinit var temperatureDisplay : TextView
+    lateinit var lastMqttDisplay : TextView
     lateinit var bar : LayoutTemperatureIndicator
+    var progressAnimation : Animation? = null
+    val mainHandler = Handler(Looper.getMainLooper())
+    val animationDelayHandler = Handler(Looper.getMainLooper())
+
+    var lastUpdated : Long = 0
 
     init {
         settingsTemperature = SettingsTemperature(context)
         osdPosition = OSDPositionsTemperature().getPositionByKey(settingsTemperature.getPosition())
         osdStyle = OSDStylesTemperature().getPositionByKey(settingsTemperature.getStyle())
         start()
+
     }
 
     override public fun addView() {
-        val currentTemperature = 0f
-        val lastMqttView = ""
-
         view = LayoutInflater.from(context).inflate(osdStyle.getLayout(false), null);
         view.visibility = View.GONE
         if (!settingsTemperature.getMQTTActive()) {
@@ -45,29 +53,64 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
             settingsTemperature.getPadding()
         )
 
-        temp = view.findViewById<TextView>(R.id.vosd_temp)
+        temperatureDisplay = view.findViewById<TextView>(R.id.vosd_temp)
 
-        lastMqtt = view.findViewById<TextView>(R.id.vosd_mqtt_time)
-
+        lastMqttDisplay= view.findViewById<TextView>(R.id.vosd_mqtt_time)
 
         val osdContainer = view.findViewById<ConstraintLayout>(R.id.vosd_osd_container)
 
-        bar = view.findViewById<LayoutTemperatureIndicator>(R.id.vosd_bar)
+        bar = view.findViewById(R.id.vosd_bar)
 
         val barContainer = view.findViewById<FrameLayout>(R.id.vosd_bar_container)
         barContainer.rotation = osdPosition.layoutRotation
         barContainer.rotationX = osdPosition.layoutRotationX
         barContainer.rotationY = osdPosition.layoutRotationY
 
-        val displayContainer = view.findViewById<ConstraintLayout>(R.id.vosd_bar_display)
         val constraintSet = ConstraintSet()
         constraintSet.clone(osdContainer)
+
+        val displayContainer = view.findViewById<ConstraintLayout>(R.id.vosd_bar_display)
         constraintSet.clear(displayContainer.id, ConstraintSet.LEFT)
         constraintSet.clear(displayContainer.id, ConstraintSet.RIGHT)
         constraintSet.clear(displayContainer.id, ConstraintSet.TOP)
         constraintSet.clear(displayContainer.id, ConstraintSet.BOTTOM)
-        constraintSet.connect(displayContainer.id, osdPosition.displayConstraintY, ConstraintSet.PARENT_ID, osdPosition.displayConstraintY,0);
-        constraintSet.connect(displayContainer.id, osdPosition.displayConstraintX, ConstraintSet.PARENT_ID, osdPosition.displayConstraintX,0);
+        constraintSet.connect(
+            displayContainer.id,
+            osdPosition.displayConstraintY,
+            ConstraintSet.PARENT_ID,
+            osdPosition.displayConstraintY,
+            0
+        );
+        constraintSet.connect(
+            displayContainer.id,
+            osdPosition.displayConstraintX,
+            ConstraintSet.PARENT_ID,
+            osdPosition.displayConstraintX,
+            0
+        );
+
+        val icon = view.findViewById<ImageView>(R.id.vosd_icon_temp)
+        if (icon != null) {
+            constraintSet.clear(icon.id, ConstraintSet.LEFT)
+            constraintSet.clear(icon.id, ConstraintSet.RIGHT)
+            constraintSet.clear(icon.id, ConstraintSet.TOP)
+            constraintSet.clear(icon.id, ConstraintSet.BOTTOM)
+            constraintSet.connect(
+                icon.id,
+                osdPosition.displayConstraintY,
+                ConstraintSet.PARENT_ID,
+                osdPosition.displayConstraintY,
+                0
+            );
+            constraintSet.connect(
+                icon.id,
+                osdPosition.displayConstraintX,
+                ConstraintSet.PARENT_ID,
+                osdPosition.displayConstraintX,
+                0
+            );
+        }
+
         constraintSet.applyTo(osdContainer);
 
         frameLayout.addView(view, FrameLayout.LayoutParams(
@@ -78,17 +121,67 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
             height = ViewGroup.LayoutParams.WRAP_CONTENT
             gravity = osdPosition.gravity
         })
+
+        startClockUpdateTimer()
     }
 
-    public fun update(currentTemperature: Float, lastMqttView: String) {
+
+
+    fun formatTime(value: Long): String {
+        val timeDiff = System.currentTimeMillis() - value
+        val date : Date = Date(timeDiff)
+        val formatter = SimpleDateFormat("mm:ss")
+        return formatter.format(date)
+    }
+
+
+    private fun startClockUpdateTimer() {
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                updateClock()
+                mainHandler.postDelayed(this, 1000)
+            }
+        })
+    }
+
+    private fun updateClock() {
+        if (isVisible) {
+            lastMqttDisplay.text = formatTime(lastUpdated)
+        }
+    }
+
+    public fun update(currentTemperature: Float, lastMqttUpdate: Long, justAppeared: Boolean) {
+        if (!settingsTemperature.getMQTTActive()) {
+            return
+        }
+
         val tempRounded = round(currentTemperature * 10).toFloat() / 10f
-        temp.text = tempRounded.toString()
+        temperatureDisplay.text = tempRounded.toString()
 
-        lastMqtt.text = lastMqttView
+        lastUpdated = lastMqttUpdate
+        updateClock()
 
-        bar.maxValue = settingsTemperature.getMaxTemp().toInt()
-        bar.minValue = settingsTemperature.getMinTemp()
-        bar.value = currentTemperature.toInt()
+        val animationFactor = 1000
+        bar.maxValue = settingsTemperature.getMaxTemp().toInt() * animationFactor
+        bar.minValue = settingsTemperature.getMinTemp() * animationFactor
+
+        val curVal = currentTemperature.toInt() * animationFactor
+
+        if (justAppeared) {
+            bar.value = bar.minValue
+            animationDelayHandler.postDelayed(Runnable {
+                progressAnimation = AnimationTemperatureIndicator(
+                    bar,
+                    bar.minValue.toFloat(),
+                    curVal.toFloat()
+                )
+                progressAnimation!!.setDuration(osdStyle.animationDuration);
+                bar.startAnimation(progressAnimation);
+            }, osdStyle.animationDelay)
+        }
+        else {
+            bar.value = curVal
+        }
 
         updated()
     }

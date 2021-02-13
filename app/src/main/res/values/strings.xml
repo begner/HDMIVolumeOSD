@@ -25,6 +25,7 @@
     <string name="settings_volume_popup_headline">OSD Settings</string>
     <string name="settings_volume_label_position">Position</string>
     <string name="settings_volume_label_style">Style</string>
+    <string name="settings_volume_label_mapping">Volume Value Mapping</string>
     <string name="settings_volume_label_limit_to_hdmi">Only show on HDMI</string>
     <string name="settings_volume_label_size">Size (in %)</string>
     <string name="settings_volume_label_padding">Padding</string>

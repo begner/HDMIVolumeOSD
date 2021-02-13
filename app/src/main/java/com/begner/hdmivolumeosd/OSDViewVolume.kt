@@ -27,9 +27,11 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
     lateinit var bar : ProgressBar
     lateinit var speakerIcon : ImageView
     var progressAnimation : Animation? = null
+    var osdMapping: OSDMapping
 
     init {
         settingsVolume = SettingsVolume(context)
+        osdMapping = OSDMappingVolume().getPositionByKey(settingsVolume.getMapping())
         osdPosition = OSDPositionsVolume().getPositionByKey(settingsVolume.getPosition())
         osdStyle = OSDStylesVolume().getPositionByKey(settingsVolume.getStyle())
         start()
@@ -37,27 +39,35 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
 
     public fun update(curVolume: Int, oldVolume: Int, maxVolume: Int) {
         if (title != null) {
-            title!!.text = mapVolume(curVolume).toString() // + "/" + mapVolume(props.maxVolume).toString()
+            title!!.text = mapVolume(curVolume, maxVolume).toString() // + "/" + mapVolume(props.maxVolume).toString()
         }
 
-        if (mapVolume(curVolume) < 1) {
+
+        var oldVolumeValue = oldVolume
+        if (oldVolume == -1) {
+            oldVolumeValue = curVolume
+        }
+
+        val mappedOldVolume = mapVolume(oldVolumeValue, maxVolume)
+        val mappedCurVolume = mapVolume(curVolume, maxVolume)
+        val mappedMaxVolume = mapVolume(maxVolume, maxVolume)
+
+
+        if (mappedCurVolume < 1) {
             speakerIcon.setImageResource(R.drawable.ic_icon_speaker_0)
-        } else if (mapVolume(curVolume) < 8) {
+        } else if (mappedCurVolume < 8) {
             speakerIcon.setImageResource(R.drawable.ic_icon_speaker_1)
-        } else if (mapVolume(curVolume) < 15) {
+        } else if (mappedCurVolume < 15) {
             speakerIcon.setImageResource(R.drawable.ic_icon_speaker_2)
         } else {
             speakerIcon.setImageResource(R.drawable.ic_icon_speaker_3)
         }
 
         val animationFactor = 1000
-        var oldVolumeValue = oldVolume
-        if (oldVolume == -1) {
-            oldVolumeValue = curVolume
-        }
-        val oldProgress = mapVolume(oldVolumeValue).toFloat() * animationFactor
-        val newProgress = mapVolume(curVolume).toFloat() * animationFactor
-        bar.max = (mapVolume(maxVolume).toFloat() * animationFactor).toInt()
+
+        val oldProgress = mappedOldVolume.toFloat() * animationFactor
+        val newProgress = mappedCurVolume.toFloat() * animationFactor
+        bar.max = (mappedMaxVolume.toFloat() * animationFactor).toInt()
         if (progressAnimation != null) {
             progressAnimation!!.cancel()
         }
@@ -72,10 +82,6 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
         val layoutId = osdStyle.getLayout(osdPosition.isHorizontal)
         view = LayoutInflater.from(context).inflate(layoutId, null);
         view.visibility = View.GONE
-
-        val curVolume = 0
-        val oldVolume = 0
-        val maxVolume = 60
 
         view.setPadding(
             settingsVolume.getPadding(),
@@ -145,8 +151,7 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
         })
     }
 
-    private fun mapVolume(volume: Int): Int {
-        var versatz = floor(volume.toDouble() / 6.toDouble()).toInt()
-        return volume - versatz
+    private fun mapVolume(volume: Int, maxVolume: Int): Int {
+        return osdMapping.mappingClass.mapVolume(volume, maxVolume)
     }
 }

@@ -14,6 +14,15 @@ class OSDStylesTemperature() : OSDStyles() {
                 layoutID = R.layout.temperature_osd_apple
                 animationClass = StyleAnimationTemperatureApple()
                 backgroundID = null
+                animationDelay = 0
+                animationDuration = 500
+            },
+            OSDStyle("apple14radial","Apple TvOS, Radial Animation").apply {
+                layoutID = R.layout.temperature_osd_apple
+                animationClass = StyleAnimationTemperatureAppleRadial()
+                backgroundID = null
+                animationDelay = 300
+                animationDuration = 500
             }
         )
     }

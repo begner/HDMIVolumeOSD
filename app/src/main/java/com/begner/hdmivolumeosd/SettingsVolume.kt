@@ -37,6 +37,11 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         return padding
     }
 
+    fun getMapping() : String {
+        loadPreferences()
+        return getValueAsString("Mapping", "default")
+    }
+
     fun getStyle() : String {
         loadPreferences()
         return getValueAsString("Style", "android")
@@ -47,6 +52,7 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         size: Int,
         padding: Int,
         style: String,
+        mapping: String,
     ) {
         loadPreferences()
         var editor: SharedPreferences.Editor = sharedpreferences.edit()
@@ -54,6 +60,7 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         editor.putInt("Size", size)
         editor.putInt("Padding", padding)
         editor.putString("Style", style)
+        editor.putString("Mapping", mapping)
         editor.commit()
     }
 

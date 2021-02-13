@@ -1,5 +1,6 @@
 package com.begner.hdmivolumeosd
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
@@ -7,50 +8,45 @@ import android.util.AttributeSet
 import android.view.ViewDebug.ExportedProperty
 import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
+import kotlin.math.tan
 
 class LayoutTemperatureIndicator : FrameLayout {
 
     @ExportedProperty(category = "value")
-    public var value: Int = 0
+    var value: Int = 0
         set(value) {
             field = value
             doOnChange()
         }
 
     @ExportedProperty(category = "minValue")
-    public var minValue: Int = 0
+    var minValue: Int = 0
         set(value) {
             field = value
             doOnChange()
         }
 
     @ExportedProperty(category = "maxValue")
-    public var maxValue: Int = 0
+    var maxValue: Int = 0
         set(value) {
             field = value
             doOnChange()
         }
 
     @ExportedProperty(category = "backgroundId")
-    public var backgroundId: Int = 0
-        set(value) {
-            field = value
-        }
+    var backgroundId: Int = 0
 
     @ExportedProperty(category = "chartId")
-    public var chartId: Int = 0
-        set(value) {
-            field = value
-        }
+    var chartId: Int = 0
 
     private var mWidth: Int = 0
     private var mHeight: Int = 0
 
-    lateinit private var chartCanvas: Canvas
-    lateinit private var chartCanvasBitmap: Bitmap
+    private lateinit var chartCanvas: Canvas
+    private lateinit var chartCanvasBitmap: Bitmap
 
-    lateinit private var chartProgress: Drawable
-    lateinit private var chartBackground: Drawable
+    private lateinit var chartProgress: Drawable
+    private lateinit var chartBackground: Drawable
 
     constructor(context: Context) : super(context) {
         init(context, null, 0)
@@ -68,9 +64,8 @@ class LayoutTemperatureIndicator : FrameLayout {
         init(context, attrs, defStyle)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
-        val metrics = context.getResources().getDisplayMetrics()
-
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.LayoutTemperatureIndicator,
@@ -110,7 +105,7 @@ class LayoutTemperatureIndicator : FrameLayout {
         doOnChange()
     }
 
-    fun doOnChange() {
+    private fun doOnChange() {
         if (mWidth < 1 || mHeight < 1) {
             return
         }
@@ -118,6 +113,7 @@ class LayoutTemperatureIndicator : FrameLayout {
         chartCanvas = Canvas(chartCanvasBitmap)
         chartProgress.setBounds(0, 0, mWidth, mHeight)
         chartBackground.setBounds(0, 0, mWidth, mHeight)
+        invalidate()
     }
 
     private fun calcAngle() : Float {
@@ -136,9 +132,10 @@ class LayoutTemperatureIndicator : FrameLayout {
         if (angle >= 90f) {
             angle = 89.9f
         }
-        return (mWidth.toDouble() * Math.tan(Math.toRadians(angle.toDouble()))).toFloat()
+        return (mWidth.toDouble() * tan(Math.toRadians(angle.toDouble()))).toFloat()
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 

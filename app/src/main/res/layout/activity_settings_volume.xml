@@ -28,72 +28,104 @@
             android:orientation="vertical"
             android:padding="@dimen/popup_layout_padding">
 
+            <!-- TABS -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/navigationTab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/background_popup"
+                />
 
-
+            <!-- apperence_settings -->
             <LinearLayout
+                android:id="@+id/apperence_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/popup_field_margin_top"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="@dimen/popup_field_label_width"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/position"
-                    android:text="@string/settings_volume_label_position" />
-                <Spinner
-                    android:id="@+id/position"
-                    android:layout_width="@dimen/popup_field_input_width"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                android:orientation="vertical"
+                android:padding="@dimen/popup_layout_padding">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/popup_field_margin_top"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="@dimen/popup_field_label_width"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:labelFor="@id/style"
-                    android:text="@string/settings_volume_label_style" />
-                <Spinner
-                    android:id="@+id/style"
-                    android:layout_width="@dimen/popup_field_input_width"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/popup_field_margin_top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/popup_field_label_width"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/position"
+                        android:text="@string/settings_volume_label_position" />
+                    <Spinner
+                        android:id="@+id/position"
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/popup_field_margin_top"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="@dimen/popup_field_label_width"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:labelFor="@id/size"
-                    android:text="@string/settings_volume_label_size" />
-                <EditText
-                    android:id="@+id/size"
-                    android:layout_width="@dimen/popup_field_input_width"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/popup_field_margin_top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/popup_field_label_width"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/style"
+                        android:text="@string/settings_volume_label_style" />
+                    <Spinner
+                        android:id="@+id/style"
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/popup_field_margin_top"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="@dimen/popup_field_label_width"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:labelFor="@id/padding"
-                    android:text="@string/settings_volume_label_padding" />
-                <EditText
-                    android:id="@+id/padding"
-                    android:layout_width="@dimen/popup_field_input_width"
+                    android:layout_marginTop="@dimen/popup_field_margin_top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/popup_field_label_width"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/style"
+                        android:text="@string/settings_volume_label_mapping" />
+                    <Spinner
+                        android:id="@+id/mapping"
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:layout_marginTop="@dimen/popup_field_margin_top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/popup_field_label_width"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/size"
+                        android:text="@string/settings_volume_label_size" />
+                    <EditText
+                        android:id="@+id/size"
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/popup_field_margin_top"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/popup_field_label_width"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/padding"
+                        android:text="@string/settings_volume_label_padding" />
+                    <EditText
+                        android:id="@+id/padding"
+                        android:layout_width="@dimen/popup_field_input_width"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <include layout="@layout/include_settings_buttons" />

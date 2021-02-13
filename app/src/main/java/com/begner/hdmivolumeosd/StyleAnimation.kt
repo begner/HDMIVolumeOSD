@@ -21,7 +21,6 @@ open class StyleAnimation  {
 
 
     open public fun calcAnimationDirections(animView: View, horizontal: Boolean, animateIn: Boolean) {
-        val metrics = context.getResources().getDisplayMetrics()
         animView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
         if (!horizontal) {
@@ -111,6 +110,11 @@ open class StyleAnimation  {
             "alpha" -> view.alpha = value
             "scaleX" -> view.scaleX = value
             "scaleY" -> view.scaleY = value
+            "rotation" -> view.rotation = value
+            "rotationX" -> view.rotationX = value
+            "rotationY" -> view.rotationY = value
+            "pivotX" -> view.pivotX = value
+            "pivotY" -> view.pivotY = value
         }
     }
 
