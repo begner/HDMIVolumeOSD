@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.*
 import com.google.android.material.tabs.TabLayout
 
-class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelectedListener {
+class ActivityPopupSettingsTemperature : ActivityPopup() {
 
     lateinit var Active: com.google.android.material.switchmaterial.SwitchMaterial
     lateinit var Position: Spinner
@@ -16,8 +16,6 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
     lateinit var User: TextView
     lateinit var Password: TextView
     lateinit var ClientId: TextView
-    lateinit var NavigationTab: TabLayout
-    lateinit var TabList    : List<TabData>
     lateinit var Padding: EditText
 
     lateinit var settingsTemperature: SettingsTemperature
@@ -58,7 +56,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
 
         TabList = listOf(
             TabData("main", "Main", findViewById(R.id.main_settings)),
-            TabData("visual", "Visual", findViewById(R.id.visual_settings)),
+            TabData("apperence", "Apperence", findViewById(R.id.apperence_settings)),
             TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
             TabData("extra", "Extras", findViewById(R.id.extra_settings)),
         )
@@ -102,28 +100,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup(), TabLayout.OnTabSelecte
         )
     }
 
-    override fun onTabSelected(tab: TabLayout.Tab?) {
-        val tabIndex = NavigationTab.selectedTabPosition
-        TabList.forEachIndexed { index, tabData ->
-            if (index == tabIndex) {
-                tabData.contentContainer.visibility = ScrollView.VISIBLE
-            }
-            else {
-                tabData.contentContainer.visibility = ScrollView.GONE
-            }
-        }
-    }
 
-    override fun onTabUnselected(tab: TabLayout.Tab?) {
-    }
 
-    override fun onTabReselected(tab: TabLayout.Tab?) {
-    }
-
-    data class TabData (
-        var key: String = "",
-        var label: String = "",
-        var contentContainer: LinearLayout
-    )
 }
 

@@ -2,15 +2,18 @@ package com.begner.hdmivolumeosd
 
 import android.app.Activity
 import android.content.Intent
-import android.inputmethodservice.InputMethodService
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import com.google.android.material.tabs.TabLayout
 
-abstract class ActivityPopup : ActivityGlobal() {
+abstract class ActivityPopup : ActivityGlobal(), TabLayout.OnTabSelectedListener {
+
+    lateinit var TabList    : List<TabData>
+    lateinit var NavigationTab: TabLayout
 
     public fun setResultAndFinish(success: Boolean) {
         setResult(success)
@@ -47,7 +50,7 @@ abstract class ActivityPopup : ActivityGlobal() {
 
     fun HideKeyboardOnFocus(view: View, activity: Activity?) {
         if (!(view is EditText)) {
-            view.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     HideSoftKeyboard()
                 }
@@ -65,4 +68,28 @@ abstract class ActivityPopup : ActivityGlobal() {
         val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0);
     }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val tabIndex = NavigationTab.selectedTabPosition
+        TabList.forEachIndexed { index, tabData ->
+            if (index == tabIndex) {
+                tabData.contentContainer.visibility = ScrollView.VISIBLE
+            }
+            else {
+                tabData.contentContainer.visibility = ScrollView.GONE
+            }
+        }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+    }
+
+    data class TabData (
+        var key: String = "",
+        var label: String = "",
+        var contentContainer: LinearLayout
+    )
 }
