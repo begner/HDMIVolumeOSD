@@ -27,10 +27,7 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
     lateinit var animationContainerScale : View
     lateinit var animationContainerBar : View
     lateinit var bar : LayoutTemperatureIndicator
-    var progressAnimation : Animation? = null
     val mainHandler = Handler(Looper.getMainLooper())
-    val animationDelayHandler = Handler(Looper.getMainLooper())
-    private val animationResolutionFactor = 10
     var lastUpdated : Long = 0
 
     init {
@@ -138,15 +135,12 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         startClockUpdateTimer()
     }
 
-
-
     fun formatTime(value: Long): String {
         val timeDiff = System.currentTimeMillis() - value
         val date : Date = Date(timeDiff)
-        val formatter = SimpleDateFormat("mm:ss")
+        val formatter = SimpleDateFormat("m:ss")
         return formatter.format(date)
     }
-
 
     private fun startClockUpdateTimer() {
         mainHandler.post(object : Runnable {
@@ -174,25 +168,11 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         lastUpdated = lastMqttUpdate
         updateClock()
 
-        bar.maxValue = settingsTemperature.getMaxTemp().toInt() * animationResolutionFactor
-        bar.minValue = settingsTemperature.getMinTemp() * animationResolutionFactor
-        val curVal = currentTemperature.toInt() * animationResolutionFactor
+        bar.maxValue = settingsTemperature.getMaxTemp().toInt()
+        bar.minValue = settingsTemperature.getMinTemp()
+        val curVal = currentTemperature.toInt()
 
-        if (justAppeared) {
-            bar.value = bar.minValue
-            animationDelayHandler.postDelayed(Runnable {
-                progressAnimation = AnimationTemperatureIndicator(
-                    bar,
-                    bar.minValue.toFloat(),
-                    curVal.toFloat()
-                )
-                progressAnimation!!.setDuration(osdStyle.animationDuration);
-                bar.startAnimation(progressAnimation);
-            }, osdStyle.animationDelay)
-        }
-        else {
-            bar.value = curVal
-        }
+        bar.value = curVal
 
         updated()
     }

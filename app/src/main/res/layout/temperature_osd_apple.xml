@@ -27,7 +27,11 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/vosd_scale_animation_container">
+                android:id="@+id/vosd_scale_animation_container"
+                android:rotation="0"
+                android:transformPivotX="90dp"
+                android:transformPivotY="90dp"
+                >
                 <ImageView
                     android:id="@+id/vosd_scale"
                     android:layout_width="match_parent"
@@ -40,18 +44,21 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/vosd_bar_animation_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/vosd_bar_animation_container">
+                android:rotation="0"
+                android:transformPivotX="90dp"
+                android:transformPivotY="90dp">
+
                 <com.begner.hdmivolumeosd.LayoutTemperatureIndicator
                     android:id="@+id/vosd_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:value="45"
-                    app:minValue="0"
-                    app:maxValue="90"
                     app:chartId="@drawable/temperature_indicator_chart_apple"
-                    />
+                    app:maxValue="90"
+                    app:minValue="0"
+                    app:value="45" />
             </FrameLayout>
         </FrameLayout>
 

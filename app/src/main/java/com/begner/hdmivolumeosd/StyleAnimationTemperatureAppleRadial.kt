@@ -3,7 +3,6 @@ package com.begner.hdmivolumeosd
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.view.Gravity
-import android.view.View
 import com.daimajia.easing.Skill
 
 class StyleAnimationTemperatureAppleRadial : StyleAnimation() {
@@ -30,88 +29,61 @@ class StyleAnimationTemperatureAppleRadial : StyleAnimation() {
     private val easingMove = Skill.QuadEaseInOut
 
     @SuppressLint("RtlHardcoded")
-    private fun setPivot(view: View, animateIn: Boolean) {
-        mainView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-
+    private fun setRotationStartAngle() {
         val horizontalGravity = osdPosition.gravity and Gravity.VERTICAL_GRAVITY_MASK
-        if (horizontalGravity == Gravity.TOP) {
-            setViewProperty(view, "pivotY", 0f)
-            if (animateIn) {
-                outOfScreenPos = 90f
-            }
-            else {
-                outOfScreenPos = -90f
-            }
-        }
-        if (horizontalGravity == Gravity.BOTTOM) {
-            setViewProperty(view, "pivotY", mainView.getMeasuredHeight().toFloat())
-            if (animateIn) {
-                outOfScreenPos = -90f
-            }
-            else {
-                outOfScreenPos = 90f
-            }
-        }
-
-        val verticalGravity = osdPosition.gravity and Gravity.HORIZONTAL_GRAVITY_MASK
-        if (verticalGravity == Gravity.LEFT) {
-            setViewProperty(view, "pivotX", 0f)
-        }
-        if (verticalGravity == Gravity.RIGHT) {
-            setViewProperty(view, "pivotX", mainView.getMeasuredWidth().toFloat())
-        }
+        outOfScreenPos = 0f
+        if (horizontalGravity == Gravity.TOP) outOfScreenPos = 90f
+        if (horizontalGravity == Gravity.BOTTOM) outOfScreenPos = -90f
     }
 
     // Instant in
     @SuppressLint("RtlHardcoded")
-    override public fun animateIn(): MutableList<Animator> {
+    override fun animateIn(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         // verticlal
-        calcAnimationDirections(mainView, false, true)
+        calcAnimationDirections(mainView, horizontal = false, animateIn = true)
         animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, inAnimationDuration, inAnimationDelay, easingMove))
 
         // horizontal
-        calcAnimationDirections(mainView, true, true)
+        calcAnimationDirections(mainView, horizontal = true, animateIn = true)
         animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, inAnimationDuration, inAnimationDelay, easingMove))
 
         animations.add(createAnimation(mainView, "scaleX", animationScale, 1f, inAnimationDuration, inAnimationDelay, easingScale))
         animations.add(createAnimation(mainView, "scaleY", animationScale, 1f, inAnimationDuration, inAnimationDelay, easingScale))
 
+        setRotationStartAngle()
         val scale = osdView!!.getAnimationSubPart("scale")
-        setPivot(scale!!, true)
-        animations.add(createAnimation(scale, "rotation", outOfScreenPos, 0f, inRotationDuration, inRotationDelay, inRotationEasing))
+        animations.add(createAnimation(scale!!, "rotation", outOfScreenPos*-1, 0f, inRotationDuration, inRotationDelay, inRotationEasing))
 
         val bar = osdView!!.getAnimationSubPart("bar")
-        setPivot(bar!!, true)
-        animations.add(createAnimation(bar, "rotation", outOfScreenPos, 0f, inRotationDurationBar, inRotationDelayBar, inRotationEasing))
+        animations.add(createAnimation(bar!!, "rotation", outOfScreenPos, 0f, inRotationDurationBar, inRotationDelayBar, inRotationEasing))
 
         return animations
     }
 
 
     // Instant out
-    override public fun animateOut(): MutableList<Animator> {
+    override fun animateOut(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         // vertical
-        calcAnimationDirections(mainView, false, false)
+        calcAnimationDirections(mainView, horizontal = false, animateIn = false)
         animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, outAnimationDuration, outAnimationDelay, easingMove))
 
         // horizontal
-        calcAnimationDirections(mainView, true, false)
+        calcAnimationDirections(mainView, horizontal = true, animateIn = false)
         animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, outAnimationDuration, outAnimationDelay, easingMove))
 
         animations.add(createAnimation(mainView, "scaleX", 1f, animationScale, outAnimationDuration, outAnimationDelay, easingScale))
         animations.add(createAnimation(mainView, "scaleY", 1f, animationScale, outAnimationDuration, outAnimationDelay, easingScale))
 
+        setRotationStartAngle()
         val scale = osdView!!.getAnimationSubPart("scale")
-        setPivot(scale!!, false)
-        animations.add(createAnimation(scale, "rotation", 0f, outOfScreenPos, outRotationDuration, outRotationDelay, outRotationEasing))
+        animations.add(createAnimation(scale!!, "rotation", 0f, outOfScreenPos, outRotationDuration, outRotationDelay, outRotationEasing))
 
         val bar = osdView!!.getAnimationSubPart("bar")
-        setPivot(bar!!, false)
-        animations.add(createAnimation(bar, "rotation",0f, outOfScreenPos, outRotationDurationBar, outRotationDelayBar, inRotationEasing))
+        animations.add(createAnimation(bar!!, "rotation",0f, outOfScreenPos*-1, outRotationDurationBar, outRotationDelayBar, inRotationEasing))
 
         return animations
     }
