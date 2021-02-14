@@ -1,10 +1,7 @@
 package com.begner.hdmivolumeosd
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
 
-
-class OSDStylesVolume() : OSDStyles() {
+class OSDStylesVolume : OSDStyles() {
     init {
         availableStyles = listOf(
             OSDStyle("android","Android").apply {

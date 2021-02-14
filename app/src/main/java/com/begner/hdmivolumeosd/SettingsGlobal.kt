@@ -2,7 +2,6 @@ package com.begner.hdmivolumeosd
 
 import android.content.Context
 import android.content.SharedPreferences
-import java.time.Duration
 
 class SettingsGlobal(applicationContext: Context) : Settings() {
 
@@ -25,16 +24,15 @@ class SettingsGlobal(applicationContext: Context) : Settings() {
         return getValueAsBoolean("LimitOnHDMI", true)
     }
 
-    fun SaveSettings(
+    fun saveSettings(
         duration: Int,
         limitOnHDMI: Boolean
     ) {
         loadPreferences()
-        var editor: SharedPreferences.Editor = sharedpreferences.edit()
+        val editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putInt("Duration", duration)
         editor.putBoolean("LimitOnHDMI", limitOnHDMI)
-        editor.commit()
+        editor.apply()
     }
-
 
 }

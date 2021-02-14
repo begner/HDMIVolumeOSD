@@ -2,7 +2,6 @@ package com.begner.hdmivolumeosd
 
 import android.content.Context
 import android.content.SharedPreferences
-import java.time.Duration
 
 class SettingsVolume(applicationContext: Context) : Settings() {
 
@@ -47,7 +46,7 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         return getValueAsString("Style", "android")
     }
 
-    fun SaveSettings(
+    fun saveSettings(
         position: String,
         size: Int,
         padding: Int,
@@ -55,13 +54,13 @@ class SettingsVolume(applicationContext: Context) : Settings() {
         mapping: String,
     ) {
         loadPreferences()
-        var editor: SharedPreferences.Editor = sharedpreferences.edit()
+        val editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putString("Position", position)
         editor.putInt("Size", size)
         editor.putInt("Padding", padding)
         editor.putString("Style", style)
         editor.putString("Mapping", mapping)
-        editor.commit()
+        editor.apply()
     }
 
 

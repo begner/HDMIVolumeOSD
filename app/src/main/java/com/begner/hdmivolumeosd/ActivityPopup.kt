@@ -12,15 +12,15 @@ import com.google.android.material.tabs.TabLayout
 
 abstract class ActivityPopup : ActivityGlobal(), TabLayout.OnTabSelectedListener {
 
-    lateinit var TabList    : List<TabData>
-    lateinit var NavigationTab: TabLayout
+    lateinit var tabList    : List<TabData>
+    lateinit var navigationTab: TabLayout
 
-    public fun setResultAndFinish(success: Boolean) {
+    private fun setResultAndFinish(success: Boolean) {
         setResult(success)
         finish()
     }
 
-    public fun setResult(success: Boolean) {
+    private fun setResult(success: Boolean) {
         val returnIntent = Intent()
         // returnIntent.putExtra("result", "canceled")
         if (success) {
@@ -32,12 +32,12 @@ abstract class ActivityPopup : ActivityGlobal(), TabLayout.OnTabSelectedListener
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun ActionCancel(view: View?) {
+    fun actionCancel(view: View?) {
         setResultAndFinish(false)
     }
 
     @Suppress("UNUSED_PARAMETER")
-    public fun ActionSave(view: View?) {
+    fun actionSave(view: View?) {
         save()
         setResultAndFinish(true)
     }
@@ -48,30 +48,30 @@ abstract class ActivityPopup : ActivityGlobal(), TabLayout.OnTabSelectedListener
         setResultAndFinish(false)
     }
 
-    fun HideKeyboardOnFocus(view: View, activity: Activity?) {
-        if (!(view is EditText)) {
+    fun hideKeyboardOnFocus(view: View, activity: Activity?) {
+        if (view !is EditText) {
             view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    HideSoftKeyboard()
+                    hideSoftKeyboard()
                 }
             }
         }
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)
-                HideKeyboardOnFocus(innerView, activity)
+                hideKeyboardOnFocus(innerView, activity)
             }
         }
     }
 
-    fun HideSoftKeyboard() {
+    private fun hideSoftKeyboard() {
         val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0);
+        inputMethodManager.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0)
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        val tabIndex = NavigationTab.selectedTabPosition
-        TabList.forEachIndexed { index, tabData ->
+        val tabIndex = navigationTab.selectedTabPosition
+        tabList.forEachIndexed { index, tabData ->
             if (index == tabIndex) {
                 tabData.contentContainer.visibility = ScrollView.VISIBLE
             }

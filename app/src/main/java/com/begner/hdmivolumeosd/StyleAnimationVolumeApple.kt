@@ -11,7 +11,7 @@ class StyleAnimationVolumeApple : StyleAnimation() {
     private val easingScale = Skill.QuadEaseInOut
 
     // Instant in
-    override public fun animateIn(): MutableList<Animator> {
+    override fun animateIn(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseOut
@@ -26,7 +26,7 @@ class StyleAnimationVolumeApple : StyleAnimation() {
     }
 
     // Instant out
-    override public fun animateOut(): MutableList<Animator> {
+    override fun animateOut(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseIn

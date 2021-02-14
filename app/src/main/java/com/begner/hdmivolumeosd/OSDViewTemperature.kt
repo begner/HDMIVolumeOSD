@@ -6,32 +6,30 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import java.lang.Math.round
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) : OSDView(
     applicationContext,
     frameLayout
 ) {
 
-    var settingsTemperature  : SettingsTemperature
-    lateinit var temperatureDisplay : TextView
-    lateinit var lastMqttDisplay : TextView
-    lateinit var animationContainerScale : View
-    lateinit var animationContainerBar : View
-    lateinit var bar : LayoutTemperatureIndicator
+    private var settingsTemperature  : SettingsTemperature = SettingsTemperature(context)
+    private lateinit var temperatureDisplay : TextView
+    private lateinit var lastMqttDisplay : TextView
+    private lateinit var animationContainerScale : View
+    private lateinit var animationContainerBar : View
+    private lateinit var bar : LayoutTemperatureIndicator
     val mainHandler = Handler(Looper.getMainLooper())
-    var lastUpdated : Long = 0
+    private var lastUpdated : Long = 0
 
     init {
-        settingsTemperature = SettingsTemperature(context)
         osdPosition = OSDPositionsTemperature().getPositionByKey(settingsTemperature.getPosition())
         osdStyle = OSDStylesTemperature().getPositionByKey(settingsTemperature.getStyle())
         start()
@@ -46,8 +44,8 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         return view
     }
 
-    override public fun addView() {
-        view = LayoutInflater.from(context).inflate(osdStyle.getLayout(false), null);
+    override fun addView() {
+        view = LayoutInflater.from(context).inflate(osdStyle.getLayout(false), null)
         view.visibility = View.GONE
         if (!settingsTemperature.getMQTTActive()) {
             return
@@ -60,9 +58,9 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
             settingsTemperature.getPadding()
         )
 
-        temperatureDisplay = view.findViewById<TextView>(R.id.vosd_temp)
+        temperatureDisplay = view.findViewById(R.id.vosd_temp)
 
-        lastMqttDisplay= view.findViewById<TextView>(R.id.vosd_mqtt_time)
+        lastMqttDisplay= view.findViewById(R.id.vosd_mqtt_time)
 
         val osdContainer = view.findViewById<ConstraintLayout>(R.id.vosd_osd_container)
 
@@ -90,14 +88,14 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
             ConstraintSet.PARENT_ID,
             osdPosition.displayConstraintY,
             0
-        );
+        )
         constraintSet.connect(
             displayContainer.id,
             osdPosition.displayConstraintX,
             ConstraintSet.PARENT_ID,
             osdPosition.displayConstraintX,
             0
-        );
+        )
 
         val icon = view.findViewById<ImageView>(R.id.vosd_icon_temp)
         if (icon != null) {
@@ -111,17 +109,17 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
                 ConstraintSet.PARENT_ID,
                 osdPosition.displayConstraintY,
                 0
-            );
+            )
             constraintSet.connect(
                 icon.id,
                 osdPosition.displayConstraintX,
                 ConstraintSet.PARENT_ID,
                 osdPosition.displayConstraintX,
                 0
-            );
+            )
         }
 
-        constraintSet.applyTo(osdContainer);
+        constraintSet.applyTo(osdContainer)
 
         frameLayout.addView(view, FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -135,10 +133,10 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         startClockUpdateTimer()
     }
 
-    fun formatTime(value: Long): String {
+    private fun formatTime(value: Long): String {
         val timeDiff = System.currentTimeMillis() - value
-        val date : Date = Date(timeDiff)
-        val formatter = SimpleDateFormat("m:ss")
+        val date = Date(timeDiff)
+        val formatter = SimpleDateFormat("m:ss", Locale.US)
         return formatter.format(date)
     }
 
@@ -157,18 +155,18 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         }
     }
 
-    public fun update(currentTemperature: Float, lastMqttUpdate: Long, justAppeared: Boolean) {
+    fun update(currentTemperature: Float, lastMqttUpdate: Long) {
         if (!settingsTemperature.getMQTTActive()) {
             return
         }
 
-        val tempRounded = round(currentTemperature * 10).toFloat() / 10f
+        val tempRounded = (currentTemperature * 10).roundToInt().toFloat() / 10f
         temperatureDisplay.text = tempRounded.toString()
 
         lastUpdated = lastMqttUpdate
         updateClock()
 
-        bar.maxValue = settingsTemperature.getMaxTemp().toInt()
+        bar.maxValue = settingsTemperature.getMaxTemp()
         bar.minValue = settingsTemperature.getMinTemp()
         val curVal = currentTemperature.toInt()
 
@@ -177,14 +175,11 @@ class OSDViewTemperature(applicationContext: Context, frameLayout: FrameLayout) 
         updated()
     }
 
-    override public fun addBackground() {
+    override fun addBackground() {
         if (!settingsTemperature.getMQTTActive()) {
             return
         }
-        val backgroundRes = osdStyle.getBackground(osdPosition.isHorizontal)
-        if (backgroundRes == null) {
-            return
-        }
+        val backgroundRes = osdStyle.getBackground(osdPosition.isHorizontal) ?: return
 
         backgroundView = ImageView(context).apply {
             setImageResource(backgroundRes)

@@ -11,17 +11,17 @@ class StyleAnimationTemperatureApple : StyleAnimation() {
     private val easingScale = Skill.QuadEaseInOut
 
     // Instant in
-    override public fun animateIn(): MutableList<Animator> {
+    override fun animateIn(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseOut
 
         // verticlal
-        calcAnimationDirections(mainView, false, true)
+        calcAnimationDirections(mainView, horizontal = false, animateIn = true)
         animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, animationDuration, animationDelay, easing))
 
         // horizontal
-        calcAnimationDirections(mainView, true, true)
+        calcAnimationDirections(mainView, horizontal = true, animateIn = true)
         animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, animationDuration, animationDelay, easing))
 
         animations.add(createAnimation(mainView, "scaleX", animationScale, 1f, animationDuration, animationDelay, easingScale))
@@ -31,17 +31,17 @@ class StyleAnimationTemperatureApple : StyleAnimation() {
     }
 
     // Instant out
-    override public fun animateOut(): MutableList<Animator> {
+    override fun animateOut(): MutableList<Animator> {
         val animations : MutableList<Animator> = ArrayList()
 
         val easing = Skill.CircEaseIn
 
         // vertical
-        calcAnimationDirections(mainView, false, false)
+        calcAnimationDirections(mainView, horizontal = false, animateIn = false)
         animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, animationDuration, animationDelay, easing))
 
         // horizontal
-        calcAnimationDirections(mainView, true, false)
+        calcAnimationDirections(mainView, true, animateIn = false)
         animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, animationDuration, animationDelay, easing))
 
         animations.add(createAnimation(mainView, "scaleX", 1f, animationScale, animationDuration, animationDelay, easingScale))

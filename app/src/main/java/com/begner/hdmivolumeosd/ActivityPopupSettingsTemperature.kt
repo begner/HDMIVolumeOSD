@@ -2,7 +2,6 @@ package com.begner.hdmivolumeosd
 
 import android.os.Bundle
 import android.widget.*
-import com.google.android.material.tabs.TabLayout
 
 class ActivityPopupSettingsTemperature : ActivityPopup() {
 
@@ -23,7 +22,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_temperature)
-        HideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
+        hideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
 
         settingsTemperature = SettingsTemperature(applicationContext)
 
@@ -54,17 +53,17 @@ class ActivityPopupSettingsTemperature : ActivityPopup() {
         Password = findViewById(R.id.password);
         ClientId = findViewById(R.id.clientId);
 
-        TabList = listOf(
+        tabList = listOf(
             TabData("main", "Main", findViewById(R.id.main_settings)),
             TabData("apperence", "Apperence", findViewById(R.id.apperence_settings)),
             TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
             TabData("extra", "Extras", findViewById(R.id.extra_settings)),
         )
 
-        NavigationTab = findViewById(R.id.navigationTab)
-        NavigationTab.addOnTabSelectedListener(this)
-        TabList.forEach {
-            NavigationTab.addTab(NavigationTab.newTab().setText(it.label))
+        navigationTab = findViewById(R.id.navigationTab)
+        navigationTab.addOnTabSelectedListener(this)
+        tabList.forEach {
+            navigationTab.addTab(navigationTab.newTab().setText(it.label))
         }
 
         fill()
@@ -85,7 +84,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup() {
     }
 
     override fun save() {
-        settingsTemperature.SaveSettings(
+        settingsTemperature.saveSettings(
             Active.isChecked(),
             OSDPositionsTemperature().getByIndex(Position.selectedItemPosition).key,
             OSDStylesTemperature().getByIndex(Style.selectedItemPosition).key,

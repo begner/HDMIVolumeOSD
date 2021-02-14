@@ -1,28 +1,27 @@
 package com.begner.hdmivolumeosd
 
-abstract class OSDStyles() {
+abstract class OSDStyles {
 
     lateinit var availableStyles : List<OSDStyle>
 
-    public fun getByIndex(index: Int) : OSDStyle {
+    fun getByIndex(index: Int) : OSDStyle {
         return availableStyles[index]
     }
 
-    public fun getIndexByKey(searchKey: String):Int {
-        val index = availableStyles.indexOfFirst { it.key.equals(searchKey) }
-        return index
+    fun getIndexByKey(searchKey: String):Int {
+        return availableStyles.indexOfFirst { it.key == searchKey }
     }
 
-    public fun getPositionByKey(searchKey: String):OSDStyle {
-        var prop = availableStyles.find { it.key.equals(searchKey) }
+    fun getPositionByKey(searchKey: String):OSDStyle {
+        var prop = availableStyles.find { it.key == searchKey }
         if (prop == null) {
             prop = OSDStyle("default", "Default")
         }
         return prop
     }
 
-    public fun getLabelArray(): Array<String> {
-        val keyMap: List<String> = availableStyles.map { it.label };
+    fun getLabelArray(): Array<String> {
+        val keyMap: List<String> = availableStyles.map { it.label }
         return keyMap.toTypedArray()
     }
 

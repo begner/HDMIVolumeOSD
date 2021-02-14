@@ -52,32 +52,32 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         return value
     }
 
-    fun getMQTTServer(): String? {
+    fun getMQTTServer(): String {
         loadPreferences()
         return getValueAsString("Server", "")
     }
 
-    fun getMQTTTopic(): String? {
+    fun getMQTTTopic(): String {
         loadPreferences()
         return getValueAsString("Topic", "")
     }
 
-    fun getMQTTUser(): String? {
+    fun getMQTTUser(): String {
         loadPreferences()
         return getValueAsString("User", "")
     }
 
-    fun getMQTTPassword(): String? {
+    fun getMQTTPassword(): String {
         loadPreferences()
         return getValueAsString("Pass", "")
     }
 
-    fun getMQTTClientId(): String? {
+    fun getMQTTClientId(): String {
         loadPreferences()
         return getValueAsString("ClientId", "")
     }
 
-    fun SaveSettings(
+    fun saveSettings(
         active: Boolean,
         position: String,
         style: String,
@@ -91,7 +91,7 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         padding: Int,
         ) {
         loadPreferences()
-        var editor: SharedPreferences.Editor = sharedpreferences.edit()
+        val editor: SharedPreferences.Editor = sharedpreferences.edit()
         editor.putBoolean("Active", active)
         editor.putString("Position", position)
         editor.putString("Style", style)
@@ -103,7 +103,7 @@ class SettingsTemperature(applicationContext: Context) : Settings() {
         editor.putString("Pass", passwd)
         editor.putString("ClientId", clientId)
         editor.putInt("Padding", padding)
-        editor.commit()
+        editor.apply()
     }
 
 

@@ -15,7 +15,7 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_volume)
-        HideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
+        hideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
 
         settingsVolume = SettingsVolume(applicationContext)
 
@@ -34,15 +34,15 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
         Size = findViewById<EditText>(R.id.size)
         Padding = findViewById<EditText>(R.id.padding)
 
-        TabList = listOf(
+        tabList = listOf(
             TabData(
                 "apperence", "Apperence", findViewById(R.id.apperence_settings)
             )
         )
-        NavigationTab = findViewById(R.id.navigationTab)
-        NavigationTab.addOnTabSelectedListener(this)
-        TabList.forEach {
-            NavigationTab.addTab(NavigationTab.newTab().setText(it.label))
+        navigationTab = findViewById(R.id.navigationTab)
+        navigationTab.addOnTabSelectedListener(this)
+        tabList.forEach {
+            navigationTab.addTab(navigationTab.newTab().setText(it.label))
         }
 
         fill()
@@ -57,7 +57,7 @@ class ActivityPopupSettingsVolume : ActivityPopup() {
     }
 
     override fun save() {
-        settingsVolume.SaveSettings(
+        settingsVolume.saveSettings(
             OSDPositionsVolume().getByIndex(Position.selectedItemPosition).key,
             Size.getText().toString().toInt(),
             Padding.getText().toString().toInt(),

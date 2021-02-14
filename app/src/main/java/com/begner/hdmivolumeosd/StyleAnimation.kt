@@ -3,8 +3,8 @@ package com.begner.hdmivolumeosd
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
-import android.opengl.Visibility
 import android.view.Gravity
 import android.view.View
 import com.daimajia.easing.Glider
@@ -20,12 +20,13 @@ open class StyleAnimation  {
     var onScreenPos: Float = 0f
     var outOfScreenPos: Float = 0f
 
+    @SuppressLint("RtlHardcoded")
     open fun calcAnimationDirections(animView: View, horizontal: Boolean, animateIn: Boolean) {
-        animView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        animView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
         if (!horizontal) {
             val horizontalGravity = osdPosition.gravity and Gravity.VERTICAL_GRAVITY_MASK
-            val height = animView.getMeasuredHeight()
+            val height = animView.measuredHeight
             animationProperty = "translationY"
 
             if (horizontalGravity == Gravity.TOP) {
@@ -38,7 +39,7 @@ open class StyleAnimation  {
         }
         else {
             val verticalGravity = osdPosition.gravity and Gravity.HORIZONTAL_GRAVITY_MASK
-            val width = animView.getMeasuredWidth()
+            val width = animView.measuredWidth
             animationProperty = "translationX"
 
             if (verticalGravity == Gravity.LEFT) {
@@ -61,11 +62,11 @@ open class StyleAnimation  {
         val delayBackground = 0f
 
         // verticlal
-        calcAnimationDirections(mainView, false, true)
+        calcAnimationDirections(mainView, horizontal = false, animateIn = true)
         animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, duration, delayElement, easing))
 
         // horizontal
-        calcAnimationDirections(mainView, true, true)
+        calcAnimationDirections(mainView, true, animateIn = true)
         animations.add(createAnimation(mainView, animationProperty, outOfScreenPos, onScreenPos, duration, delayElement, easing))
 
         if (backgroundView != null) {
@@ -87,11 +88,11 @@ open class StyleAnimation  {
         val delayBackground = 100f
 
         // vertical
-        calcAnimationDirections(mainView, false, false)
+        calcAnimationDirections(mainView, horizontal = false, animateIn = false)
         animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, duration, delayElement, easing))
 
         // horizontal
-        calcAnimationDirections(mainView, true, false)
+        calcAnimationDirections(mainView, true, animateIn = false)
         animations.add(createAnimation(mainView, animationProperty, onScreenPos, outOfScreenPos, duration, delayElement, easing))
 
         if (backgroundView != null) {
@@ -103,7 +104,7 @@ open class StyleAnimation  {
         return animations
     }
 
-    fun setViewProperty(view: View, propertyName: String, value: Float) {
+    private fun setViewProperty(view: View, propertyName: String, value: Float) {
         when (propertyName) {
             "translationX" -> view.translationX = value
             "translationY" -> view.translationY = value
@@ -121,7 +122,7 @@ open class StyleAnimation  {
     fun createAnimation(view:View, property: String, start: Float, end: Float, duration: Float, startDelay: Float, easing: Skill) : ValueAnimator {
         setViewProperty(view, property, start)
         val animation = ObjectAnimator.ofFloat(view, property, end)
-        animation.setDuration((duration - startDelay).toLong())
+        animation.duration = (duration - startDelay).toLong()
         animation.startDelay = startDelay.toLong()
 
         return Glider.glide(easing, duration, animation)

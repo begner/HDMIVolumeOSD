@@ -16,11 +16,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MqttClient {
     public MqttAndroidClient mqttAndroidClient;
 
-    private String serverUri = ""; // tcp://192.168.1.17:1883
-    private String clientId = "";
-    private String subscriptionTopic = ""; // philipsTV/TempSensor/+
-    private String username = "";
-    private String password = "";
+    private final String serverUri;         // tcp://192.168.1.17:1883
+    private final String subscriptionTopic; // philipsTV/TempSensor/+
+    private final String username;
+    private final String password;
 
     public MqttClient(Context context){
 
@@ -29,7 +28,7 @@ public class MqttClient {
         subscriptionTopic = settings.getMQTTTopic();
         username = settings.getMQTTUser();
         password = settings.getMQTTPassword();
-        clientId = settings.getMQTTClientId() + "HDMIVolumeOSD";
+        String clientId = settings.getMQTTClientId() + "HDMIVolumeOSD";
 
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
@@ -44,7 +43,7 @@ public class MqttClient {
             }
 
             @Override
-            public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
+            public void messageArrived(String topic, MqttMessage mqttMessage) {
                 Log.w("Mqtt", mqttMessage.toString());
             }
 

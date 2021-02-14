@@ -9,21 +9,19 @@ import androidx.core.app.NotificationCompat
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainService : Service() {
     private var osd: OSD = OSD()
 
     private lateinit var mqttClient: MqttClient
-    private var temperatures: MutableMap<String, Float> = mutableMapOf<String, Float>()
+    private var temperatures: MutableMap<String, Float> = mutableMapOf()
     private var lastMqttValue: Long = System.currentTimeMillis()
 
 
     override fun onCreate() {
         super.onCreate()
 
-        initNotificationChannel("service_channel", "Service channel", "Service channel")
+        initNotificationChannel()
 
         val pendingIntent = PendingIntent.getActivity(
             this, 0,
@@ -39,7 +37,7 @@ class MainService : Service() {
             .setAutoCancel(false)
             .setOngoing(true)
 
-        startForeground(Companion.ONGOING_NOTIFICATION_ID, mBuilder.build())
+        startForeground(ONGOING_NOTIFICATION_ID, mBuilder.build())
         startMqtt()
         osd.initialize(this, applicationContext)
         osd.createOverlay()
@@ -58,13 +56,10 @@ class MainService : Service() {
         return START_STICKY
     }
 
-    private fun initNotificationChannel(id: String, name: String, description: String) {
+    private fun initNotificationChannel() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(
-            id, name,
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        channel.description = description
+        val channel = NotificationChannel("service_channel", "Service channel", NotificationManager.IMPORTANCE_DEFAULT)
+        channel.description = "Service channel"
         notificationManager.createNotificationChannel(channel)
     }
 
@@ -73,7 +68,7 @@ class MainService : Service() {
     }
 
     fun getAverageTemp(): Float {
-        var avarageTemp : Float = 0f
+        var avarageTemp = 0f
         if (temperatures.isNotEmpty()) {
             for (item in temperatures) {
                 avarageTemp += item.value
@@ -83,8 +78,8 @@ class MainService : Service() {
         return avarageTemp
     }
 
-    fun startMqtt() {
-        temperatures = mutableMapOf<String, Float>()
+    private fun startMqtt() {
+        temperatures = mutableMapOf()
 
         mqttClient = MqttClient(applicationContext)
         mqttClient.setCallback(object : MqttCallbackExtended {
@@ -102,7 +97,7 @@ class MainService : Service() {
 
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
-                temperatures.put(topic, mqttMessage.toString().toFloat())
+                temperatures[topic] = mqttMessage.toString().toFloat()
                 lastMqttValue = System.currentTimeMillis()
             }
         })

@@ -2,18 +2,16 @@ package com.begner.hdmivolumeosd
 
 import android.animation.Animator
 import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.CountDownTimer
-import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 
 
 abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
 
-    var settingsGlobal  : SettingsGlobal
+    private var settingsGlobal  : SettingsGlobal = SettingsGlobal(context)
     lateinit var osdPosition: OSDPosition
     lateinit var view: View
     var backgroundView: View? = null
@@ -21,34 +19,30 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
     abstract fun addView()
     abstract fun addBackground()
     var isVisible: Boolean = false
-    var closeTimer: CountDownTimer? = null
-    var animatorSet: AnimatorSet? = null
+    private var closeTimer: CountDownTimer? = null
+    private var animatorSet: AnimatorSet? = null
 
-    init {
-        settingsGlobal = SettingsGlobal(context)
-    }
-
-    public fun start() {
+    fun start() {
         addBackground()
         addView()
 
     }
 
-    public fun animateIn() {
+    private fun animateIn() {
         if (!isVisible) {
             isVisible = true
             animate(true)
         }
     }
 
-    public fun animateOut() {
+    fun animateOut() {
         if (isVisible) {
             isVisible = false
             animate(false)
         }
     }
 
-    public fun updated() {
+    fun updated() {
         val duration = settingsGlobal.getDuration().toLong()
         if (closeTimer != null) {
             closeTimer!!.cancel()
@@ -62,7 +56,7 @@ abstract class OSDView(val context: Context, var frameLayout: FrameLayout) {
         animateIn()
     }
 
-    open public fun getAnimationSubPart(name: String): View? {
+    open fun getAnimationSubPart(name: String): View? {
         return null
     }
 

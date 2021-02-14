@@ -1,10 +1,7 @@
 package com.begner.hdmivolumeosd
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
 
-
-class OSDMappingVolume() : OSDMappings() {
+class OSDMappingVolume : OSDMappings() {
     init {
         availableMappings = listOf(
             OSDMapping("default","1:1 Android Volume").apply {

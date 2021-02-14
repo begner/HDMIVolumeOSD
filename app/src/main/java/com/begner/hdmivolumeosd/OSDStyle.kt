@@ -1,7 +1,5 @@
 package com.begner.hdmivolumeosd
 
-import android.animation.Animator
-
 data class OSDStyle (
     var key: String = "",
     var label: String = ""

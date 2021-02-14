@@ -1,44 +1,34 @@
 package com.begner.hdmivolumeosd
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.content.Context
-import android.opengl.Visibility
-import android.os.Handler
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import java.lang.Math.floor
+import kotlin.math.roundToInt
 
 
 class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSDView(applicationContext, frameLayout) {
 
-    var settingsVolume  : SettingsVolume
-    var title : TextView? = null
-    lateinit var bar : ProgressBar
-    lateinit var speakerIcon : ImageView
-    var progressAnimation : Animation? = null
-    var osdMapping: OSDMapping
+    private var settingsVolume  : SettingsVolume = SettingsVolume(context)
+    private var title : TextView? = null
+    private lateinit var bar : ProgressBar
+    private lateinit var speakerIcon : ImageView
+    private var progressAnimation : Animation? = null
+    private var osdMapping: OSDMapping = OSDMappingVolume().getPositionByKey(settingsVolume.getMapping())
     private val animationResolutionFactor = 100
 
     init {
-        settingsVolume = SettingsVolume(context)
-        osdMapping = OSDMappingVolume().getPositionByKey(settingsVolume.getMapping())
         osdPosition = OSDPositionsVolume().getPositionByKey(settingsVolume.getPosition())
         osdStyle = OSDStylesVolume().getPositionByKey(settingsVolume.getStyle())
         start()
     }
 
-    public fun update(curVolume: Int, oldVolume: Int, maxVolume: Int) {
+    fun update(curVolume: Int, oldVolume: Int, maxVolume: Int) {
         if (title != null) {
             title!!.text = mapVolume(curVolume, maxVolume).toString() // + "/" + mapVolume(props.maxVolume).toString()
         }
@@ -53,17 +43,12 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
         val mappedCurVolume = mapVolume(curVolume, maxVolume)
         val mappedMaxVolume = mapVolume(maxVolume, maxVolume)
 
-
-        if (mappedCurVolume < 1) {
-            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_0)
-        } else if (mappedCurVolume < 8) {
-            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_1)
-        } else if (mappedCurVolume < 15) {
-            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_2)
-        } else {
-            speakerIcon.setImageResource(R.drawable.ic_icon_speaker_3)
+        when (mappedCurVolume) {
+            0 -> speakerIcon.setImageResource(R.drawable.ic_icon_speaker_0)
+            in 1..8 -> speakerIcon.setImageResource(R.drawable.ic_icon_speaker_1)
+            in 9..15 -> speakerIcon.setImageResource(R.drawable.ic_icon_speaker_2)
+            else -> speakerIcon.setImageResource(R.drawable.ic_icon_speaker_3)
         }
-
 
         val oldProgress = mappedOldVolume.toFloat() * animationResolutionFactor
         val newProgress = mappedCurVolume.toFloat() * animationResolutionFactor
@@ -72,15 +57,15 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
             progressAnimation!!.cancel()
         }
         progressAnimation = AnimationProgressBarProgress(bar, oldProgress, newProgress)
-        progressAnimation!!.setDuration(osdStyle.animationDuration);
-        bar.startAnimation(progressAnimation);
+        progressAnimation!!.duration = osdStyle.animationDuration
+        bar.startAnimation(progressAnimation)
 
         updated()
     }
 
-    override public fun addView() {
+    override fun addView() {
         val layoutId = osdStyle.getLayout(osdPosition.isHorizontal)
-        view = LayoutInflater.from(context).inflate(layoutId, null);
+        view = LayoutInflater.from(context).inflate(layoutId, null)
         view.visibility = View.GONE
 
         view.setPadding(
@@ -90,24 +75,22 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
             settingsVolume.getPadding()
         )
 
-        title = view.findViewById<TextView>(R.id.vosd_volume)
+        title = view.findViewById(R.id.vosd_volume)
 
-        bar = view.findViewById<ProgressBar>(R.id.vosd_bar)
+        bar = view.findViewById(R.id.vosd_bar)
 
-        speakerIcon = view.findViewById<ImageView>(R.id.vosd_icon_speaker)
+        speakerIcon = view.findViewById(R.id.vosd_icon_speaker)
 
         // inflate the popup layout
-        val metrics = context.getResources().getDisplayMetrics()
+        val metrics = context.resources.displayMetrics
         var newWidth = ViewGroup.LayoutParams.WRAP_CONTENT
         var newHeight = ViewGroup.LayoutParams.WRAP_CONTENT
         if (osdPosition.isHorizontal) {
-            newWidth = Math.round(
-                metrics.widthPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
-            )
+            newWidth = (metrics.widthPixels.toFloat() / 100f * settingsVolume.getSize()
+                .toFloat()).roundToInt()
         } else {
-            newHeight = Math.round(
-                metrics.heightPixels.toFloat() / 100f * settingsVolume.getSize().toFloat()
-            )
+            newHeight = (metrics.heightPixels.toFloat() / 100f * settingsVolume.getSize()
+                .toFloat()).roundToInt()
         }
 
         frameLayout.addView(view, FrameLayout.LayoutParams(
@@ -120,11 +103,8 @@ class OSDViewVolume(applicationContext: Context, frameLayout: FrameLayout) : OSD
         })
     }
 
-    override public fun addBackground() {
-        val backgroundRes = osdStyle.getBackground(osdPosition.isHorizontal)
-        if (backgroundRes == null) {
-            return
-        }
+    override fun addBackground() {
+        val backgroundRes = osdStyle.getBackground(osdPosition.isHorizontal) ?: return
 
         var backgroundWidth = ViewGroup.LayoutParams.MATCH_PARENT
         var backgroundHeight = ViewGroup.LayoutParams.MATCH_PARENT

@@ -1,27 +1,19 @@
 package com.begner.hdmivolumeosd
 
-import android.content.Context
 import android.content.Intent
-import android.media.AudioDeviceInfo
-import android.media.AudioManager
-import android.media.AudioManager.AudioPlaybackCallback
-import android.media.AudioPlaybackConfiguration
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.Settings.canDrawOverlays
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.GuardedBy
 
 class ActivityMain : ActivityGlobal() {
 
-    lateinit var mainServiceIntent: Intent
+    private lateinit var mainServiceIntent: Intent
 
-    val REQUEST_CODE_SETTINGS_GLOBAL = 1
-    val REQUEST_CODE_SETTINGS_VOLUME = 2
-    val REQUEST_CODE_SETTINGS_TEMPERATURE = 3
+    private val requestCodeSettingGlobal = 1
+    private val requestCodeSettingVolume = 2
+    private val requestCodeSettingTemperature = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,32 +41,29 @@ class ActivityMain : ActivityGlobal() {
     @Suppress("UNUSED_PARAMETER")
     fun openSettingsGlobal(view: View) {
         val intent = Intent(this, ActivityPopupSettingsGlobal::class.java)
-        startActivityForResult(intent, REQUEST_CODE_SETTINGS_GLOBAL);
+        startActivityForResult(intent, requestCodeSettingGlobal)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun openSettingsVolume(view: View) {
         val intent = Intent(this, ActivityPopupSettingsVolume::class.java)
-        startActivityForResult(intent, REQUEST_CODE_SETTINGS_VOLUME);
+        startActivityForResult(intent, requestCodeSettingVolume)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun openSettingsTemperature(view: View) {
         val intent = Intent(this, ActivityPopupSettingsTemperature::class.java)
-        startActivityForResult(intent, REQUEST_CODE_SETTINGS_TEMPERATURE);
+        startActivityForResult(intent, requestCodeSettingTemperature)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SETTINGS_GLOBAL ||
-            requestCode == REQUEST_CODE_SETTINGS_VOLUME ||
-            requestCode == REQUEST_CODE_SETTINGS_TEMPERATURE) {
+        if (requestCode == requestCodeSettingGlobal ||
+            requestCode == requestCodeSettingVolume ||
+            requestCode == requestCodeSettingTemperature) {
             if (resultCode == RESULT_OK) {
                 stopService(mainServiceIntent)
                 startForegroundService(mainServiceIntent)
-            }
-            if (resultCode == RESULT_CANCELED) {
-                // Nothing to do here
             }
         }
     }

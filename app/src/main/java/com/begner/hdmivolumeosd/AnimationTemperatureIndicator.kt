@@ -2,8 +2,6 @@ package com.begner.hdmivolumeosd
 
 import android.view.animation.Animation
 import android.view.animation.Transformation
-import android.widget.FrameLayout
-import android.widget.ProgressBar
 
 class AnimationTemperatureIndicator (
     private val tempIndicator: LayoutTemperatureIndicator,

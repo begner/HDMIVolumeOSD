@@ -13,7 +13,7 @@ class ActivityPopupSettingsGlobal : ActivityPopup() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_global)
-        HideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
+        hideKeyboardOnFocus(getWindow().getDecorView().getRootView(), this)
 
         settingsGlobal = SettingsGlobal(applicationContext)
 
@@ -29,7 +29,7 @@ class ActivityPopupSettingsGlobal : ActivityPopup() {
     }
 
     override fun save() {
-        settingsGlobal.SaveSettings(
+        settingsGlobal.saveSettings(
             Duration.getText().toString().toInt(),
             LimitOnHDMI.isChecked()
         )

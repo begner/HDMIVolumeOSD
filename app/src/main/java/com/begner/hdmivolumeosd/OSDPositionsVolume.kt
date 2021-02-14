@@ -2,7 +2,7 @@ package com.begner.hdmivolumeosd
 
 import android.view.Gravity
 
-class OSDPositionsVolume() : OSDPositions() {
+class OSDPositionsVolume : OSDPositions() {
     init {
         availablePositions = listOf(
             OSDPosition("leftTop","Left Top", Gravity.TOP or Gravity.START).apply {

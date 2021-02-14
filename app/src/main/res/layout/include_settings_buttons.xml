@@ -12,7 +12,7 @@
             android:id="@+id/settings_btn_cancel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:onClick="ActionCancel"
+            android:onClick="actionCancel"
             android:text="@string/settings_button_cancel"
             android:layout_marginStart="16dp"
             />
@@ -21,7 +21,7 @@
             android:id="@+id/settings_btn_save"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:onClick="ActionSave"
+            android:onClick="actionSave"
             android:text="@string/settings_button_save"
             android:layout_marginStart="16dp"
             />

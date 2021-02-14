@@ -3,14 +3,14 @@ package com.begner.hdmivolumeosd
 import android.content.Context
 import android.content.SharedPreferences
 
-abstract class Settings() {
+abstract class Settings {
 
     lateinit var sharedpreferences: SharedPreferences
     lateinit var context: Context
     var preferenceId: String = ""
 
     fun loadPreferences() {
-        sharedpreferences = context.getSharedPreferences(preferenceId, Context.MODE_PRIVATE);
+        sharedpreferences = context.getSharedPreferences(preferenceId, Context.MODE_PRIVATE)
     }
 
     fun getValueAsString(ident: String, default: String) : String {

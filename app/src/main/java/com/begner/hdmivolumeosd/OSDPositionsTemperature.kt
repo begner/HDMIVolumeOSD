@@ -1,10 +1,9 @@
 package com.begner.hdmivolumeosd
 
 import android.view.Gravity
-import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintSet
 
-class OSDPositionsTemperature() : OSDPositions() {
+class OSDPositionsTemperature : OSDPositions() {
     init {
         availablePositions = listOf(
             OSDPosition("topLeft", "Top Left", Gravity.TOP or Gravity.START).apply {

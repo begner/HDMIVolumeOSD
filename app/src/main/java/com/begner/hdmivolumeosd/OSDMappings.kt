@@ -1,28 +1,27 @@
 package com.begner.hdmivolumeosd
 
-abstract class OSDMappings() {
+abstract class OSDMappings {
 
     lateinit var availableMappings : List<OSDMapping>
 
-    public fun getByIndex(index: Int) : OSDMapping {
+    fun getByIndex(index: Int) : OSDMapping {
         return availableMappings[index]
     }
 
-    public fun getIndexByKey(searchKey: String):Int {
-        val index = availableMappings.indexOfFirst { it.key.equals(searchKey) }
-        return index
+    fun getIndexByKey(searchKey: String):Int {
+        return availableMappings.indexOfFirst { it.key == searchKey }
     }
 
-    public fun getPositionByKey(searchKey: String):OSDMapping {
-        var prop = availableMappings.find { it.key.equals(searchKey) }
+    fun getPositionByKey(searchKey: String):OSDMapping {
+        var prop = availableMappings.find { it.key == searchKey }
         if (prop == null) {
             prop = OSDMapping("default", "Default")
         }
         return prop
     }
 
-    public fun getLabelArray(): Array<String> {
-        val keyMap: List<String> = availableMappings.map { it.label };
+    fun getLabelArray(): Array<String> {
+        val keyMap: List<String> = availableMappings.map { it.label }
         return keyMap.toTypedArray()
     }
 
