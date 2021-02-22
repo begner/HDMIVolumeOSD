@@ -32,8 +32,8 @@ class StyleAnimationTemperatureAppleRadial : StyleAnimation() {
     private fun setRotationStartAngle() {
         val horizontalGravity = osdPosition.gravity and Gravity.VERTICAL_GRAVITY_MASK
         outOfScreenPos = 0f
-        if (horizontalGravity == Gravity.TOP) outOfScreenPos = 90f
-        if (horizontalGravity == Gravity.BOTTOM) outOfScreenPos = -90f
+        if (horizontalGravity == Gravity.TOP) outOfScreenPos = 110f
+        if (horizontalGravity == Gravity.BOTTOM) outOfScreenPos = -110f
     }
 
     // Instant in
