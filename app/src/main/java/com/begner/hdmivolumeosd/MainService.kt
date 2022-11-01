@@ -3,12 +3,14 @@ package com.begner.hdmivolumeosd
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
+
 
 class MainService : Service() {
     private var osd: OSD = OSD()
@@ -41,6 +43,10 @@ class MainService : Service() {
         startMqtt()
         osd.initialize(this, applicationContext)
         osd.createOverlay()
+
+        val receiverVolumeSet = ReceiverVolumeSet()
+        receiverVolumeSet.setOSD(osd)
+        registerReceiver(receiverVolumeSet, IntentFilter("android.media.VOLUME_CHANGED_ACTION"))
     }
 
     override fun onBind(intent: Intent?): IBinder? {

@@ -57,6 +57,7 @@ class ActivityPopupSettingsTemperature : ActivityPopup() {
             TabData("main", "Main", findViewById(R.id.main_settings)),
             TabData("apperence", "Apperence", findViewById(R.id.apperence_settings)),
             TabData("mqtt", "Mqtt", findViewById(R.id.mqtt_settings)),
+            TabData("mqtt2", "Mqtt2", findViewById(R.id.mqtt_settings2)),
             TabData("extra", "Extras", findViewById(R.id.extra_settings)),
         )
 

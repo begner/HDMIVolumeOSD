@@ -102,6 +102,8 @@ class OSD {
             val routeName = routeInfo.name.toString()
             val routeMax = routeInfo.volumeMax
 
+            println("In onChange currentVolume = $currentVolume, routeMax = $routeMax")
+
             if (routeName == "HDMI" || !SettingsGlobal(context).getLimitOnHDMI()) {
                 service.updateView(currentVolume, oldVolume, routeMax)
             }

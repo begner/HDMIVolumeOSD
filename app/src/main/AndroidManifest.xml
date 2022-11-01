@@ -40,13 +40,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".ReceiverMute" >
-            <intent-filter>
-                <action android:name="android.media.EXTRA_MASTER_VOLUME_MUTED" />
-                <action android:name="android.media.RINGER_MODE_CHANGED" />
-            </intent-filter>
-        </receiver>
-
         <service
             android:name=".MainService"
             android:enabled="true"
@@ -55,7 +48,16 @@
         <service
             android:name="org.eclipse.paho.android.service.MqttService" />
 
+        <receiver
+            android:name=".ReceiverVolumeSet"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+            </intent-filter>
+        </receiver>
+
         <activity
+            android:exported="true"
             android:name=".ActivityMain"
             android:banner="@mipmap/ic_banner"
             android:label="@string/app_name"
@@ -67,6 +69,7 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <activity
             android:name=".ActivityPopupSettingsGlobal"
