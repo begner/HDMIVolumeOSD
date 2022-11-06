@@ -27,12 +27,14 @@ class OSD {
             initialized = true
             service = s
             applicationContext = c
+            /*
             settingsContentObserver = SettingsContentObserver(service, this, Looper.myLooper()?.let { Handler(it) })
             applicationContext.contentResolver.registerContentObserver(
                 Settings.System.CONTENT_URI,
                 true,
                 settingsContentObserver
             )
+            */
         }
     }
 
@@ -79,6 +81,15 @@ class OSD {
         }
     }
 
+    private var oldVolume: Int = 0;
+
+    public fun updateView(curVolume: Int, maxVolume: Int) {
+        viewVolume!!.update(curVolume, oldVolume, maxVolume)
+        viewTemperature!!.update(service.getAverageTemp(), service.getLastMqttValue())
+        oldVolume = curVolume;
+    }
+
+    /*
     fun updateView(curVolume: Int, oldVolume: Int, maxVolume: Int) {
         viewVolume!!.update(curVolume, oldVolume, maxVolume)
         viewTemperature!!.update(service.getAverageTemp(), service.getLastMqttValue())
@@ -108,6 +119,6 @@ class OSD {
                 service.updateView(currentVolume, oldVolume, routeMax)
             }
         }
-
     }
+    */
 }
